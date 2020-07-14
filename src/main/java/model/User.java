@@ -21,7 +21,7 @@ public class User {
 
     private Date registered = new Date();
 
-//    @Column(name = "roles")
+
     @ElementCollection(fetch = FetchType.EAGER)
     @BatchSize(size = 200)
     private Set<Role> roles;
@@ -31,7 +31,4 @@ public class User {
     public User() {
     }
 
-    public boolean isNew() {
-        return userId == null;
-    }
 }
