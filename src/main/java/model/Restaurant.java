@@ -1,15 +1,14 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
+@Embeddable
 @Table(name = "restaraunt")
-public class Restaurant {
+public class Restaurant implements Serializable {
 
     @Id
     private int restaraunt_Id;
