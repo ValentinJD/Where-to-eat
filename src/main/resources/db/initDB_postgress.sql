@@ -1,8 +1,8 @@
 -- ALTER TABLE "history_votes" DROP CONSTRAINT IF EXISTS "history_votes_fk0";
-
+--
 -- ALTER TABLE "roles" DROP CONSTRAINT IF EXISTS "roles_fk0";
 
-DROP TABLE IF EXISTS "user";
+DROP TABLE IF EXISTS "users";
 
 DROP TABLE IF EXISTS "restaraunt";
 
@@ -10,15 +10,16 @@ DROP TABLE IF EXISTS "history_votes";
 
 DROP TABLE IF EXISTS "roles";
 
-CREATE TABLE "user" (
-                        "user_id" serial NOT NULL,
-                        "name" TEXT NOT NULL,
-                        "email" TEXT NOT NULL UNIQUE,
-                        "password" char(255) NOT NULL,
-                        "enabled" bool NOT NULL DEFAULT 'false',
-                        "registered" TIMESTAMP NOT NULL,
-                        "vote_on_day_now" BOOLEAN NOT NULL DEFAULT 'false',
-                        CONSTRAINT "user_pk" PRIMARY KEY ("user_id")
+
+CREATE TABLE "users" (
+                         "user_id" serial NOT NULL,
+                         "name" TEXT NOT NULL,
+                         "email" TEXT NOT NULL UNIQUE,
+                         "password" char(255) NOT NULL,
+                         "enabled" bool NOT NULL DEFAULT 'false',
+                         "registered" TIMESTAMP NOT NULL,
+                         "vote_on_day_now" BOOLEAN NOT NULL DEFAULT 'false',
+                         CONSTRAINT "users_pk" PRIMARY KEY ("user_id")
 ) WITH (
       OIDS=FALSE
     );
@@ -62,6 +63,6 @@ CREATE TABLE "roles" (
 
 
 
-ALTER TABLE "history_votes" ADD CONSTRAINT "history_votes_fk0" FOREIGN KEY ("history_fk") REFERENCES "user"("user_id");
+ALTER TABLE "history_votes" ADD CONSTRAINT "history_votes_fk0" FOREIGN KEY ("history_fk") REFERENCES "users"("user_id");
 
-ALTER TABLE "roles" ADD CONSTRAINT "roles_fk0" FOREIGN KEY ("user_roles_idx") REFERENCES "user"("user_id");
+ALTER TABLE "roles" ADD CONSTRAINT "roles_fk0" FOREIGN KEY ("user_roles_idx") REFERENCES "users"("user_id");
