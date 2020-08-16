@@ -4,15 +4,16 @@ DROP TABLE IF EXISTS "restaurants" CASCADE;
 DROP TABLE IF EXISTS history_votes CASCADE;
 DROP TABLE IF EXISTS "users" CASCADE;
 
+CREATE SEQUENCE global_seq START WITH 100000;
+
 CREATE TABLE IF NOT EXISTS "users"
 (
-    "id"         serial                  NOT NULL,
-    "name"       TEXT                    NOT NULL,
-    "email"      TEXT                    NOT NULL UNIQUE,
-    "password"   char(255)               NOT NULL,
-    "enabled"    BOOL      DEFAULT TRUE  NOT NULL,
-    "registered" TIMESTAMP DEFAULT now() NOT NULL,
-    CONSTRAINT "users_pk" PRIMARY KEY ("id")
+    id           INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    "name"       TEXT                              NOT NULL,
+    "email"      TEXT                              NOT NULL UNIQUE,
+    "password"   char(255)                         NOT NULL,
+    "enabled"    BOOL                DEFAULT TRUE  NOT NULL,
+    "registered" TIMESTAMP           DEFAULT now() NOT NULL
 ) WITH ( OIDS= FALSE );
 
 CREATE TABLE IF NOT EXISTS "restaurants"
