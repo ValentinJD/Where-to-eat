@@ -11,5 +11,5 @@ INSERT INTO users (name, email, password) VALUES
 ('Admin', 'admin@gmail.com', 'admin');
 
 INSERT INTO roles (role, user_id) VALUES
-('ROLE_USER', 100000),
-('ROLE_ADMIN', 100001);
+('USER', 100000),
+('ADMIN', 100001);
