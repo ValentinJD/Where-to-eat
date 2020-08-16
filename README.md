@@ -1,6 +1,6 @@
 # Where-to-eat
 Vote for the restaurant with the best food
-
+-
 Разработка и реализация REST API с использованием
 Hibernate / Spring/ SpringMVC (или Spring-Boot) без frontend.
 Задача такова:
