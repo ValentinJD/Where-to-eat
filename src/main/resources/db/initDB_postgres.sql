@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS "roles"
 (
     "user_id" bigint       NOT NULL,
     "role"    varchar(255) NOT NULL,
+    CONSTRAINT user_roles_idx UNIQUE (user_id, role),
     CONSTRAINT "roles_fk0" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE
 ) WITH ( OIDS= FALSE );
 

@@ -1,50 +1,112 @@
 package repository.jdbc;
 
+import exceptions.NotFoundException;
 import model.Role;
 import model.User;
+import org.postgresql.jdbc.PgResultSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import repository.UserRepository;
 import util.dbUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class JDBCUserRepository implements UserRepository {
+
+    protected final Logger log = LoggerFactory.getLogger(getClass());
+
+    private Connection connection;
+
     @Override
     public User save(User user) {
-        Connection connection = dbUtil.getConnection();
+        connection = dbUtil.getConnection();
 
-        try {
-            PreparedStatement preparedStatement = null;
-            preparedStatement = connection
-                    .prepareStatement("insert into users(name,email,password) values (?, ?, ?)");
-            // Parameters start with 1
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.executeUpdate();
-            return user;
+        PreparedStatement preparedStatement = null;
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        if (user.isNew()) {
+
+            log.info("save {}", user);
+
+            try {
+                preparedStatement = connection
+                        .prepareStatement("insert into users(name,email,password) values (?, ?, ?)");
+                // Parameters start with 1
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setString(2, user.getEmail());
+                preparedStatement.setString(3, user.getPassword());
+                preparedStatement.executeUpdate();
+                setRole(user);
+                return user;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        } else {
+
+            log.info("update {}", user);
+
+            try {
+                preparedStatement = connection
+                        .prepareStatement("update users set name=?,email=?,password=?, enabled=?" +
+                                "where id=?");
+                // Parameters start with 1
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setString(2, user.getEmail());
+                preparedStatement.setString(3, user.getPassword());
+                preparedStatement.setBoolean(4, user.isEnabled());
+                preparedStatement.setInt(5, user.getUserId());
+
+                int count = preparedStatement.executeUpdate();
+
+                setRole(user);
+                if (count == 0) {
+                    return null;
+                } else {
+                    return user;
+                }
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
-
 
         return null;
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+
+        log.info("delete {}", id);
+
+        connection = dbUtil.getConnection();
+
+        Integer count = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.
+                    prepareStatement("delete from users where id=?");
+            preparedStatement.setInt(1, id);
+            count = preparedStatement.executeUpdate();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+        boolean b = count == 1;
+        return b;
+
     }
 
     @Override
     public User get(int id) {
-        Connection connection = dbUtil.getConnection();
+
+        log.info("get {}", id);
+
+        connection = dbUtil.getConnection();
+
         User user = new User();
+
         try {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("select * from users where id=?");
@@ -55,59 +117,125 @@ public class JDBCUserRepository implements UserRepository {
                 user.setUserId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
+                user.setPassword("password");
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setRegistered(rs.getDate("registered"));
-//                setRoles(user);
+            }
+            user.setRole(getRole(user));
+
+            if (user.getUserId() == null) {
+                return null;
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
+
         return user;
     }
 
-    /*private void insertRoles(User u) {
-        Connection connection = dbUtil.getConnection();
-        User user = u;
-        Set<Role> roles = u.getRoles();
+    @Override
+    public List<User> getAll() {
+
+        log.info("getAll");
+
+        connection = dbUtil.getConnection();
+
+        List<User> users = new ArrayList<User>();
 
         try {
-            PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from roles where user_id=?");
-            preparedStatement.setInt(1, user.getUserId());
-            ResultSet rs = preparedStatement.executeQuery();
-
-            if (rs.next()) {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select * from users");
+            while (rs.next()) {
+                User user = new User();
                 user.setUserId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setRegistered(rs.getDate("registered"));
-                setRoles(user);
+                user.setRole(getRole(user));
+                users.add(user);
             }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        if (!CollectionUtils.isEmpty(roles)) {
-            jdbcTemplate.batchUpdate("INSERT INTO user_roles (user_id, role) VALUES (?, ?)", roles, roles.size(),
-                    (ps, role) -> {
-                        ps.setInt(1, u.getId());
-                        ps.setString(2, role.name());
-                    });
+        return users;
+    }
+
+    private void setRole(User user) {
+
+        connection = dbUtil.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("insert into roles(user_id, role) values (?, ?)");
+            preparedStatement.setInt(1, getId(user));
+            preparedStatement.setString(2, user.getRole().name());
+            int count = preparedStatement.executeUpdate();
+            log.info("setRole {} count {}", user.getRole(), count);
+        } catch (SQLException | NotFoundException throwables) {
+            throwables.printStackTrace();
         }
     }
 
-    private void deleteRoles(User u) {
-        jdbcTemplate.update("DELETE FROM user_roles WHERE user_id=?", u.getId());
+    private Role getRole(User user) {
+        if (user == null) {
+            return null;
+        }
+
+        log.info("getRole {}", user.getRole());
+
+        connection = dbUtil.getConnection();
+
+        Role role = null;
+
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("select * from roles where user_id=?");
+            preparedStatement.setInt(1, getId(user));
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                role = Role.valueOf(rs.getString("role"));
+            }
+
+        } catch (SQLException | NotFoundException throwable) {
+            throwable.printStackTrace();
+        }
+
+        return role;
     }
 
-    private User setRoles(User u) {
-        if (u != null) {
-            List<Role> roles = jdbcTemplate.queryForList("SELECT role FROM user_roles  WHERE user_id=?", Role.class, u.getId());
-            u.setRoles(roles);
+    private Integer getId(User user) throws NotFoundException {
+
+        log.info("getId {}", user.getUserId());
+
+        connection = dbUtil.getConnection();
+
+        Integer id = null;
+
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("select * from users where email=?");
+            preparedStatement.setString(1, user.getEmail());
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                id = rs.getInt("id");
+
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return u;
-    }*/
+
+        if (id == null) {
+            throw new NotFoundException("Пользователь с данным id в базе отсутствует");
+        }
+
+        return id;
+    }
 }

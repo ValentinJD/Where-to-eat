@@ -11,7 +11,9 @@ public interface UserRepository {
     // false if not found
     boolean delete(int id);
 
-    // null if not found
+    // NotFoundException if not found
     User get(int id);
+
+    List<User> getAll();
 
 }

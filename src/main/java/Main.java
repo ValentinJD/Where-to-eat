@@ -2,22 +2,22 @@ import model.Role;
 import model.User;
 import repository.UserRepository;
 import repository.jdbc.JDBCUserRepository;
-import util.dbUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args)  {
         UserRepository userRepository = new JDBCUserRepository();
-        /*Set<Role> set = new HashSet<>();
-        set.add(Role.USER);
-        User user = new User("юзер","email@ya.ru","password", set);
-        userRepository.save(user);*/
-        User user1 = userRepository.get(3);
+
+        /*System.out.println(userRepository.delete(16));*/
+        /*userRepository.save(new User("Вася", "vasya@mail.ru", "password", Role.USER));
+        userRepository.save(new User("Петя", "petya@mail.ru", "password", Role.USER));
+        userRepository.save(new User("Иван", "ivan@mail.ru", "password", Role.USER));*/
+        User user1 = userRepository.get(100);
         System.out.println(user1);
+        //userRepository.save(user1);
+        /*List<User> list = userRepository.getAll();
+        list.forEach((user)-> System.out.println(user));*/
+
     }
 }

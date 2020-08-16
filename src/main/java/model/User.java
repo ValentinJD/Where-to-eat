@@ -18,25 +18,25 @@ public class User {
 
     private Date registered = new Date();
 
-    private Set<Role> roles;
+    private Role role;
 
     public User() {
     }
 
-    public User(String name, String email, String password, boolean enabled, Date registered, Set<Role> roles) {
+    public User(String name, String email, String password, boolean enabled, Date registered, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.registered = registered;
-        this.roles = roles;
+        this.role = role;
     }
 
-    public User(String name, String email, String password, Set<Role> roles) {
+    public User(String name, String email, String password, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }
 
     public Integer getUserId() {
@@ -63,8 +63,8 @@ public class User {
         return registered;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
     public void setUserId(Integer userId) {
@@ -91,8 +91,12 @@ public class User {
         this.registered = registered;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean isNew(){
+        return userId == null;
     }
 
     @Override
@@ -104,7 +108,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", registered=" + registered +
-                ", roles=" + roles.iterator().next() +
+                ", roles=" + role +
                 '}';
     }
 }
