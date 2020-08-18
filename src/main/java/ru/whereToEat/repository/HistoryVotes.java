@@ -1,4 +1,4 @@
-package repository;
+package ru.whereToEat.repository;
 
 public interface HistoryVotes {
 }

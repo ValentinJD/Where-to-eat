@@ -1,7 +1,7 @@
-package service;
+package ru.whereToEat.service;
 
-import model.User;
-import repository.UserRepository;
+import ru.whereToEat.model.User;
+import ru.whereToEat.repository.UserRepository;
 
 import java.util.List;
 

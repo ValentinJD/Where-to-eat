@@ -1,13 +1,12 @@
-package repository.jdbc;
+package ru.whereToEat.repository.jdbc;
 
-import exceptions.NotFoundException;
-import model.Role;
-import model.User;
-import org.postgresql.jdbc.PgResultSet;
+import ru.whereToEat.exceptions.NotFoundException;
+import ru.whereToEat.model.Role;
+import ru.whereToEat.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import repository.UserRepository;
-import util.dbUtil;
+import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.util.dbUtil;
 
 import java.sql.*;
 import java.util.ArrayList;

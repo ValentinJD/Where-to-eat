@@ -1,6 +1,6 @@
-package repository;
+package ru.whereToEat.repository;
 
-import model.User;
+import ru.whereToEat.model.User;
 
 import java.util.List;
 

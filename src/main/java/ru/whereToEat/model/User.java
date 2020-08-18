@@ -1,7 +1,6 @@
-package model;
+package ru.whereToEat.model;
 
 import java.util.Date;
-import java.util.Set;
 
 
 public class User {

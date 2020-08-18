@@ -1,4 +1,4 @@
-package exceptions;
+package ru.whereToEat.exceptions;
 
 public class NotFoundException extends Exception {
     public NotFoundException(String message) {

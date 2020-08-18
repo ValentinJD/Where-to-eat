@@ -1,15 +1,16 @@
-import model.Role;
-import model.User;
+package ru.whereToEat;
+
+import ru.whereToEat.model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import repository.UserRepository;
-import repository.jdbc.JDBCUserRepository;
+import ru.whereToEat.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args)  {
+
         UserRepository userRepository;
 //                new JDBCUserRepository();
 
