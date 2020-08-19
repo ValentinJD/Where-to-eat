@@ -22,6 +22,16 @@ public class User {
     public User() {
     }
 
+    public User(Integer userId, String name, String email, String password, boolean enabled, Date registered, Role role) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+        this.registered = registered;
+        this.role = role;
+    }
+
     public User(String name, String email, String password, boolean enabled, Date registered, Role role) {
         this.name = name;
         this.email = email;
