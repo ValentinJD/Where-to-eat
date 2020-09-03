@@ -5,7 +5,7 @@
 </head>
 <body>
 <hr>
-<h3><a href="../index.html">На главную</a></h3>
+<h3><a href="index.html">На главную</a></h3>
 <hr>
 <h2>Users</h2>
 </body>
