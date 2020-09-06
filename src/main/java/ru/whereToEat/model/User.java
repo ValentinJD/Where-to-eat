@@ -1,6 +1,6 @@
 package ru.whereToEat.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 public class User {
@@ -15,14 +15,14 @@ public class User {
 
     private boolean enabled = true;
 
-    private Date registered = new Date();
+    private LocalDateTime registered;
 
     private Role role;
 
     public User() {
     }
 
-    public User(Integer userId, String name, String email, String password, boolean enabled, Date registered, Role role) {
+    public User(Integer userId, String name, String email, String password, boolean enabled, LocalDateTime registered, Role role) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -32,7 +32,7 @@ public class User {
         this.role = role;
     }
 
-    public User(String name, String email, String password, boolean enabled, Date registered, Role role) {
+    public User(String name, String email, String password, boolean enabled, LocalDateTime registered, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -68,7 +68,7 @@ public class User {
         return enabled;
     }
 
-    public Date getRegistered() {
+    public LocalDateTime getRegistered() {
         return registered;
     }
 
@@ -96,7 +96,7 @@ public class User {
         this.enabled = enabled;
     }
 
-    public void setRegistered(Date registered) {
+    public void setRegistered(LocalDateTime registered) {
         this.registered = registered;
     }
 

@@ -1,14 +1,16 @@
 package ru.whereToEat.repository.jdbc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.util.TimeUtil;
 import ru.whereToEat.util.dbUtil;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class JDBCUserRepository implements UserRepository {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private Connection connection;
+
 
     @Override
     public User save(User user) {
@@ -92,8 +95,7 @@ public class JDBCUserRepository implements UserRepository {
             throwable.printStackTrace();
         }
 
-        boolean b = count == 1;
-        return b;
+        return count == 1;
 
     }
 
@@ -118,7 +120,7 @@ public class JDBCUserRepository implements UserRepository {
                 user.setEmail(rs.getString("email"));
                 user.setPassword("password");
                 user.setEnabled(rs.getBoolean("enabled"));
-                user.setRegistered(rs.getDate("registered"));
+                user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
             }
             user.setRole(getRole(user));
 
@@ -140,7 +142,7 @@ public class JDBCUserRepository implements UserRepository {
 
         connection = dbUtil.getConnection();
 
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
 
         try {
             Statement statement = connection.createStatement();
@@ -152,7 +154,7 @@ public class JDBCUserRepository implements UserRepository {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setEnabled(rs.getBoolean("enabled"));
-                user.setRegistered(rs.getDate("registered"));
+                user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
                 user.setRole(getRole(user));
                 users.add(user);
             }
