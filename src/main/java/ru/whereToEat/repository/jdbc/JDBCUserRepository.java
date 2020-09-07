@@ -39,6 +39,7 @@ public class JDBCUserRepository implements UserRepository {
                 preparedStatement.setString(2, user.getEmail());
                 preparedStatement.setString(3, user.getPassword());
                 preparedStatement.executeUpdate();
+
                 setRole(user);
                 return user;
             } catch (SQLException throwables) {

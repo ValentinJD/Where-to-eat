@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS "roles" CASCADE;
 DROP TABLE IF EXISTS "restaurants" CASCADE;
 DROP TABLE IF EXISTS history_votes CASCADE;
 DROP TABLE IF EXISTS "users" CASCADE;
+DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq START WITH 100000;
 
@@ -18,16 +19,16 @@ CREATE TABLE IF NOT EXISTS "users"
 
 CREATE TABLE IF NOT EXISTS "restaurants"
 (
-    "id"         serial NOT NULL,
-    "name"       TEXT   NOT NULL,
-    "vote_count" int    NOT NULL default 0,
+    "id"         INTEGER DEFAULT nextval('global_seq'),
+    "name"       TEXT NOT NULL,
+    "vote_count" int  NOT NULL       default 0,
     CONSTRAINT "restaurants_pk" PRIMARY KEY ("id"),
     CONSTRAINT restaurants_idx UNIQUE (name)
 ) WITH ( OIDS= FALSE );
 
 CREATE TABLE IF NOT EXISTS history_votes
 (
-    "id"            serial    NOT NULL,
+    "id"            INTEGER DEFAULT nextval('global_seq'),
     "user_id"       bigint    NOT NULL,
     "date_vote"     TIMESTAMP NOT NULL,
     "restaurant_id" bigint    NOT NULL,
@@ -48,7 +49,7 @@ CREATE TABLE IF NOT EXISTS "roles"
 
 CREATE TABLE IF NOT EXISTS "meals"
 (
-    "id"            serial NOT NULL,
+    "id"            INTEGER DEFAULT nextval('global_seq'),
     "description"   TEXT   NOT NULL,
     "price"         int    NOT NULL,
     "restaurant_id" bigint NOT NULL,
