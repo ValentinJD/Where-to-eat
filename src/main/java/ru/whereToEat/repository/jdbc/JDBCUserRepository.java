@@ -96,7 +96,6 @@ public class JDBCUserRepository implements UserRepository {
         }
 
         return count == 1;
-
     }
 
     @Override
@@ -187,8 +186,6 @@ public class JDBCUserRepository implements UserRepository {
             return null;
         }
 
-        log.info("getRole {}", user.getRole());
-
         connection = dbUtil.getConnection();
 
         Role role = null;
@@ -207,12 +204,12 @@ public class JDBCUserRepository implements UserRepository {
             throwable.printStackTrace();
         }
 
+        log.info("getRole {}", role);
+
         return role;
     }
 
     private Integer getId(User user) throws NotFoundException {
-
-        log.info("getId {}", user.getUserId());
 
         connection = dbUtil.getConnection();
 
@@ -226,7 +223,6 @@ public class JDBCUserRepository implements UserRepository {
 
             if (rs.next()) {
                 id = rs.getInt("id");
-
             }
 
         } catch (SQLException throwables) {
@@ -236,6 +232,8 @@ public class JDBCUserRepository implements UserRepository {
         if (id == null) {
             throw new NotFoundException("Пользователь с данным id в базе отсутствует");
         }
+
+        log.info("getId {}", id);
 
         return id;
     }
