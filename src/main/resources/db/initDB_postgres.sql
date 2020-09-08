@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS "meals"
 (
     "id"            INTEGER DEFAULT nextval('global_seq'),
     "description"   TEXT   NOT NULL,
-    "price"         int    NOT NULL,
+    "price"         float    NOT NULL,
     "restaurant_id" bigint NOT NULL,
     CONSTRAINT "meals_pk" PRIMARY KEY ("id"),
     CONSTRAINT "meals_fk0" FOREIGN KEY (restaurant_id) REFERENCES "restaurants" ("id") ON DELETE CASCADE
