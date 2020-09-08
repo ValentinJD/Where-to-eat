@@ -18,6 +18,8 @@ public class Main {
         System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
 
         userRepository = context.getBean(UserRepository.class);
+        User user = userRepository.get(100000);
+        System.out.println("Хелоу");
         List<User> users = userRepository.getAll();
         context.close();
         users.forEach(System.out::println);

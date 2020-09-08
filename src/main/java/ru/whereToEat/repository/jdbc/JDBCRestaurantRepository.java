@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
-import ru.whereToEat.model.User;
 import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.util.dbUtil;
 
@@ -78,7 +77,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
         return null;
     }
 
-    private Integer getId(User user) throws NotFoundException {
+    private Integer getId(Restaurant restaurant) throws NotFoundException {
 
         connection = dbUtil.getConnection();
 
@@ -86,8 +85,8 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
 
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("select * from users where email=?");
-            preparedStatement.setString(1, user.getEmail());
+                    .prepareStatement("select * from restaurants where id=?");
+            preparedStatement.setInt(1, restaurant.getRestaraunt_Id());
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {

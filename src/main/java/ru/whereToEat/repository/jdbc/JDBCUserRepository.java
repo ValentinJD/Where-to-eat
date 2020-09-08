@@ -110,7 +110,9 @@ public class JDBCUserRepository implements UserRepository {
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from users where id=?");
+                    prepareStatement("select users.*, roles.role" +
+                            " from users, roles" +
+                            " where users.id = roles.user_id and users.id=?");
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -121,8 +123,9 @@ public class JDBCUserRepository implements UserRepository {
                 user.setPassword("password");
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
+                user.setRole(Role.valueOf(rs.getString("role")));
             }
-            user.setRole(getRole(user));
+
 
             if (user.getUserId() == null) {
                 return null;
@@ -146,7 +149,9 @@ public class JDBCUserRepository implements UserRepository {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from users");
+            ResultSet rs = statement.executeQuery("select users.*, roles.role" +
+                    " from users, roles" +
+                    " where users.id = roles.user_id");
             while (rs.next()) {
                 User user = new User();
                 user.setUserId(rs.getInt("id"));
@@ -155,7 +160,7 @@ public class JDBCUserRepository implements UserRepository {
                 user.setPassword(rs.getString("password"));
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
-                user.setRole(getRole(user));
+                user.setRole(Role.valueOf(rs.getString("role")));
                 users.add(user);
             }
 
@@ -182,33 +187,7 @@ public class JDBCUserRepository implements UserRepository {
         }
     }
 
-    private Role getRole(User user) {
-        if (user == null) {
-            return null;
-        }
 
-        connection = dbUtil.getConnection();
-
-        Role role = null;
-
-        try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("select * from roles where user_id=?");
-            preparedStatement.setInt(1, getId(user));
-            ResultSet rs = preparedStatement.executeQuery();
-
-            if (rs.next()) {
-                role = Role.valueOf(rs.getString("role"));
-            }
-
-        } catch (SQLException | NotFoundException throwable) {
-            throwable.printStackTrace();
-        }
-
-        log.info("getRole {}", role);
-
-        return role;
-    }
 
     private Integer getId(User user) throws NotFoundException {
 
