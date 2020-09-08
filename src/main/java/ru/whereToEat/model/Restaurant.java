@@ -16,8 +16,8 @@ public class Restaurant implements Serializable {
     public Restaurant() {
     }
 
-    public Restaurant(int restaraunt_Id) {
-        this.restaraunt_Id = restaraunt_Id;
+    public Restaurant(String name) {
+        this.name_restaraunt = name;
     }
 
     public boolean isNew(){
@@ -54,5 +54,15 @@ public class Restaurant implements Serializable {
 
     public void setMenu(List<Meal> menu) {
         this.menu = menu;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "restaraunt_Id=" + restaraunt_Id +
+                ", name_restaraunt='" + name_restaraunt + '\'' +
+                ", vote_count=" + vote_count +
+                ", menu=" + menu +
+                '}';
     }
 }

@@ -1,8 +1,10 @@
 package ru.whereToEat;
 
+import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.UserRepository;
 
 import java.util.Arrays;
@@ -17,12 +19,26 @@ public class Main {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
 
-        userRepository = context.getBean(UserRepository.class);
+        // Тестирование userRepository
+        /*userRepository = context.getBean(UserRepository.class);
         User user = userRepository.get(100000);
         System.out.println("Хелоу");
         List<User> users = userRepository.getAll();
         context.close();
-        users.forEach(System.out::println);
+        users.forEach(System.out::println);*/
+
+        // Тестирование RestaurauntRepository
+        RestaurantRepository restaurantRepository = context.getBean(RestaurantRepository.class);
+        Restaurant restaurant = restaurantRepository.get(100004); // Перчини Пицца & Паста
+        List<Restaurant> restaurants = restaurantRepository.getAll(); // 3 шт
+        Restaurant restaurant1 = new Restaurant("Ресторан");
+
+        restaurantRepository.save(restaurant1);
+
+        restaurantRepository.delete(100018);
+        context.close();
+
+        restaurants.forEach(System.out::println);
 
         /*System.out.println(userRepository.delete(16));*/
         /*userRepository.save(new User("Вася", "vasya@mail.ru", "password", Role.USER));

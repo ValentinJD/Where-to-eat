@@ -32,13 +32,14 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
                 preparedStatement.setString(1, restaurant.getName());
                 preparedStatement.executeUpdate();
 
-                setMenu(restaurant);
+                log.info("save {}", restaurant);
+
                 return restaurant;
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
 
-            log.info("save {}", restaurant);
+
 
         } else {
 
@@ -52,10 +53,11 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
 
                 int count = preparedStatement.executeUpdate();
 
-                setMenu(restaurant);
                 if (count == 0) {
                     return null;
                 } else {
+
+                    log.info("update {}", restaurant);
                     return restaurant;
                 }
 
@@ -63,7 +65,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
                 throwables.printStackTrace();
             }
 
-            log.info("update {}", restaurant);
+
         }
 
         return null;
@@ -79,7 +81,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
 
     private Integer getId(Restaurant restaurant) throws NotFoundException {
 
-        connection = dbUtil.getConnection();
+        /*connection = dbUtil.getConnection();
 
         Integer id = null;
 
@@ -101,15 +103,15 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             throw new NotFoundException("Пользователь с данным id в базе отсутствует");
         }
 
-        log.info("getId {}", id);
+        log.info("getId {}", id);*/
 
-        return id;
+        return null; // id
     }
 
     @Override
     public boolean delete(int id) {
 
-        log.info("delete {}", id);
+
 
         connection = dbUtil.getConnection();
 
@@ -124,13 +126,13 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             throwable.printStackTrace();
         }
 
+        log.info("delete {}", id);
+
         return count == 1;
     }
 
     @Override
     public Restaurant get(int id) {
-
-        log.info("get {}", id);
 
         connection = dbUtil.getConnection();
 
@@ -157,12 +159,14 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             throwable.printStackTrace();
         }
 
+        log.info("get {}", id);
+
         return restaurant;
     }
 
     @Override
     public List<Restaurant> getAll() {
-        log.info("getAll");
+
 
         connection = dbUtil.getConnection();
 
@@ -175,13 +179,13 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
                 Restaurant restaurant = new Restaurant();
                 restaurant.setRestaraunt_Id(rs.getInt("id"));
                 restaurant.setName(rs.getString("name"));
-                restaurant.setMenu(getMenu(restaurant));
                 restaurants.add(restaurant);
             }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        log.info("getAll");
 
         return restaurants;
     }
