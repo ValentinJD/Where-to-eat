@@ -1,11 +1,14 @@
 package ru.whereToEat;
 
+import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.repository.jdbc.JDBCMealRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,17 +31,19 @@ public class Main {
         users.forEach(System.out::println);*/
 
         // Тестирование RestaurauntRepository
-        RestaurantRepository restaurantRepository = context.getBean(RestaurantRepository.class);
+        /*RestaurantRepository restaurantRepository = context.getBean(RestaurantRepository.class);
         Restaurant restaurant = restaurantRepository.get(100004); // Перчини Пицца & Паста
         List<Restaurant> restaurants = restaurantRepository.getAll(); // 3 шт
         Restaurant restaurant1 = new Restaurant("Ресторан");
-
         restaurantRepository.save(restaurant1);
-
         restaurantRepository.delete(100018);
         context.close();
+        restaurants.forEach(System.out::println);*/
 
-        restaurants.forEach(System.out::println);
+        // Тестирование JDBCMealRepository
+        MealRepository mealRepository = new JDBCMealRepository();
+        List<Meal> meals = mealRepository.getAll(0);
+        meals.forEach(System.out::println);
 
         /*System.out.println(userRepository.delete(16));*/
         /*userRepository.save(new User("Вася", "vasya@mail.ru", "password", Role.USER));

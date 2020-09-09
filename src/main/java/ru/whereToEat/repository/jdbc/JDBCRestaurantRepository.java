@@ -81,37 +81,11 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
 
     private Integer getId(Restaurant restaurant) throws NotFoundException {
 
-        /*connection = dbUtil.getConnection();
-
-        Integer id = null;
-
-        try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("select * from restaurants where id=?");
-            preparedStatement.setInt(1, restaurant.getRestaraunt_Id());
-            ResultSet rs = preparedStatement.executeQuery();
-
-            if (rs.next()) {
-                id = rs.getInt("id");
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        if (id == null) {
-            throw new NotFoundException("Пользователь с данным id в базе отсутствует");
-        }
-
-        log.info("getId {}", id);*/
-
         return null; // id
     }
 
     @Override
     public boolean delete(int id) {
-
-
 
         connection = dbUtil.getConnection();
 
@@ -151,9 +125,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             }
             restaurant.setMenu(getMenu(restaurant));
 
-            if (restaurant.getRestaraunt_Id() == null) {
-                return null;
-            }
+
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();
