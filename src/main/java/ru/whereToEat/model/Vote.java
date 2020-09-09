@@ -2,7 +2,7 @@ package ru.whereToEat.model;
 
 import java.time.LocalDateTime;
 
-public class HistoryVotes {
+public class Vote {
 
     private Integer id;
 
@@ -12,7 +12,17 @@ public class HistoryVotes {
 
     private Restaurant restaurant;
 
-    public HistoryVotes() {
+    private int vote;
+
+    public int getVote() {
+        return vote;
+    }
+
+    public void setVote(int vote) {
+        this.vote = vote;
+    }
+
+    public Vote() {
     }
 
     public Integer getId() {
@@ -45,5 +55,16 @@ public class HistoryVotes {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    @Override
+    public String toString() {
+        return "Vote{" +
+                "id=" + id +
+                ", user=" + user +
+                ", date_vote=" + date_vote +
+                ", restaurant=" + restaurant +
+                ", vote=" + vote +
+                '}';
     }
 }

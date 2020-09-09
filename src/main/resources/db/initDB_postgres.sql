@@ -30,8 +30,9 @@ CREATE TABLE IF NOT EXISTS history_votes
 (
     "id"            INTEGER DEFAULT nextval('global_seq'),
     "user_id"       bigint    NOT NULL,
-    "date_vote"     TIMESTAMP NOT NULL,
+    "date_vote"     TIMESTAMP DEFAULT now() NOT NULL,
     "restaurant_id" bigint    NOT NULL,
+    "vote" integer not null default 0,
     CONSTRAINT "history_votes_users" PRIMARY KEY ("id"),
     CONSTRAINT "history_votes_users_fk0" FOREIGN KEY ("user_id")
         REFERENCES "users" ("id") ON DELETE CASCADE,

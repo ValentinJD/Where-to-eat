@@ -29,6 +29,17 @@ public class Main {
         List<User> users = userRepository.getAll();
         context.close();
         users.forEach(System.out::println);*/
+        /*System.out.println(userRepository.delete(16));*/
+        /*userRepository.save(new User("Вася", "vasya@mail.ru", "password", Role.USER));
+        userRepository.save(new User("Петя", "petya@mail.ru", "password", Role.USER));
+        userRepository.save(new User("Иван", "ivan@mail.ru", "password", Role.USER));*/
+       /* User user1 = userRepository.get(100);
+        System.out.println(user1);*/
+        //userRepository.save(user1);
+        /*List<User> list = userRepository.getAll();
+        list.forEach((user)-> System.out.println(user));*/
+
+
 
         // Тестирование RestaurauntRepository
         /*RestaurantRepository restaurantRepository = context.getBean(RestaurantRepository.class);
@@ -45,14 +56,6 @@ public class Main {
         List<Meal> meals = mealRepository.getAll(0);
         meals.forEach(System.out::println);
 
-        /*System.out.println(userRepository.delete(16));*/
-        /*userRepository.save(new User("Вася", "vasya@mail.ru", "password", Role.USER));
-        userRepository.save(new User("Петя", "petya@mail.ru", "password", Role.USER));
-        userRepository.save(new User("Иван", "ivan@mail.ru", "password", Role.USER));*/
-       /* User user1 = userRepository.get(100);
-        System.out.println(user1);*/
-        //userRepository.save(user1);
-        /*List<User> list = userRepository.getAll();
-        list.forEach((user)-> System.out.println(user));*/
+
     }
 }
