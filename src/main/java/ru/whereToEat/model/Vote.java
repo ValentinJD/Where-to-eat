@@ -6,11 +6,11 @@ public class Vote {
 
     private Integer id;
 
-    private User user;
+    private int userId;
 
     private LocalDateTime date_vote;
 
-    private Restaurant restaurant;
+    private int restaurantId;
 
     private int vote;
 
@@ -33,12 +33,12 @@ public class Vote {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public LocalDateTime getDate_vote() {
@@ -49,21 +49,21 @@ public class Vote {
         this.date_vote = date_vote;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public int getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     @Override
     public String toString() {
         return "Vote{" +
                 "id=" + id +
-                ", user=" + user +
+                ", userId=" + userId +
                 ", date_vote=" + date_vote +
-                ", restaurant=" + restaurant +
+                ", restaurantId=" + restaurantId +
                 ", vote=" + vote +
                 '}';
     }

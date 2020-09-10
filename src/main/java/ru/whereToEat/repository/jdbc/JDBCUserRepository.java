@@ -81,8 +81,6 @@ public class JDBCUserRepository implements UserRepository {
     @Override
     public boolean delete(int id) {
 
-        log.info("delete {}", id);
-
         connection = dbUtil.getConnection();
 
         Integer count = null;
@@ -96,13 +94,13 @@ public class JDBCUserRepository implements UserRepository {
             throwable.printStackTrace();
         }
 
+        log.info("delete {}", id);
+
         return count == 1;
     }
 
     @Override
     public User get(int id) {
-
-        log.info("get {}", id);
 
         connection = dbUtil.getConnection();
 
@@ -117,15 +115,10 @@ public class JDBCUserRepository implements UserRepository {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                user.setUserId(rs.getInt("id"));
-                user.setName(rs.getString("name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword("password");
-                user.setEnabled(rs.getBoolean("enabled"));
-                user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
-                user.setRole(Role.valueOf(rs.getString("role")));
+
             }
 
+            log.info("get {}", id);
 
             if (user.getUserId() == null) {
                 return null;
@@ -136,6 +129,11 @@ public class JDBCUserRepository implements UserRepository {
         }
 
         return user;
+    }
+
+
+    private User createUser(ResultSet rs) {
+        return null;
     }
 
     @Override

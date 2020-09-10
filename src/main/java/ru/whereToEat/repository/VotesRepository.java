@@ -13,9 +13,9 @@ public interface VotesRepository {
     boolean delete(int id);
 
     // NotFoundException if not found
-    User get(int id);
+    Vote get(int voteId);
 
     List<Vote> getAll(int restaurantId);
 
-    boolean isNewVote(User user, int restaurantId);
+    boolean isNewVote(int userId, int restaurantId);
 }
