@@ -8,7 +8,7 @@
     <bean class="ru.whereToEat.repository.jdbc.JDBCUserRepository" id="jdbcUserRepository"/>
     <bean class="ru.whereToEat.repository.jdbc.JDBCRestaurantRepository" id="restaurantRepository"/>
     <bean class="ru.whereToEat.repository.jdbc.JDBCMealRepository" id="mealRepository"/>
-    <bean class="ru.whereToEat.repository.jdbc.JDBCMealRepository" id="mealRepository"/>
+    <bean class="ru.whereToEat.repository.jdbc.JDBCVotesRepository" id="votesRepository"/>
 
     <bean class="ru.whereToEat.service.UserService">
         <constructor-arg name="repository" ref="jdbcUserRepository"/>

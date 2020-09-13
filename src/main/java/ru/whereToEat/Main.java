@@ -1,20 +1,25 @@
 package ru.whereToEat;
 
+import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.repository.jdbc.JDBCMealRepository;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws NotFoundException {
 
         UserRepository userRepository;
 //                new JDBCUserRepository();
@@ -52,10 +57,26 @@ public class Main {
         restaurants.forEach(System.out::println);*/
 
         // Тестирование JDBCMealRepository
-        MealRepository mealRepository = new JDBCMealRepository();
+        /*MealRepository mealRepository = new JDBCMealRepository();
         List<Meal> meals = mealRepository.getAll(0);
-        meals.forEach(System.out::println);
+        meals.forEach(System.out::println);*/
 
+        // Тестирование VotesRepository
+        VotesRepository votesRepository = context.getBean(VotesRepository.class);
+        List<Vote> votes = votesRepository.getAll(100002);
+        votes.forEach(System.out::println);
+        Vote vote = new Vote();
+        vote.setUserId(100000);
+        vote.setRestaurantId(100002);
+        vote.setDate_vote(LocalDateTime.now());
+        vote.setVote(99);
+        votesRepository.save(vote);
+        votes = votesRepository.getAll(100004);
+        votes.forEach(System.out::println);
 
+        /*Date date = new Date();
+        date.setTime(5);
+        LocalDateTime ldt = LocalDateTime.now();*/
+//        ldt.getLong()
     }
 }
