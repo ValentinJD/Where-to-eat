@@ -13,6 +13,7 @@ import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.UserRepository;
 import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.repository.jdbc.JDBCMealRepository;
+import ru.whereToEat.service.VoteService;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -67,13 +68,14 @@ public class Main {
         //Получение голосов конкретного ресторана
         //List<Vote> votes = votesRepository.getAll(100002);
         //votes.forEach(System.out::println);
+
         //Сохранение голоса
-        Vote vote = new Vote();
+        /*Vote vote = new Vote();
         vote.setUserId(100000);
         vote.setRestaurantId(100004);
         vote.setDate_vote(LocalDateTime.now());
         vote.setVote(0);
-        System.out.println(votesRepository.save(vote));
+        System.out.println(votesRepository.save(vote));*/
 
        /* votes = votesRepository.getAll(100002);
         votes.forEach(System.out::println);*/
@@ -87,6 +89,10 @@ public class Main {
         System.out.println(votesRepository.isNewVote(100001, 100003));*/
 
         //System.out.println(bool);
+
+        //Тестирование VoteService
+        VoteService voteService = new VoteService(votesRepository);
+        System.out.println(voteService.getCountVote(100004));
 
     }
 }

@@ -38,4 +38,18 @@ public class VoteService {
         log.info("isVoteUserInRestaurantBefore11Hour");
         return time < 11;
     }
+
+    public int getCountVote(int restaurantId) throws NotFoundException {
+        List<Vote> voteList = getAllByRestarauntId(restaurantId);
+        int count = 0;
+        for (Vote vote : voteList) {
+            if (vote.getVote() > 0) {
+                count++;
+            }
+            if (vote.getVote() < 0) {
+                count--;
+            }
+        }
+        return count;
+    }
 }
