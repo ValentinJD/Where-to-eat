@@ -3,6 +3,7 @@ package ru.whereToEat.repository.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.whereToEat.exceptions.NotFoundException;
+import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.util.TimeUtil;
@@ -10,6 +11,7 @@ import ru.whereToEat.util.dbUtil;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,31 +21,29 @@ public class JDBCVotesRepository implements VotesRepository {
     private Connection connection;
 
     @Override
-    public Vote save(Vote vote) {
+    public Vote save(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
         connection = dbUtil.getConnection();
 
         PreparedStatement preparedStatement = null;
 
         if (isNewVote(vote.getUserId(), vote.getRestaurantId())) {
 
-            if (isVoteUserInRestaurantBefore11Hour(vote.getUserId(), vote.getRestaurantId())) {
-                try {
-                    preparedStatement = connection
-                            .prepareStatement("insert into history_votes(user_id, restaurant_id, vote) " +
-                                    "values (?,?,?)");
-                    // Parameters start with 1
-                    preparedStatement.setInt(1, vote.getUserId());
-                    //preparedStatement.setTimestamp(2, new Timestamp(LocalDateTimeToLong(vote.getDate_vote())));
-                    preparedStatement.setInt(2, vote.getRestaurantId());
-                    preparedStatement.setInt(3, vote.getVote());
-                    preparedStatement.executeUpdate();
+            try {
+                preparedStatement = connection
+                        .prepareStatement("insert into history_votes(user_id, restaurant_id, vote) " +
+                                "values (?,?,?)");
+                // Parameters start with 1
+                preparedStatement.setInt(1, vote.getUserId());
+                //preparedStatement.setTimestamp(2, new Timestamp(LocalDateTimeToLong(vote.getDate_vote())));
+                preparedStatement.setInt(2, vote.getRestaurantId());
+                preparedStatement.setInt(3, vote.getVote());
+                preparedStatement.executeUpdate();
 
-                    log.info("save {}", vote);
+                log.info("save {}", vote);
 
-                    return vote;
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+                return vote;
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
             }
 
         } else {
@@ -57,30 +57,20 @@ public class JDBCVotesRepository implements VotesRepository {
                         new Timestamp(TimeUtil.LocalDateTimeToLong(vote.getDate_vote())));
 
                 preparedStatement.setInt(2, vote.getVote());
-
                 preparedStatement.setInt(3, vote.getRestaurantId());
-
                 preparedStatement.setInt(4, vote.getUserId());
 
-                int count = preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
 
-                if (count == 0) {
-                    return null;
-                } else {
-                    log.info("update {}", vote);
-                    return vote;
-                }
+
+                log.info("update {}", vote);
+                return vote;
 
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
-
         return null;
-    }
-
-    private Boolean isVoteUserInRestaurantBefore11Hour(int userId, int restaurantId) {
-        return true;
     }
 
     @Override
@@ -105,7 +95,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public Vote get(int voteId) {
+    public Vote get(int userId, int restaurantId) {
         connection = dbUtil.getConnection();
 
         Vote vote = new Vote();
@@ -114,8 +104,10 @@ public class JDBCVotesRepository implements VotesRepository {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("select  * " +
                             "from history_votes" +
-                            " where history_votes.id = ?");
-            preparedStatement.setInt(1, voteId);
+                            " where history_votes.user_id = ? and " +
+                            "history_votes.restaurant_id = ?");
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, restaurantId);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
@@ -125,15 +117,13 @@ public class JDBCVotesRepository implements VotesRepository {
 
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
                 vote.setVote(rs.getInt("vote"));
+            } else {
+                throw new NotFoundException("Голос с указанным id в базе отсутствует");
             }
 
-            if (vote.getId() == null) {
-                return null;
-            }
+            log.info("get {}", userId);
 
-            log.info("get {}", voteId);
-
-        } catch (SQLException throwable) {
+        } catch (SQLException | NotFoundException throwable) {
             throwable.printStackTrace();
         }
 
@@ -141,7 +131,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public List<Vote> getAll(int restaurantId) throws NotFoundException{
+    public List<Vote> getAll(int restaurantId) throws NotFoundException {
         connection = dbUtil.getConnection();
 
         List<Vote> votes = new ArrayList<>();
@@ -176,11 +166,15 @@ public class JDBCVotesRepository implements VotesRepository {
         return votes;
     }
 
-    @Override
-    public boolean isNewVote(int userId, int restaurantId) {
-        return false;
-        /*return getAll(restaurantId).stream()
-                .allMatch((vote) -> vote.getUserId() != userId && vote.getRestaurantId() != restaurantId);
-   */
+
+    public boolean isNewVote(int userId, int restaurantId) throws NotFoundException {
+        boolean bool = true;
+        List<Vote> list = getAll(restaurantId);
+
+        for (Vote vote : list) {
+            bool = bool && (vote.getUserId() != userId);
+        }
+
+        return bool;
     }
 }

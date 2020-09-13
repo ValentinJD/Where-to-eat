@@ -1,6 +1,7 @@
 package ru.whereToEat;
 
 import ru.whereToEat.exceptions.NotFoundException;
+import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.User;
@@ -19,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws NotFoundException {
+    public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
 
         UserRepository userRepository;
 //                new JDBCUserRepository();
@@ -63,20 +64,29 @@ public class Main {
 
         // Тестирование VotesRepository
         VotesRepository votesRepository = context.getBean(VotesRepository.class);
-        List<Vote> votes = votesRepository.getAll(100002);
-        votes.forEach(System.out::println);
+        //Получение голосов конкретного ресторана
+        //List<Vote> votes = votesRepository.getAll(100002);
+        //votes.forEach(System.out::println);
+        //Сохранение голоса
         Vote vote = new Vote();
         vote.setUserId(100000);
-        vote.setRestaurantId(100002);
+        vote.setRestaurantId(100004);
         vote.setDate_vote(LocalDateTime.now());
-        vote.setVote(99);
-        votesRepository.save(vote);
-        votes = votesRepository.getAll(100004);
-        votes.forEach(System.out::println);
+        vote.setVote(0);
+        System.out.println(votesRepository.save(vote));
 
-        /*Date date = new Date();
-        date.setTime(5);
-        LocalDateTime ldt = LocalDateTime.now();*/
-//        ldt.getLong()
+       /* votes = votesRepository.getAll(100002);
+        votes.forEach(System.out::println);*/
+
+        //Получение голоса
+       // System.out.println(votesRepository.get(100033));
+        // Удаление голоса
+       // votesRepository.delete(100033);
+
+        /*System.out.println(votesRepository.isNewVote(100009, 100003));
+        System.out.println(votesRepository.isNewVote(100001, 100003));*/
+
+        //System.out.println(bool);
+
     }
 }
