@@ -9,10 +9,10 @@ public interface UserRepository {
     User save(User user);
 
     // false if not found
-    boolean delete(int id);
+    boolean delete(Integer id);
 
     // NotFoundException if not found
-    User get(int id);
+    User get(Integer id);
 
     List<User> getAll();
 

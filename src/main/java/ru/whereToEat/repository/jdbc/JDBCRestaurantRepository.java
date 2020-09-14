@@ -162,8 +162,5 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
         return restaurants;
     }
 
-    @Override
-    public boolean vote() {
-        return false;
-    }
+
 }

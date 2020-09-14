@@ -79,7 +79,7 @@ public class JDBCUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
 
         connection = dbUtil.getConnection();
 
@@ -100,7 +100,7 @@ public class JDBCUserRepository implements UserRepository {
     }
 
     @Override
-    public User get(int id) {
+    public User get(Integer id) {
 
         connection = dbUtil.getConnection();
 
