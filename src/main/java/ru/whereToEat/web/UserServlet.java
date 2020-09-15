@@ -25,8 +25,8 @@ public class UserServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         UserService service = new UserService(new JDBCUserRepository());
-        service.create(new User("Юзер", "user@mail.ru", "password", Role.USER));
-        service.create(new User("Админ", "admin@mail.ru", "password", Role.ADMIN));
+        /*service.create(new User("Юзер", "user@mail.ru", "password", Role.USER));
+        service.create(new User("Админ", "admin@mail.ru", "password", Role.ADMIN));*/
         users = service.getAll();
     }
 
