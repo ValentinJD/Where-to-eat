@@ -74,7 +74,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public boolean delete(int voteId) {
+    public boolean delete(int userId, int restaurantId) {
 
         connection = dbUtil.getConnection();
 
@@ -82,14 +82,16 @@ public class JDBCVotesRepository implements VotesRepository {
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("delete from history_votes where id=?");
-            preparedStatement.setInt(1, voteId);
+                    prepareStatement("delete from history_votes " +
+                            "where user_id=? and restaurant_id=?");
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, restaurantId);
             count = preparedStatement.executeUpdate();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
-        log.info("delete {}", voteId);
+        log.info("delete restaurantId{}", restaurantId);
 
         return count == 1;
     }

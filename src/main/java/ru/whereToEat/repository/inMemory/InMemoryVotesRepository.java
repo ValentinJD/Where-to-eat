@@ -20,8 +20,12 @@ public class InMemoryVotesRepository implements VotesRepository {
     }
 
     @Override
-    public boolean delete(int id) {
-        return storage.remove(id) != null;
+    public boolean delete(int userId, int restaurantId) throws NotFoundException {
+        Vote vote1 = getAll(restaurantId).stream()
+                .filter((vote -> vote.getUserId() == userId && vote.getRestaurantId() == restaurantId))
+                .findFirst()
+                .get();
+        return storage.remove(vote1.getId()) != null;
     }
 
     @Override

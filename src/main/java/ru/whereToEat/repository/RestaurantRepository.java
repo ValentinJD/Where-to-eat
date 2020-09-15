@@ -10,10 +10,10 @@ public interface RestaurantRepository {
     Restaurant save(Restaurant restaurant);
 
     // false if not found
-    boolean delete(int id);
+    boolean delete(int restaurantId);
 
     // NotFoundException if not found
-    Restaurant get(int id);
+    Restaurant get(int restaurantId);
 
     List<Restaurant> getAll();
 }

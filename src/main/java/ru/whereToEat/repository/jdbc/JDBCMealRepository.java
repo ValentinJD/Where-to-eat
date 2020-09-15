@@ -72,7 +72,7 @@ public class JDBCMealRepository implements MealRepository {
     }
 
     @Override
-    public boolean delete(int id, int restaurantId) {
+    public boolean delete(int mealId, int userId) {
         connection = dbUtil.getConnection();
 
         Integer count = null;
@@ -80,13 +80,13 @@ public class JDBCMealRepository implements MealRepository {
         try {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("delete from meals where id=?");
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, mealId);
             count = preparedStatement.executeUpdate();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
-        log.info("delete {}", id);
+        log.info("delete mealId {}", mealId);
 
         return count == 1;
     }

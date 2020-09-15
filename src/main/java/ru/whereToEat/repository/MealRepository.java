@@ -13,7 +13,7 @@ public interface MealRepository {
     boolean delete(int id, int userId);
 
     // null if meal do not belong to userId
-    Meal get(int id, int userId);
+    Meal get(int mealId, int userId);
 
     // ORDERED dateTime desc
     List<Meal> getAll(int userId);

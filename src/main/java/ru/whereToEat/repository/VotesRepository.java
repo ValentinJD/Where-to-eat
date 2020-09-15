@@ -12,7 +12,7 @@ public interface VotesRepository {
     Vote save(Vote vote) throws NotFoundException, NotSaveOrUpdateException;
 
     // false if not found
-    boolean delete(int id);
+    boolean delete(int userId, int restaurantId) throws NotFoundException;
 
     // NotFoundException if not found
     Vote get(int userId, int restaurantId)throws NotFoundException;

@@ -64,7 +64,7 @@ public class Main {
         meals.forEach(System.out::println);*/
 
         // Тестирование VotesRepository
-        VotesRepository votesRepository = context.getBean(VotesRepository.class);
+        //VotesRepository votesRepository = context.getBean(VotesRepository.class);
         //Получение голосов конкретного ресторана
         //List<Vote> votes = votesRepository.getAll(100002);
         //votes.forEach(System.out::println);
@@ -91,8 +91,8 @@ public class Main {
         //System.out.println(bool);
 
         //Тестирование VoteService
-        VoteService voteService = new VoteService(votesRepository);
-        System.out.println(voteService.getCountVote(100004));
+       /* VoteService voteService = new VoteService(votesRepository);
+        System.out.println(voteService.getCountVote(100004));*/
 
     }
 }

@@ -80,7 +80,6 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
     }
 
     private Integer getId(Restaurant restaurant) throws NotFoundException {
-
         return null; // id
     }
 
@@ -161,6 +160,4 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
 
         return restaurants;
     }
-
-
 }

@@ -13,34 +13,42 @@ import java.util.List;
 public class VoteService {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    VotesRepository votesRepository;
+    VotesRepository repository;
 
-    public VoteService(VotesRepository votesRepository) {
-        this.votesRepository = votesRepository;
+    public VoteService(VotesRepository repository) {
+        this.repository = repository;
     }
 
-    public List<Vote> getAllByRestarauntId(int restaurantId) throws NotFoundException {
-        return votesRepository.getAll(restaurantId);
+    public List<Vote> getallbyrestarauntid(int restaurantId) throws NotFoundException {
+        return repository.getAll(restaurantId);
     }
 
     public Vote vote(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
         if (isVoteUserInRestaurantBefore11Hour(vote.getUserId(), vote.getRestaurantId())) {
             log.info("vote {}", vote);
-            return votesRepository.save(vote);
+            return repository.save(vote);
         }
         throw new NotVoteException();
     }
 
+    public void delete(int userId, int restaurantId) throws NotFoundException {
+        repository.delete(userId, restaurantId);
+    }
+
+    public Vote get(int userId, int restaurantId) throws NotFoundException {
+        return repository.get(userId, restaurantId);
+    }
+
     private Boolean isVoteUserInRestaurantBefore11Hour(int userId, int restaurantId) throws NotFoundException {
 
-        Vote vote = votesRepository.get(userId, restaurantId);
+        Vote vote = repository.get(userId, restaurantId);
         int time = vote.getDate_vote().getHour();
         log.info("isVoteUserInRestaurantBefore11Hour");
         return time < 11;
     }
 
     public int getCountVote(int restaurantId) throws NotFoundException {
-        List<Vote> voteList = getAllByRestarauntId(restaurantId);
+        List<Vote> voteList = getallbyrestarauntid(restaurantId);
         int count = 0;
         for (Vote vote : voteList) {
             if (vote.getVote() > 0) {
