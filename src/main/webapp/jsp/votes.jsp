@@ -29,8 +29,15 @@
             <td>${vote.id}</td>
             <td>${vote.userId}</td>
             <td><%=vote.getDate_vote().format(TimeUtil.format)%>
+
+          <%-- <fmt:parseDate value="${ vote.date_vote }" pattern="yyyy-MM-dd'T'HH:mm"
+                          var="parsedDateTime" type="both"/>
+            <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime }"/></td>--%>
+
             <td>${vote.date_vote}</td>
             <td>${vote.vote}</td>
+            <td><a href="votes?action=edit&voteId=<c:out value="${vote.id}"/>">Update</a></td>
+            <td><a href="votes?action=delete&voteId=<c:out value="${vote.id}"/>">Delete</a></td>
 
         </tr>
     </c:forEach>

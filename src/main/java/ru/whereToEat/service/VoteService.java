@@ -7,6 +7,7 @@ import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
+import ru.whereToEat.repository.jdbc.JDBCVotesRepository;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class VoteService {
 
     VotesRepository repository;
 
-    public VoteService(VotesRepository repository) {
-        this.repository = repository;
+    public VoteService() {
+        this.repository = JDBCVotesRepository.getInstance();
     }
 
     public List<Vote> getallbyrestarauntid(int restaurantId) throws NotFoundException {
@@ -24,24 +25,24 @@ public class VoteService {
     }
 
     public Vote vote(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
-        if (isVoteUserInRestaurantBefore11Hour(vote.getUserId(), vote.getRestaurantId())) {
+        if (isVoteUserInRestaurantBefore11Hour(vote.getUserId())) {
             log.info("vote {}", vote);
             return repository.save(vote);
         }
         throw new NotVoteException();
     }
 
-    public void delete(int userId, int restaurantId) throws NotFoundException {
-        repository.delete(userId, restaurantId);
+    public void delete(int voteId) throws NotFoundException {
+        repository.delete(voteId);
     }
 
-    public Vote get(int userId, int restaurantId) throws NotFoundException {
-        return repository.get(userId, restaurantId);
+    public Vote get(int voteId) throws NotFoundException {
+        return repository.get(voteId);
     }
 
-    private Boolean isVoteUserInRestaurantBefore11Hour(int userId, int restaurantId) throws NotFoundException {
+    private Boolean isVoteUserInRestaurantBefore11Hour(int voteId) throws NotFoundException {
 
-        Vote vote = repository.get(userId, restaurantId);
+        Vote vote = repository.get(voteId);
         int time = vote.getDate_vote().getHour();
         log.info("isVoteUserInRestaurantBefore11Hour");
         return time < 11;

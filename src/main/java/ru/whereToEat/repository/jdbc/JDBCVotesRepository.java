@@ -18,7 +18,21 @@ import java.util.List;
 public class JDBCVotesRepository implements VotesRepository {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    public static JDBCVotesRepository repository;
+
     private Connection connection;
+
+    private JDBCVotesRepository() {
+    }
+
+    public static VotesRepository getInstance() {
+        if (repository == null) {
+            repository = new JDBCVotesRepository();
+        }
+        return repository;
+    }
+
+
 
     @Override
     public Vote save(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
@@ -74,7 +88,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public boolean delete(int userId, int restaurantId) {
+    public boolean delete(int voteId) {
 
         connection = dbUtil.getConnection();
 
@@ -83,21 +97,20 @@ public class JDBCVotesRepository implements VotesRepository {
         try {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("delete from history_votes " +
-                            "where user_id=? and restaurant_id=?");
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, restaurantId);
+                            "where id=?");
+            preparedStatement.setInt(1, voteId);
             count = preparedStatement.executeUpdate();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
-        log.info("delete restaurantId{}", restaurantId);
+        log.info("delete");
 
         return count == 1;
     }
 
     @Override
-    public Vote get(int userId, int restaurantId) {
+    public Vote get(int voteId) {
         connection = dbUtil.getConnection();
 
         Vote vote = new Vote();
@@ -106,10 +119,8 @@ public class JDBCVotesRepository implements VotesRepository {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("select  * " +
                             "from history_votes" +
-                            " where history_votes.user_id = ? and " +
-                            "history_votes.restaurant_id = ?");
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, restaurantId);
+                            " where history_votes.id = ?");
+            preparedStatement.setInt(1, voteId);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
@@ -123,7 +134,7 @@ public class JDBCVotesRepository implements VotesRepository {
                 throw new NotFoundException("Голос с указанным id в базе отсутствует");
             }
 
-            log.info("get {}", userId);
+            log.info("get");
 
         } catch (SQLException | NotFoundException throwable) {
             throwable.printStackTrace();

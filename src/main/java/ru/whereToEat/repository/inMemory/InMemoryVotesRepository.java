@@ -20,26 +20,24 @@ public class InMemoryVotesRepository implements VotesRepository {
     }
 
     @Override
-    public boolean delete(int userId, int restaurantId) throws NotFoundException {
-        Vote vote1 = getAll(restaurantId).stream()
-                .filter((vote -> vote.getUserId() == userId && vote.getRestaurantId() == restaurantId))
+    public boolean delete(int voteId) throws NotFoundException {
+        Vote vote1 = getAll(voteId).stream()
+                .filter((vote -> vote.getId() == voteId ))
                 .findFirst()
                 .get();
         return storage.remove(vote1.getId()) != null;
     }
 
     @Override
-    public Vote get(int userId, int restaurantId) throws NotFoundException {
-        return getAll(restaurantId).stream()
-                .filter((vote -> vote.getUserId() == userId))
+    public Vote get(int voteId) throws NotFoundException {
+        return getAll(0).stream()
+                .filter((vote -> vote.getId() == voteId))
                 .findFirst()
                 .get();
     }
 
     @Override
-    public List<Vote> getAll(int restaurantId) throws NotFoundException {
-        return storage.values().stream()
-                .filter((vote)-> vote.getRestaurantId() == restaurantId)
-                .collect(Collectors.toList());
+    public List<Vote> getAll(int o) throws NotFoundException {
+        return (List<Vote>) storage.values();
     }
 }
