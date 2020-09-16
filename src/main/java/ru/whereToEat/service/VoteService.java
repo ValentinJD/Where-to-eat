@@ -25,7 +25,7 @@ public class VoteService {
     }
 
     public Vote vote(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
-        if (isVoteUserInRestaurantBefore11Hour(vote.getUserId())) {
+        if (isVoteUserInRestaurantBefore11Hour(vote.getId())) {
             log.info("vote {}", vote);
             return repository.save(vote);
         }

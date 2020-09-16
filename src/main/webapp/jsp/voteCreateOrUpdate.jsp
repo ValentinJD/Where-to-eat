@@ -13,7 +13,9 @@
 
 <jsp:useBean id="vote" type="ru.whereToEat.model.Vote" scope="request"/>
 
-<form name="vote" action="votes?voteId=${vote.id}&restaurantId=${vote.restaurantId}" method="post" accept-charset="utf-8">
+<form name="vote" action="votes?action=listVotes&voteId=${vote.id}
+&restaurantId=${vote.restaurantId}
+&dateVote=${vote.date_vote}" method="post" accept-charset="utf-8">
     <p>voteId</p>
     <input value="<c:out value="${vote.id}"/>" type="text" name="voteId" disabled>
     <p>userId</p>
@@ -23,6 +25,6 @@
     <p>restaurantId</p>
     <p><c:out value="${vote.restaurantId}"/></p>
     <p>vote</p>
-    <input type="checkbox" value="<c:out value="${vote.vote}"/>" type="text" name="vote">
+    <input type="number" value="<c:out value="${vote.vote}"/>" type="text" name="vote">
     <input type="submit" value="OK">
 </form>
