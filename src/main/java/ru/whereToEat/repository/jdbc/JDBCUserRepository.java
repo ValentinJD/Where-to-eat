@@ -115,7 +115,13 @@ public class JDBCUserRepository implements UserRepository {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-
+                user.setUserId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setEnabled(rs.getBoolean("enabled"));
+                user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
+                user.setRole(Role.valueOf(rs.getString("role")));
             }
 
             log.info("get {}", id);
@@ -184,7 +190,6 @@ public class JDBCUserRepository implements UserRepository {
             throwables.printStackTrace();
         }
     }
-
 
 
     private Integer getId(User user) throws NotFoundException {

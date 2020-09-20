@@ -33,8 +33,11 @@
             <td><%=user.getRegistered().format(TimeUtil.format)%>
             </td>
             <td>${user.role}</td>
+            <td><a href="users?action=update&userId=<c:out value="${user.userId}"/>">Update</a></td>
+            <td><a href="users?action=delete&userId=<c:out value="${user.userId}"/>">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
+<a href="users?action=create" >Создать</a>
 </body>
 </html>
