@@ -167,10 +167,47 @@ public class JDBCVotesRepository implements VotesRepository {
             }
 
             if (votes.isEmpty()) {
-                throw new NotFoundException("Голоса по данному ресторану в базе отсутствуют");
+                log.info("Голоса по данному ресторану в базе отсутствуют");
+                return votes;
             }
 
             log.info("getAll restaurantId {}", restaurantId);
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+        return votes;
+    }
+
+    @Override
+    public List<Vote> getAllForTest()  {
+        connection = dbUtil.getConnection();
+
+        List<Vote> votes = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.
+                    prepareStatement("select * from history_votes");
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Vote vote = new Vote();
+                vote.setId(rs.getInt("id"));
+                vote.setUserId(rs.getInt("user_id"));
+                vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
+                vote.setRestaurantId(rs.getInt("restaurant_id"));
+                vote.setVote(rs.getInt("vote"));
+                votes.add(vote);
+            }
+
+            if (votes.isEmpty()) {
+                log.info("Голоса по данному ресторану в базе отсутствуют");
+                return votes;
+            }
+
+            log.info("getAllForTest restaurantId ");
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();

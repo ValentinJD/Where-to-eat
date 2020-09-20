@@ -24,6 +24,10 @@ public class VoteService {
         return repository.getAll(restaurantId);
     }
 
+    public List<Vote> getAll() {
+        return repository.getAllForTest();
+    }
+
     public Vote vote(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
         if (isVoteUserInRestaurantBefore11Hour(vote.getId())) {
             log.info("vote {}", vote);
@@ -40,8 +44,10 @@ public class VoteService {
         return repository.get(voteId);
     }
 
-    private Boolean isVoteUserInRestaurantBefore11Hour(int voteId) throws NotFoundException {
-
+    private Boolean isVoteUserInRestaurantBefore11Hour(Integer voteId) throws NotFoundException {
+        if (voteId == null) {
+            return true;
+        }
         Vote vote = repository.get(voteId);
         int time = vote.getDate_vote().getHour();
         log.info("isVoteUserInRestaurantBefore11Hour");

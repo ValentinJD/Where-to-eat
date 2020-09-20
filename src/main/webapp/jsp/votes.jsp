@@ -10,7 +10,7 @@
 <hr>
 <h3><a href="index.html">На главную</a></h3>
 <hr>
-<h2>Votes List</h2>
+<h2>Votes List2</h2>
 <table align="center" border="1">
 
     <tr>
@@ -34,13 +34,15 @@
                           var="parsedDateTime" type="both"/>
             <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime }"/></td>--%>
 
-            <td>${vote.date_vote}</td>
+            <td>${vote.restaurantId}</td>
             <td>${vote.vote}</td>
             <td><a href="votes?action=edit&voteId=<c:out value="${vote.id}"/>">Update</a></td>
             <td><a href="votes?action=delete&voteId=<c:out value="${vote.id}"/>">Delete</a></td>
 
         </tr>
+
     </c:forEach>
 </table>
+<a href="votes?action=create" methods="post">Создать</a>
 </body>
 </html>

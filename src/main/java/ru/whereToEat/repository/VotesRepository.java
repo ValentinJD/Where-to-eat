@@ -19,5 +19,8 @@ public interface VotesRepository {
 
     List<Vote> getAll(int restaurantId) throws NotFoundException;
 
+    List<Vote> getAllForTest();
+
+
 
 }

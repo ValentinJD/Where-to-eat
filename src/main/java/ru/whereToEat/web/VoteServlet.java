@@ -41,20 +41,25 @@ public class VoteServlet extends HttpServlet {
 
         forward = LIST_VOTES;
 
-        String action = "";
-        action = request.getParameter("action");
 
         final LocalTime startTime = LocalTime.of(0, 0);
         final LocalTime endTime = LocalTime.of(23, 59, 59);
 
         Vote vote = new Vote();
-        vote.setId(Integer.parseInt(request.getParameter("voteId")));
-        vote.setUserId(Integer.parseInt(request.getParameter("userId")));
+        String voteId = request.getParameter("voteId");
+        if (voteId != null ) {
+            vote.setId(Integer.parseInt(voteId));
+        }
+        String strUserId = request.getParameter("userId");
+        if (strUserId != null) {
+            vote.setUserId(Integer.parseInt(strUserId));
+        }
         vote.setRestaurantId(Integer.parseInt(request.getParameter("restaurantId")));
-        vote.setDate_vote(LocalDateTime.parse(request.getParameter("dateVote")));
+        vote.setDate_vote(LocalDateTime.now());
         vote.setVote(Integer.parseInt(request.getParameter("vote")));
         try {
             voteService.vote(vote);
+            request.setAttribute("vote", vote);
         } catch (NotSaveOrUpdateException e) {
             e.printStackTrace();
         } catch (NotVoteException e) {
@@ -65,11 +70,8 @@ public class VoteServlet extends HttpServlet {
 
 
         List<Vote> voteList = null;
-        try {
-            voteList = voteService.getallbyrestarauntid(restaurantId);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
+        voteList = voteService.getAll();
+
         request.setAttribute("votes", voteList);
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
@@ -92,12 +94,10 @@ public class VoteServlet extends HttpServlet {
 
         if (action.equalsIgnoreCase("listVotes")) {
             forward = LIST_VOTES;
-            try {
-                List<Vote> voteList = voteService.getallbyrestarauntid(restaurantId);
+
+                List<Vote> voteList = voteService.getAll();
                 request.setAttribute("votes", voteList);
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
+
         } else if (action.equalsIgnoreCase("delete")) {
             int voteId = Integer.parseInt(request.getParameter("voteId"));
             try {
@@ -120,7 +120,6 @@ public class VoteServlet extends HttpServlet {
             }
         } else if (action.equalsIgnoreCase("create")) {
             forward = INSERT_OR_UPDATE;
-
         } else {
             forward = LIST_INDEX;
         }

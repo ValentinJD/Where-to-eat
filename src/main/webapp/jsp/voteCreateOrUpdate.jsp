@@ -11,11 +11,9 @@
 <body style="background: burlywood  ">
 <h2>${param.action == 'create' ? 'Create vote' : 'Edit vote'}</h2>
 
-<jsp:useBean id="vote" type="ru.whereToEat.model.Vote" scope="request"/>
+<jsp:useBean id="vote" class="ru.whereToEat.model.Vote" scope="request"/>
 
-<form name="vote" action="votes?action=listVotes&voteId=${vote.id}
-&restaurantId=${vote.restaurantId}
-&dateVote=${vote.date_vote}" method="post" accept-charset="utf-8">
+<form name="vote" action="votes?action=listVotes" method="post" accept-charset="utf-8">
     <p>voteId</p>
     <input value="<c:out value="${vote.id}"/>" type="text" name="voteId" disabled>
     <p>userId</p>
@@ -23,8 +21,8 @@
     <p>dateVote</p>
     <p><c:out value="${vote.date_vote}"/></p>
     <p>restaurantId</p>
-    <p><c:out value="${vote.restaurantId}"/></p>
+    <input type="number" value="<c:out value="${vote.restaurantId}"/>" name="restaurantId">
     <p>vote</p>
-    <input type="number" value="<c:out value="${vote.vote}"/>" type="text" name="vote">
+    <input type="number" value="<c:out value="${vote.vote}"/>"  name="vote">
     <input type="submit" value="OK">
 </form>

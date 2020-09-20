@@ -40,4 +40,9 @@ public class InMemoryVotesRepository implements VotesRepository {
     public List<Vote> getAll(int o) throws NotFoundException {
         return (List<Vote>) storage.values();
     }
+
+    @Override
+    public List<Vote> getAllForTest() {
+        return (List<Vote>) storage.values();
+    }
 }
