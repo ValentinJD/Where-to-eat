@@ -12,7 +12,7 @@ public class RestaurantService {
         this.repository = repository;
     }
 
-    public List<Restaurant> getall() {
+    public List<Restaurant> getAll() {
         return repository.getAll();
     }
 

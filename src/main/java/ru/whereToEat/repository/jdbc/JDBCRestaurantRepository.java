@@ -27,9 +27,10 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
 
             try {
                 preparedStatement = connection
-                        .prepareStatement("insert into restaurants(name) values (?)");
+                        .prepareStatement("insert into restaurants(name, vote_count) values (?,?)");
                 // Parameters start with 1
                 preparedStatement.setString(1, restaurant.getName());
+                preparedStatement.setInt(2, restaurant.getVote_count());
                 preparedStatement.executeUpdate();
 
                 log.info("save {}", restaurant);
@@ -39,17 +40,16 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
                 throwables.printStackTrace();
             }
 
-
-
         } else {
 
             try {
                 preparedStatement = connection
-                        .prepareStatement("update restaurants set name=?" +
+                        .prepareStatement("update restaurants set name=?, vote_count=?" +
                                 "where id=?");
                 // Parameters start with 1
                 preparedStatement.setString(1, restaurant.getName());
-                preparedStatement.setInt(2, restaurant.getRestaraunt_Id());
+                preparedStatement.setInt(2, restaurant.getVote_count());
+                preparedStatement.setInt(3, restaurant.getRestaraunt_Id());
 
                 int count = preparedStatement.executeUpdate();
 
@@ -64,8 +64,6 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-
-
         }
 
         return null;
@@ -76,7 +74,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
     }
 
     private List<Meal> getMenu(Restaurant restaurant) {
-        return null;
+        return new ArrayList<>();
     }
 
     private Integer getId(Restaurant restaurant) throws NotFoundException {
@@ -120,10 +118,10 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             if (rs.next()) {
                 restaurant.setRestaraunt_Id(rs.getInt("id"));
                 restaurant.setName(rs.getString("name"));
+                restaurant.setVote_count(rs.getInt("vote_count"));
 
             }
             restaurant.setMenu(getMenu(restaurant));
-
 
 
         } catch (SQLException throwable) {
@@ -138,7 +136,6 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
     @Override
     public List<Restaurant> getAll() {
 
-
         connection = dbUtil.getConnection();
 
         List<Restaurant> restaurants = new ArrayList<>();
@@ -150,6 +147,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
                 Restaurant restaurant = new Restaurant();
                 restaurant.setRestaraunt_Id(rs.getInt("id"));
                 restaurant.setName(rs.getString("name"));
+                restaurant.setVote_count(rs.getInt("vote_count"));
                 restaurants.add(restaurant);
             }
 

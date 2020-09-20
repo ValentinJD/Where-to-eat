@@ -26,8 +26,11 @@
             <td>${restaurant.restaraunt_Id}</td>
             <td>${restaurant.name}</td>
             <td>${restaurant.vote_count}</td>
+            <td><a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.restaraunt_Id}"/>">Update</a></td>
+            <td><a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.restaraunt_Id}"/>">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
+<a href="restaurants?action=create" >Создать</a>
 </body>
 </html>
