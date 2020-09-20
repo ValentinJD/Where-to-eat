@@ -16,19 +16,23 @@ public class MealService {
         return repository.getAll(restaurantId);
     }
 
-    public Meal get(int mealId, int userId) {
-        return repository.get(mealId, userId);
+    public List<Meal> getAll() {
+        return repository.getAll();
     }
 
-    public void delete(int mealId, int userId) {
-        repository.delete(mealId, userId);
+    public Meal get(int mealId) {
+        return repository.get(mealId);
     }
 
-    public Meal save(Meal meal, int userId) {
-        return repository.save(meal, userId);
+    public void delete(int mealId) {
+        repository.delete(mealId);
     }
 
-    public Meal update(Meal meal, int userId) {
-        return repository.save(meal, userId);
+    public Meal save(Meal meal) {
+        return repository.save(meal);
+    }
+
+    public Meal update(Meal meal) {
+        return repository.save(meal);
     }
 }

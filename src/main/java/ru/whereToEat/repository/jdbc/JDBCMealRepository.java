@@ -18,7 +18,7 @@ public class JDBCMealRepository implements MealRepository {
     private Connection connection;
 
     @Override
-    public Meal save(Meal meal, int restaurantId) {
+    public Meal save(Meal meal) {
         connection = dbUtil.getConnection();
 
         PreparedStatement preparedStatement = null;
@@ -31,7 +31,7 @@ public class JDBCMealRepository implements MealRepository {
                 // Parameters start with 1
                 preparedStatement.setString(1, meal.getDescription());
                 preparedStatement.setFloat(2, meal.getPrice());
-                preparedStatement.setInt(3, restaurantId);
+                preparedStatement.setInt(3, meal.getRestaurant().getRestaraunt_Id());
                 preparedStatement.executeUpdate();
 
                 log.info("save {}", meal);
@@ -45,11 +45,12 @@ public class JDBCMealRepository implements MealRepository {
             try {
                 preparedStatement = connection
                         .prepareStatement("update meals set description=?, price=?" +
-                                "where restaurant_id=?");
+                                "where id = ? and restaurant_id=? ");
                 // Parameters start with 1
                 preparedStatement.setString(1, meal.getDescription());
                 preparedStatement.setFloat(2, meal.getPrice());
-                preparedStatement.setInt(3, restaurantId);
+                preparedStatement.setInt(3, meal.getId());
+                preparedStatement.setInt(4, meal.getRestaurant().getRestaraunt_Id());
 
                 int count = preparedStatement.executeUpdate();
 
@@ -72,7 +73,7 @@ public class JDBCMealRepository implements MealRepository {
     }
 
     @Override
-    public boolean delete(int mealId, int userId) {
+    public boolean delete(int mealId) {
         connection = dbUtil.getConnection();
 
         Integer count = null;
@@ -92,7 +93,7 @@ public class JDBCMealRepository implements MealRepository {
     }
 
     @Override
-    public Meal get(int mealId, int restaurantId) {
+    public Meal get(int mealId) {
         connection = dbUtil.getConnection();
 
         Meal meal = new Meal();
@@ -104,8 +105,13 @@ public class JDBCMealRepository implements MealRepository {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
+                meal.setId(rs.getInt("id"));
                 meal.setDescription(rs.getString("description"));
                 meal.setPrice(rs.getFloat("price"));
+                Restaurant restaurant = new Restaurant();
+                restaurant.setRestaraunt_Id(rs.getInt("restaurant_id"));
+                meal.setRestaurant(restaurant);
+
             }
             meal.setId(mealId);
 
@@ -119,7 +125,40 @@ public class JDBCMealRepository implements MealRepository {
     }
 
     @Override
-    public List<Meal> getAll(int mealId) {
+    public List<Meal> getAll(int restaurantId) {
+        connection = dbUtil.getConnection();
+
+        List<Meal> meals = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.
+                    prepareStatement("select * from meals" +
+                            " where restaurant_id = ?");
+            preparedStatement.setInt(1, restaurantId);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Meal meal = new Meal();
+                meal.setId(rs.getInt("id"));
+                meal.setDescription(rs.getString("description"));
+                meal.setPrice(rs.getFloat("price"));
+                Restaurant restaurant = new Restaurant();
+                restaurant.setRestaraunt_Id(restaurantId);
+                meal.setRestaurant(restaurant);
+                meals.add(meal);
+            }
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+        log.info("getAll");
+
+        return meals;
+    }
+
+    @Override
+    public List<Meal> getAll() {
         connection = dbUtil.getConnection();
 
         List<Meal> meals = new ArrayList<>();
@@ -145,7 +184,7 @@ public class JDBCMealRepository implements MealRepository {
     }
 
     @Override
-    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return null;
     }
 }

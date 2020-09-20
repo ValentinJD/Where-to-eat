@@ -28,9 +28,12 @@
             <td>${meal.description}</td>
             <td>${meal.price}</td>
             <td>${meal.restaurant.restaraunt_Id}</td>
+            <td><a href="meals?action=update&mealId=<c:out value="${meal.id}"/>">Update</a></td>
+            <td><a href="meals?action=delete&mealId=<c:out value="${meal.id}"/>">Delete</a></td>
 
         </tr>
     </c:forEach>
 </table>
+<a href="meals?action=create" >Создать</a>
 </body>
 </html>

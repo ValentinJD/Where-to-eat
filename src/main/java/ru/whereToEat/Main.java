@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
@@ -45,7 +46,6 @@ public class Main {
         //userRepository.save(user1);
         /*List<User> list = userRepository.getAll();
         list.forEach((user)-> System.out.println(user));*/
-
 
 
         // Тестирование RestaurauntRepository
@@ -81,9 +81,9 @@ public class Main {
         votes.forEach(System.out::println);*/
 
         //Получение голоса
-       // System.out.println(votesRepository.get(100033));
+        // System.out.println(votesRepository.get(100033));
         // Удаление голоса
-       // votesRepository.delete(100033);
+        // votesRepository.delete(100033);
 
         /*System.out.println(votesRepository.isNewVote(100009, 100003));
         System.out.println(votesRepository.isNewVote(100001, 100003));*/

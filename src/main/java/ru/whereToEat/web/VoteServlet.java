@@ -2,6 +2,8 @@ package ru.whereToEat.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
@@ -9,6 +11,7 @@ import ru.whereToEat.model.Vote;
 import ru.whereToEat.service.VoteService;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +35,12 @@ public class VoteServlet extends HttpServlet {
     private static String UPDATE = "jsp/updateVote.jsp";
     private static int restaurantId = 100003;
 
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        voteService = context.getBean(VoteService.class);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -47,7 +56,7 @@ public class VoteServlet extends HttpServlet {
 
         Vote vote = new Vote();
         String voteId = request.getParameter("voteId");
-        if (voteId != null ) {
+        if (voteId != null) {
             vote.setId(Integer.parseInt(voteId));
         }
         String strUserId = request.getParameter("userId");
@@ -80,7 +89,7 @@ public class VoteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        voteService = new VoteService();
+
 
         String forward = "";
         String action = "";
@@ -95,8 +104,8 @@ public class VoteServlet extends HttpServlet {
         if (action.equalsIgnoreCase("listVotes")) {
             forward = LIST_VOTES;
 
-                List<Vote> voteList = voteService.getAll();
-                request.setAttribute("votes", voteList);
+            List<Vote> voteList = voteService.getAll();
+            request.setAttribute("votes", voteList);
 
         } else if (action.equalsIgnoreCase("delete")) {
             int voteId = Integer.parseInt(request.getParameter("voteId"));

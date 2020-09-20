@@ -15,17 +15,17 @@ public class InMemoryMealRepository implements MealRepository {
     static Map<Integer, Meal> storage = new HashMap<>();
 
     @Override
-    public Meal save(Meal meal, int userId) {
+    public Meal save(Meal meal) {
         return storage.put(meal.getId(),meal);
     }
 
     @Override
-    public boolean delete(int id, int userId) {
+    public boolean delete(int id) {
         return storage.remove(id) != null;
     }
 
     @Override
-    public Meal get(int id, int userId) {
+    public Meal get(int id) {
         return storage.get(id);
     }
 
@@ -35,7 +35,12 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+    public List<Meal> getAll() {
+        return (List<Meal>) storage.values();
+    }
+
+    @Override
+    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return null;
     }
 }

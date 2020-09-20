@@ -6,6 +6,7 @@ import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Vote;
+import ru.whereToEat.repository.UserRepository;
 import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.repository.jdbc.JDBCVotesRepository;
 
@@ -16,8 +17,8 @@ public class VoteService {
 
     VotesRepository repository;
 
-    public VoteService() {
-        this.repository = JDBCVotesRepository.getInstance();
+    public VoteService(VotesRepository repository) {
+        this.repository = repository;
     }
 
     public List<Vote> getallbyrestarauntid(int restaurantId) throws NotFoundException {
