@@ -11,6 +11,7 @@ import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.VotesRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,7 +47,7 @@ public class VoteService {
     private Boolean isVoteUserInRestaurantBefore11Hour(Vote vote) throws NotFoundException {
 
         int hour = vote.getDate_vote().getHour();
-        boolean isVote = hour < 11;
+        boolean isVote = hour < 20;
         log.info("isVoteUserInRestaurantBefore11Hour {}", isVote);
         return isVote;
     }
@@ -88,6 +89,7 @@ public class VoteService {
             vote.setUserId(userId);
             vote.setRestaurantId(restaurantId);
             vote.setVote(countVote);
+            vote.setDate_vote(LocalDateTime.now());
             votesRepository.save(vote);
 
         } else {
@@ -100,7 +102,9 @@ public class VoteService {
         }
 
         Restaurant restaurant = Objects.requireNonNull(restaurantRepository.get(restaurantId));
-        restaurant.setVote_count(getCountVote(restaurantId));
-
+        votesRepository.save(vote);
+        int countInRestaurant = getCountVote(restaurantId);
+        restaurant.setVote_count(countInRestaurant);
+        restaurantRepository.save(restaurant);
     }
 }

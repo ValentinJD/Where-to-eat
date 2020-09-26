@@ -6,6 +6,7 @@ import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.RestaurantRepository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RestaurantService {
@@ -19,6 +20,12 @@ public class RestaurantService {
 
     public List<Restaurant> getAll() {
         List<Restaurant> restaurants = restaurantRepository.getAll();
+        restaurants.sort(new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant o1, Restaurant o2) {
+                return o1.getRestaraunt_Id().compareTo(o2.getRestaraunt_Id());
+            }
+        });
         return setMealsForListRestaurants(restaurants);
     }
 
