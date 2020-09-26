@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -109,24 +108,19 @@ public class VoteServlet extends HttpServlet {
 
         } else if (action.equalsIgnoreCase("delete")) {
             int voteId = Integer.parseInt(request.getParameter("voteId"));
-            try {
-                voteService.delete(voteId);
-                forward = LIST_VOTES;
-                List<Vote> voteList = voteService.getallbyrestarauntid(restaurantId);
-                request.setAttribute("votes", voteList);
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
+
+            voteService.delete(voteId);
+            forward = LIST_VOTES;
+            List<Vote> voteList = voteService.getallbyrestarauntid(restaurantId);
+            request.setAttribute("votes", voteList);
+
         } else if (action.equalsIgnoreCase("edit")) {
             forward = INSERT_OR_UPDATE;
             int voteId = Integer.parseInt(request.getParameter("voteId"));
 
-            try {
-                Vote vote = voteService.get(voteId);
-                request.setAttribute("vote", vote);
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
+            Vote vote = voteService.get(voteId);
+            request.setAttribute("vote", vote);
+
         } else if (action.equalsIgnoreCase("create")) {
             forward = INSERT_OR_UPDATE;
         } else {
