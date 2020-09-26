@@ -18,7 +18,8 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getAll() {
-        return restaurantRepository.getAll();
+        List<Restaurant> restaurants = restaurantRepository.getAll();
+        return setMealsForListRestaurants(restaurants);
     }
 
     public Restaurant get(int restaurantId) {
@@ -42,5 +43,20 @@ public class RestaurantService {
         List<Meal> list = mealRepository.getAll(restaurantId);
         restaurant.setMenu(list);
         return restaurant;
+    }
+
+    public List<Meal> getMeals(int restaurantId) {
+        return mealRepository.getAll(restaurantId);
+    }
+
+    private List<Restaurant> setMealsForListRestaurants(List<Restaurant> restaurants) {
+        List<Restaurant> restaurantsWithMeals = new ArrayList<>();
+        restaurants.forEach(
+                restaurant -> {
+                    restaurant.setMenu(getMeals(restaurant.getRestaraunt_Id()));
+                    restaurantsWithMeals.add(restaurant);
+                }
+        );
+        return restaurantsWithMeals;
     }
 }

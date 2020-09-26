@@ -216,6 +216,40 @@ public class JDBCVotesRepository implements VotesRepository {
         return votes;
     }
 
+    @Override
+    public Vote getByRestaurantId(int restaurantId) throws NotFoundException {
+        connection = dbUtil.getConnection();
+
+        Vote vote = new Vote();
+
+        try {
+            PreparedStatement preparedStatement = connection.
+                    prepareStatement("select  * " +
+                            "from history_votes" +
+                            " where history_votes.restaurant_id = ?");
+            preparedStatement.setInt(1, restaurantId);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                vote.setId(rs.getInt("id"));
+                vote.setUserId(rs.getInt("user_id"));
+                vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
+
+                vote.setRestaurantId(rs.getInt("restaurant_id"));
+                vote.setVote(rs.getInt("vote"));
+            } else {
+                throw new NotFoundException("Голос с указанным id в базе отсутствует");
+            }
+
+            log.info("get");
+
+        } catch (SQLException  throwable) {
+            throwable.printStackTrace();
+        }
+
+        return vote;
+    }
+
 
     public boolean isNewVote(int userId, int restaurantId) throws NotFoundException {
         boolean bool = true;

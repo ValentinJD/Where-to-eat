@@ -21,6 +21,6 @@ public interface VotesRepository {
 
     List<Vote> getAllForTest();
 
-
+    Vote getByRestaurantId(int restaurantId) throws NotFoundException;
 
 }

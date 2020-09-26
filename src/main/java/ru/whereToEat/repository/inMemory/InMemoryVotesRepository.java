@@ -45,4 +45,9 @@ public class InMemoryVotesRepository implements VotesRepository {
     public List<Vote> getAllForTest() {
         return (List<Vote>) storage.values();
     }
+
+    @Override
+    public Vote getByRestaurantId(int restaurantId) throws NotFoundException {
+        return null;
+    }
 }

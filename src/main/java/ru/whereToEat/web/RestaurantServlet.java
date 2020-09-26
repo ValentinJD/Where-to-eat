@@ -4,8 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.whereToEat.exceptions.NotFoundException;
+import ru.whereToEat.exceptions.NotSaveOrUpdateException;
+import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.RestaurantService;
+import ru.whereToEat.service.VoteService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -21,10 +25,13 @@ public class RestaurantServlet extends HttpServlet {
 
     private RestaurantService restaurantService;
 
+    private VoteService voteService;
+
     @Override
     public void init(ServletConfig config) {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         restaurantService = context.getBean(RestaurantService.class);
+        voteService = context.getBean(VoteService.class);
     }
 
     @Override
@@ -54,6 +61,17 @@ public class RestaurantServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         switch (action == null ? "all" : action) {
+            case "vote":
+                int restaurantId = getRestaurantId(request);
+                int countVote = getRestaurantCount(request);
+                int userId = SecurityUtil.authUserId();
+                try {
+                    voteService.voter(restaurantId, userId, countVote);
+                } catch (NotFoundException | NotSaveOrUpdateException | NotVoteException e) {
+                    e.printStackTrace();
+                }
+                response.sendRedirect("restaurants");
+                break;
             case "delete":
                 int id = getRestaurantId(request);
                 log.info("Delete {}", id);
@@ -81,7 +99,8 @@ public class RestaurantServlet extends HttpServlet {
 
     private int getRestaurantId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("restaurantId"));
-        return Integer.parseInt(paramId);
+        String paramIdTrim = paramId.trim();
+        return Integer.parseInt(paramIdTrim);
     }
 
     private int getRestaurantCount(HttpServletRequest request) {

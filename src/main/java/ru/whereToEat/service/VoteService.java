@@ -4,55 +4,51 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
+import ru.whereToEat.exceptions.NotSupportOperationException;
 import ru.whereToEat.exceptions.NotVoteException;
+import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.Vote;
-import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.VotesRepository;
-import ru.whereToEat.repository.jdbc.JDBCVotesRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 public class VoteService {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    VotesRepository repository;
+    VotesRepository votesRepository;
 
-    public VoteService(VotesRepository repository) {
-        this.repository = repository;
+    RestaurantRepository restaurantRepository;
+
+    public VoteService(VotesRepository votesRepository, RestaurantRepository restaurantRepository) {
+        this.votesRepository = votesRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public List<Vote> getallbyrestarauntid(int restaurantId) throws NotFoundException {
-        return repository.getAll(restaurantId);
+        return votesRepository.getAll(restaurantId);
     }
 
     public List<Vote> getAll() {
-        return repository.getAllForTest();
+        return votesRepository.getAllForTest();
     }
 
-    public Vote vote(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
-        if (isVoteUserInRestaurantBefore11Hour(vote.getId())) {
-            log.info("vote {}", vote);
-            return repository.save(vote);
-        }
-        throw new NotVoteException();
-    }
 
     public void delete(int voteId) throws NotFoundException {
-        repository.delete(voteId);
+        votesRepository.delete(voteId);
     }
 
     public Vote get(int voteId) throws NotFoundException {
-        return repository.get(voteId);
+        return votesRepository.get(voteId);
     }
 
-    private Boolean isVoteUserInRestaurantBefore11Hour(Integer voteId) throws NotFoundException {
-        if (voteId == null) {
-            return true;
-        }
-        Vote vote = repository.get(voteId);
-        int time = vote.getDate_vote().getHour();
-        log.info("isVoteUserInRestaurantBefore11Hour");
-        return time < 11;
+    private Boolean isVoteUserInRestaurantBefore11Hour(Vote vote) throws NotFoundException {
+
+        int hour = vote.getDate_vote().getHour();
+        boolean isVote = hour < 11;
+        log.info("isVoteUserInRestaurantBefore11Hour {}", isVote);
+        return isVote;
     }
 
     public int getCountVote(int restaurantId) throws NotFoundException {
@@ -67,5 +63,44 @@ public class VoteService {
             }
         }
         return count;
+    }
+
+    public Vote vote(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
+        log.info("vote {}", vote);
+
+        if (isVoteUserInRestaurantBefore11Hour(vote)) {
+
+            return votesRepository.save(vote);
+        }
+        throw new NotVoteException("голосование проходит только до 11 часов");
+    }
+
+    public void voter(int restaurantId, int userId, int countVote) throws NotFoundException, NotSaveOrUpdateException, NotVoteException {
+        Vote vote;
+        try {
+            vote = votesRepository.getByRestaurantId(restaurantId);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+            vote = new Vote();
+        }
+
+        if (vote.isNew()) {
+            vote.setUserId(userId);
+            vote.setRestaurantId(restaurantId);
+            vote.setVote(countVote);
+            votesRepository.save(vote);
+
+        } else {
+            if (isVoteUserInRestaurantBefore11Hour(vote)) {
+                vote.setVote(countVote);
+            } else {
+                throw new NotVoteException("Голосовать необходимо до 11 часов");
+            }
+
+        }
+
+        Restaurant restaurant = Objects.requireNonNull(restaurantRepository.get(restaurantId));
+        restaurant.setVote_count(getCountVote(restaurantId));
+
     }
 }

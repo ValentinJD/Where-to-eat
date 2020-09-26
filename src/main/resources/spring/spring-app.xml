@@ -20,7 +20,9 @@
     </bean>
 
     <bean class="ru.whereToEat.service.VoteService">
-        <constructor-arg name="repository" ref="jdbcVotesRepository"/>
+        <constructor-arg name="votesRepository" ref="jdbcVotesRepository"/>
+        <constructor-arg name="restaurantRepository" ref="jdbcRestaurantRepository"/>
+
     </bean>
 
     <bean class="ru.whereToEat.service.MealService">

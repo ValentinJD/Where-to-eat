@@ -25,6 +25,10 @@ public class Vote {
     public Vote() {
     }
 
+    public boolean isNew(){
+        return id == null;
+    }
+
     public Integer getId() {
         return id;
     }
