@@ -259,6 +259,7 @@ public class JDBCVotesRepository implements VotesRepository {
         for (Vote vote : list) {
             bool = bool && (vote.getUserId() != userId);
         }
+        log.info("isNewVote {}", bool);
 
         return bool;
     }
