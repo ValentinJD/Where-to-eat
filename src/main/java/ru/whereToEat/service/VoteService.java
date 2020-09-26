@@ -27,7 +27,7 @@ public class VoteService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public List<Vote> getallbyrestarauntid(int restaurantId) throws NotFoundException {
+    public List<Vote> getallbyrestarauntid(int restaurantId) {
         return votesRepository.getAll(restaurantId);
     }
 
@@ -36,11 +36,11 @@ public class VoteService {
     }
 
 
-    public void delete(int voteId) throws NotFoundException {
+    public void delete(int voteId) {
         votesRepository.delete(voteId);
     }
 
-    public Vote get(int voteId) throws NotFoundException {
+    public Vote get(int voteId) {
         return votesRepository.get(voteId);
     }
 
@@ -59,7 +59,7 @@ public class VoteService {
         return isVote;
     }
 
-    public int getCountVote(int restaurantId) throws NotFoundException {
+    public int getCountVote(int restaurantId)  {
         List<Vote> voteList = getallbyrestarauntid(restaurantId);
         int count = 0;
         for (Vote vote : voteList) {
