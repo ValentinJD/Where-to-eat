@@ -1,10 +1,12 @@
 package ru.whereToEat.service;
 
+import org.springframework.stereotype.Service;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.repository.MealRepository;
 
 import java.util.List;
 
+@Service
 public class MealService {
     private final MealRepository repository;
 

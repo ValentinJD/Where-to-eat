@@ -2,6 +2,7 @@ package ru.whereToEat.repository.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JDBCUserRepository implements UserRepository {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -59,7 +61,7 @@ public class JDBCUserRepository implements UserRepository {
                 preparedStatement.setString(2, user.getEmail());
                 preparedStatement.setString(3, user.getPassword());
                 preparedStatement.setBoolean(4, user.isEnabled());
-                preparedStatement.setInt(5, user.getUserId());
+                preparedStatement.setInt(5, user.getId());
 
                 int count = preparedStatement.executeUpdate();
 
@@ -115,7 +117,7 @@ public class JDBCUserRepository implements UserRepository {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                user.setUserId(rs.getInt("id"));
+                user.setId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
@@ -126,7 +128,7 @@ public class JDBCUserRepository implements UserRepository {
 
             log.info("get {}", id);
 
-            if (user.getUserId() == null) {
+            if (user.getId() == null) {
                 return null;
             }
 
@@ -158,7 +160,7 @@ public class JDBCUserRepository implements UserRepository {
                     " where users.id = roles.user_id");
             while (rs.next()) {
                 User user = new User();
-                user.setUserId(rs.getInt("id"));
+                user.setId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
@@ -174,6 +176,47 @@ public class JDBCUserRepository implements UserRepository {
 
         return users;
     }
+
+    @Override
+    public User getByEmail(String email) {
+        connection = dbUtil.getConnection();
+
+        User user = null;
+
+        try {
+            user = new User();
+            PreparedStatement preparedStatement = connection.
+                    prepareStatement("select *" +
+                            " from users" +
+                            " where users.email = ?");
+            preparedStatement.setString(1, email);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setEnabled(rs.getBoolean("enabled"));
+                user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
+                setRole(user);
+//                user.setRole(Role.valueOf(rs.getString("role")));
+            }
+
+            log.info("get {}", email);
+
+            if (user.getId() == null) {
+                return null;
+            }
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+        return user;
+    }
+
+
 
     private void setRole(User user) {
 

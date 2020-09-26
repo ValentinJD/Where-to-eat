@@ -24,12 +24,11 @@ import java.util.Objects;
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
         System.out.println("ТЕст");
-     /*   UserRepository userRepository;
+        UserRepository userRepository;
 //                new JDBCUserRepository();
 
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
-*/
         // Тестирование userRepository
         /*userRepository = context.getBean(UserRepository.class);
         User user = userRepository.get(100000);

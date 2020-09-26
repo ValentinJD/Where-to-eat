@@ -1,5 +1,6 @@
 package ru.whereToEat.service;
 
+import org.springframework.stereotype.Service;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.MealRepository;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Service
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final MealRepository mealRepository;

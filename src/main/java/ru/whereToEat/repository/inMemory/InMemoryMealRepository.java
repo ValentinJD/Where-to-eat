@@ -1,5 +1,6 @@
 package ru.whereToEat.repository.inMemory;
 
+import org.springframework.stereotype.Repository;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.MealRepository;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Repository
 public class InMemoryMealRepository implements MealRepository {
     static Map<Integer, Meal> storage = new HashMap<>();
 

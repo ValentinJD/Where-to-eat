@@ -2,6 +2,7 @@ package ru.whereToEat.repository.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
@@ -12,6 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JDBCRestaurantRepository implements RestaurantRepository {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

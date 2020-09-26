@@ -2,6 +2,7 @@ package ru.whereToEat.repository.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Vote;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JDBCVotesRepository implements VotesRepository {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

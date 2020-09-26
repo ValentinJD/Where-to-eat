@@ -1,5 +1,6 @@
 package ru.whereToEat.repository.inMemory;
 
+import org.springframework.stereotype.Repository;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public class InMemoryVotesRepository implements VotesRepository {
     static Map<Integer, Vote> storage = new HashMap<>();
 

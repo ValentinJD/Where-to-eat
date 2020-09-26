@@ -26,15 +26,15 @@
         <tr>
             <jsp:useBean id="user" type="ru.whereToEat.model.User"/>
 
-            <td>${user.userId}</td>
+            <td>${user.id}</td>
             <td>${user.name}</td>
             <td>${user.password}</td>
             <td>${user.enabled}</td>
             <td><%=user.getRegistered().format(TimeUtil.format)%>
             </td>
             <td>${user.role}</td>
-            <td><a href="users?action=update&userId=<c:out value="${user.userId}"/>">Update</a></td>
-            <td><a href="users?action=delete&userId=<c:out value="${user.userId}"/>">Delete</a></td>
+            <td><a href="users?action=update&userId=<c:out value="${user.id}"/>">Update</a></td>
+            <td><a href="users?action=delete&userId=<c:out value="${user.id}"/>">Delete</a></td>
         </tr>
     </c:forEach>
 </table>

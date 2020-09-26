@@ -13,7 +13,7 @@
     <h2>${param.action == 'create' ? 'Create user' : 'Edit user'}</h2>
     <jsp:useBean id="user" type="ru.whereToEat.model.User" scope="request"/>
     <form method="post" action="users">
-        <input type="hidden" name="userId" value="${user.userId}">
+        <input type="hidden" name="userId" value="${user.id}">
         <dl>
             <dt>Name:</dt>
             <dd><input type="text" value="${user.name}" size=40 name="name" required></dd>

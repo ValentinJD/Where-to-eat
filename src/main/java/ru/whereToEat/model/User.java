@@ -3,11 +3,11 @@ package ru.whereToEat.model;
 import java.time.LocalDateTime;
 
 
-public class User {
+public class User extends AbstractNamedEntity{
 
-    private Integer userId;
+    /*private Integer userId;
 
-    private String name;
+    private String name;*/
 
     private String email;
 
@@ -20,11 +20,13 @@ public class User {
     private Role role;
 
     public User() {
+        super(null, null);
     }
 
     public User(Integer userId, String name, String email, String password, boolean enabled, LocalDateTime registered, Role role) {
-        this.userId = userId;
-        this.name = name;
+        super(userId, name);
+//        this.userId = userId;
+//        this.name = name;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
@@ -33,7 +35,8 @@ public class User {
     }
 
     public User(String name, String email, String password, boolean enabled, LocalDateTime registered, Role role) {
-        this.name = name;
+        super(null, name);
+//        this.name = name;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
@@ -42,19 +45,20 @@ public class User {
     }
 
     public User(String name, String email, String password, Role role) {
-        this.name = name;
+        super(null,name);
+//        this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
+//    public Integer getUserId() {
+//        return userId;
+//    }
 
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
 
     public String getEmail() {
         return email;
@@ -76,9 +80,9 @@ public class User {
         return role;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+//    public void setUserId(Integer userId) {
+//        this.userId = userId;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -104,20 +108,19 @@ public class User {
         this.role = role;
     }
 
-    public boolean isNew(){
-        return userId == null;
-    }
+//    public boolean isNew(){
+//        return userId == null;
+//    }
+
 
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
+                "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", registered=" + registered +
-                ", roles=" + role +
+                ", role=" + role +
                 '}';
     }
 }

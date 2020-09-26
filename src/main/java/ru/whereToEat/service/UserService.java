@@ -1,10 +1,15 @@
 package ru.whereToEat.service;
 
+import org.springframework.stereotype.Service;
+import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
 
 import java.util.List;
 
+import static ru.whereToEat.util.ValidationUtil.checkNotFound;
+
+@Service
 public class UserService {
     private final UserRepository repository;
 
@@ -36,4 +41,7 @@ public class UserService {
         repository.save(user);
     }
 
+    public User getByEmail(String email) throws NotFoundException {
+        return checkNotFound(repository.getByEmail(email), "email=" + email);
+    }
 }
