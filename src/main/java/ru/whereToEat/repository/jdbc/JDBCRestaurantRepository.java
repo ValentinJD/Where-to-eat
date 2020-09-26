@@ -69,10 +69,6 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
         return null;
     }
 
-    private void setMenu(Restaurant restaurant) {
-
-    }
-
     private List<Meal> getMenu(Restaurant restaurant) {
         return new ArrayList<>();
     }
@@ -102,6 +98,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
         return count == 1;
     }
 
+
     @Override
     public Restaurant get(int id) {
 
@@ -119,10 +116,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
                 restaurant.setRestaraunt_Id(rs.getInt("id"));
                 restaurant.setName(rs.getString("name"));
                 restaurant.setVote_count(rs.getInt("vote_count"));
-
             }
-            restaurant.setMenu(getMenu(restaurant));
-
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -158,4 +152,6 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
 
         return restaurants;
     }
+
+
 }

@@ -28,7 +28,8 @@
     </bean>
 
     <bean class="ru.whereToEat.service.RestaurantService">
-        <constructor-arg name="repository" ref="jdbcRestaurantRepository"/>
+        <constructor-arg name="restaurantRepository" ref="jdbcRestaurantRepository"/>
+        <constructor-arg name="mealRepository" ref="jdbcMealRepository"/>
     </bean>
 
 </beans>
