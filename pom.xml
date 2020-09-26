@@ -13,7 +13,7 @@
     <name>Votes for restaurant</name>
 
     <properties>
-        <java.version>8</java.version>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -89,12 +89,12 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>${slf4j.version}</version>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
