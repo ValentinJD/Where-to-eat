@@ -85,10 +85,10 @@ public class VoteService {
 
     public void voter(int restaurantId, int userId, int countVote) throws NotFoundException, NotSaveOrUpdateException, NotVoteException {
         Vote vote;
-        try {
-            vote = votesRepository.getByRestaurantId(restaurantId);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
+
+        vote = votesRepository.getByRestaurantId(restaurantId);
+
+        if (vote == null) {
             vote = new Vote();
         }
 
