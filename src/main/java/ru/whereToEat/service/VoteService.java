@@ -44,11 +44,18 @@ public class VoteService {
         return votesRepository.get(voteId);
     }
 
-    private Boolean isVoteUserInRestaurantBefore11Hour(Vote vote) throws NotFoundException {
+    private Boolean isVoteUserInRestaurantBefore11Hour(Vote vote) throws NotVoteException {
+        LocalDateTime ldt = LocalDateTime.now();
+        LocalDateTime voteDateTime = vote.getDate_vote();
+        boolean isVote;
+        if (ldt.toLocalDate().isEqual(voteDateTime.toLocalDate())) {
+            int hour = vote.getDate_vote().getHour();
+            isVote = hour < 11;
+            log.info("isVoteUserInRestaurantBefore11Hour {}", isVote);
+        } else {
+            throw new NotVoteException("Голосовать нужно до 11 часов");
+        }
 
-        int hour = vote.getDate_vote().getHour();
-        boolean isVote = hour < 20;
-        log.info("isVoteUserInRestaurantBefore11Hour {}", isVote);
         return isVote;
     }
 
