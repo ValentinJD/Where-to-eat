@@ -11,7 +11,6 @@ import ru.whereToEat.util.dbUtil;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class JDBCVotesRepository implements VotesRepository {
 
 
     @Override
-    public Vote save(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
+    public Vote save(Vote vote) {
         connection = dbUtil.getConnection();
 
         PreparedStatement preparedStatement = null;
@@ -131,12 +130,12 @@ public class JDBCVotesRepository implements VotesRepository {
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
                 vote.setVote(rs.getInt("vote"));
             } else {
-                throw new NotFoundException("Голос с указанным id в базе отсутствует");
+                return null;
             }
 
             log.info("get");
 
-        } catch (SQLException | NotFoundException throwable) {
+        } catch (SQLException  throwable) {
             throwable.printStackTrace();
         }
 
@@ -144,7 +143,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public List<Vote> getAll(int restaurantId) throws NotFoundException {
+    public List<Vote> getAll(int restaurantId) {
         connection = dbUtil.getConnection();
 
         List<Vote> votes = new ArrayList<>();
@@ -217,7 +216,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public Vote getByRestaurantId(int restaurantId) throws NotFoundException {
+    public Vote getByRestaurantId(int restaurantId) {
         connection = dbUtil.getConnection();
 
         Vote vote = new Vote();
@@ -238,7 +237,7 @@ public class JDBCVotesRepository implements VotesRepository {
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
                 vote.setVote(rs.getInt("vote"));
             } else {
-                throw new NotFoundException("Голос с указанным id в базе отсутствует");
+                return null;
             }
 
             log.info("get");
@@ -251,7 +250,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
 
-    public boolean isNewVote(int userId, int restaurantId) throws NotFoundException {
+    public boolean isNewVote(int userId, int restaurantId)  {
         boolean bool = true;
         List<Vote> list = getAll(restaurantId);
 

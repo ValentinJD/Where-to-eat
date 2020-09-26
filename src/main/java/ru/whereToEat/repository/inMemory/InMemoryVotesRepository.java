@@ -1,35 +1,31 @@
 package ru.whereToEat.repository.inMemory;
 
-import ru.whereToEat.exceptions.NotFoundException;
-import ru.whereToEat.exceptions.NotSaveOrUpdateException;
-import ru.whereToEat.model.User;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class InMemoryVotesRepository implements VotesRepository {
     static Map<Integer, Vote> storage = new HashMap<>();
 
     @Override
-    public Vote save(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
+    public Vote save(Vote vote) {
         return storage.put(vote.getId(), vote);
     }
 
     @Override
-    public boolean delete(int voteId) throws NotFoundException {
+    public boolean delete(int voteId) {
         Vote vote1 = getAll(voteId).stream()
-                .filter((vote -> vote.getId() == voteId ))
+                .filter((vote -> vote.getId() == voteId))
                 .findFirst()
                 .get();
         return storage.remove(vote1.getId()) != null;
     }
 
     @Override
-    public Vote get(int voteId) throws NotFoundException {
+    public Vote get(int voteId) {
         return getAll(0).stream()
                 .filter((vote -> vote.getId() == voteId))
                 .findFirst()
@@ -37,7 +33,7 @@ public class InMemoryVotesRepository implements VotesRepository {
     }
 
     @Override
-    public List<Vote> getAll(int o) throws NotFoundException {
+    public List<Vote> getAll(int o) {
         return (List<Vote>) storage.values();
     }
 
@@ -47,7 +43,7 @@ public class InMemoryVotesRepository implements VotesRepository {
     }
 
     @Override
-    public Vote getByRestaurantId(int restaurantId) throws NotFoundException {
+    public Vote getByRestaurantId(int restaurantId) {
         return null;
     }
 }

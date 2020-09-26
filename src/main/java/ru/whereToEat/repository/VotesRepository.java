@@ -2,7 +2,6 @@ package ru.whereToEat.repository;
 
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
-import ru.whereToEat.model.User;
 import ru.whereToEat.model.Vote;
 
 import java.util.List;
@@ -12,15 +11,17 @@ public interface VotesRepository {
     Vote save(Vote vote) throws NotFoundException, NotSaveOrUpdateException;
 
     // false if not found
-    boolean delete(int voteId) throws NotFoundException;
+    boolean delete(int voteId);
 
-    // NotFoundException if not found
-    Vote get(int voteId)throws NotFoundException;
+    // null if not found
+    Vote get(int voteId);
 
-    List<Vote> getAll(int restaurantId) throws NotFoundException;
+    // empty list if not found
+    List<Vote> getAll(int restaurantId);
 
     List<Vote> getAllForTest();
 
-    Vote getByRestaurantId(int restaurantId) throws NotFoundException;
+    // null if not found
+    Vote getByRestaurantId(int restaurantId);
 
 }

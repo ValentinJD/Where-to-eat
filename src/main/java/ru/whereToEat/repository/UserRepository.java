@@ -11,9 +11,10 @@ public interface UserRepository {
     // false if not found
     boolean delete(Integer id);
 
-    // NotFoundException if not found
+    // null if not found
     User get(Integer id);
 
+    // emptylist if not found
     List<User> getAll();
 
 }
