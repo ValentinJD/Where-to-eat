@@ -21,7 +21,7 @@ public interface VotesRepository {
 
     List<Vote> getAllForTest();
 
-    // null if not found
-    Vote getByRestaurantId(int restaurantId);
+    // empty if not found
+    List<Vote> getByRestaurantAndUserId(int restaurantId, int userId);
 
 }

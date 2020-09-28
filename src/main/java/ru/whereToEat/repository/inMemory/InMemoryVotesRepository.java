@@ -45,7 +45,7 @@ public class InMemoryVotesRepository implements VotesRepository {
     }
 
     @Override
-    public Vote getByRestaurantId(int restaurantId) {
+    public List<Vote> getByRestaurantAndUserId(int restaurantId, int userId) {
         return null;
     }
 }

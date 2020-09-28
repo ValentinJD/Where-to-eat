@@ -19,21 +19,7 @@ import java.util.List;
 public class JDBCVotesRepository implements VotesRepository {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    public static JDBCVotesRepository repository;
-
     private Connection connection;
-
-    private JDBCVotesRepository() {
-    }
-
-    public static VotesRepository getInstance() {
-        if (repository == null) {
-            repository = new JDBCVotesRepository();
-        }
-        return repository;
-    }
-
-
 
     @Override
     public Vote save(Vote vote) {
@@ -64,16 +50,16 @@ public class JDBCVotesRepository implements VotesRepository {
         } else {
             try {
                 preparedStatement = connection
-                        .prepareStatement("update history_votes set date_vote=?, vote=? where restaurant_id=? " +
+                        .prepareStatement("update history_votes set vote=? where restaurant_id=? " +
                                 "and user_id = ?");
 
                 // Parameters start with 1
-                preparedStatement.setTimestamp(1,
-                        new Timestamp(TimeUtil.LocalDateTimeToLong(vote.getDate_vote())));
+                /*preparedStatement.setTimestamp(1,
+                        new Timestamp(TimeUtil.LocalDateTimeToLong(vote.getDate_vote())));*/
 
-                preparedStatement.setInt(2, vote.getVote());
-                preparedStatement.setInt(3, vote.getRestaurantId());
-                preparedStatement.setInt(4, vote.getUserId());
+                preparedStatement.setInt(1, vote.getVote());
+                preparedStatement.setInt(2, vote.getRestaurantId());
+                preparedStatement.setInt(3, vote.getUserId());
 
                 preparedStatement.executeUpdate();
 
@@ -137,7 +123,7 @@ public class JDBCVotesRepository implements VotesRepository {
 
             log.info("get");
 
-        } catch (SQLException  throwable) {
+        } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
@@ -182,7 +168,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public List<Vote> getAllForTest()  {
+    public List<Vote> getAllForTest() {
         connection = dbUtil.getConnection();
 
         List<Vote> votes = new ArrayList<>();
@@ -218,41 +204,44 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public Vote getByRestaurantId(int restaurantId) {
+    public List<Vote> getByRestaurantAndUserId(int restaurantId, int userId) {
         connection = dbUtil.getConnection();
+        List<Vote> voteList = new ArrayList<>();
 
-        Vote vote = new Vote();
 
         try {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("select  * " +
                             "from history_votes" +
-                            " where history_votes.restaurant_id = ?");
+                            " where history_votes.restaurant_id = ? and history_votes.user_id = ?");
             preparedStatement.setInt(1, restaurantId);
+            preparedStatement.setInt(2, userId);
             ResultSet rs = preparedStatement.executeQuery();
 
+
             if (rs.next()) {
+                Vote vote = new Vote();
                 vote.setId(rs.getInt("id"));
                 vote.setUserId(rs.getInt("user_id"));
                 vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
-
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
                 vote.setVote(rs.getInt("vote"));
+                voteList.add(vote);
             } else {
-                return null;
+                return voteList;
             }
 
             log.info("get");
 
-        } catch (SQLException  throwable) {
+        } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
-        return vote;
+        return voteList;
     }
 
 
-    public boolean isNewVote(int userId, int restaurantId)  {
+    public boolean isNewVote(int userId, int restaurantId) {
         boolean bool = true;
         List<Vote> list = getAll(restaurantId);
 
