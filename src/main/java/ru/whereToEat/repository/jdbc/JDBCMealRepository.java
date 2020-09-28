@@ -33,7 +33,7 @@ public class JDBCMealRepository implements MealRepository {
                 // Parameters start with 1
                 preparedStatement.setString(1, meal.getDescription());
                 preparedStatement.setFloat(2, meal.getPrice());
-                preparedStatement.setInt(3, meal.getRestaurant().getRestaraunt_Id());
+                preparedStatement.setInt(3, meal.getRestaurant().getId());
                 preparedStatement.executeUpdate();
 
                 log.info("save {}", meal);
@@ -52,7 +52,7 @@ public class JDBCMealRepository implements MealRepository {
                 preparedStatement.setString(1, meal.getDescription());
                 preparedStatement.setFloat(2, meal.getPrice());
                 preparedStatement.setInt(3, meal.getId());
-                preparedStatement.setInt(4, meal.getRestaurant().getRestaraunt_Id());
+                preparedStatement.setInt(4, meal.getRestaurant().getId());
 
                 int count = preparedStatement.executeUpdate();
 
@@ -111,7 +111,7 @@ public class JDBCMealRepository implements MealRepository {
                 meal.setDescription(rs.getString("description"));
                 meal.setPrice(rs.getFloat("price"));
                 Restaurant restaurant = new Restaurant();
-                restaurant.setRestaraunt_Id(rs.getInt("restaurant_id"));
+                restaurant.setId(rs.getInt("restaurant_id"));
                 meal.setRestaurant(restaurant);
 
             }
@@ -145,7 +145,7 @@ public class JDBCMealRepository implements MealRepository {
                 meal.setDescription(rs.getString("description"));
                 meal.setPrice(rs.getFloat("price"));
                 Restaurant restaurant = new Restaurant();
-                restaurant.setRestaraunt_Id(restaurantId);
+                restaurant.setId(restaurantId);
                 meal.setRestaurant(restaurant);
                 meals.add(meal);
             }

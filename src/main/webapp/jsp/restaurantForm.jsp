@@ -30,7 +30,7 @@
     <h2>${param.action == 'create' ? 'Create restaurant' : 'Edit restaurant'}</h2>
     <jsp:useBean id="restaurant" type="ru.whereToEat.model.Restaurant" scope="request"/>
     <form method="post" action="restaurants">
-        <input type="text" name="restaurantId" value="${restaurant.restaraunt_Id}">
+        <input type="text" name="restaurantId" value="${restaurant.id}">
         <dl>
             <dt>Name:</dt>
             <dd><input type="text" value="${restaurant.name}" size=50 name="name" required></dd>

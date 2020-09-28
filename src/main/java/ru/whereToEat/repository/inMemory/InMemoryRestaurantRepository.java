@@ -1,7 +1,6 @@
 package ru.whereToEat.repository.inMemory;
 
 import org.springframework.stereotype.Repository;
-import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.RestaurantRepository;
 
@@ -15,7 +14,7 @@ public class InMemoryRestaurantRepository implements RestaurantRepository {
 
     @Override
     public Restaurant save(Restaurant restaurant) {
-        return storage.put(restaurant.getRestaraunt_Id(), restaurant);
+        return storage.put(restaurant.getId(), restaurant);
     }
 
     @Override

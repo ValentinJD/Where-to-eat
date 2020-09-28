@@ -27,7 +27,7 @@
             <td>${meal.id}</td>
             <td>${meal.description}</td>
             <td>${meal.price}</td>
-            <td>${meal.restaurant.restaraunt_Id}</td>
+            <td>${meal.restaurant.id}</td>
             <td><a href="meals?action=update&mealId=<c:out value="${meal.id}"/>">Update</a></td>
             <td><a href="meals?action=delete&mealId=<c:out value="${meal.id}"/>">Delete</a></td>
 

@@ -41,7 +41,7 @@
         </dl>
         <dl>
             <dt>restaurantId:</dt>
-            <dd><input type="number" value="${meal.restaurant.restaraunt_Id}" name="restaurantId" required></dd>
+            <dd><input type="number" value="${meal.restaurant.id}" name="restaurantId" required></dd>
         </dl>
         <button type="submit">Save</button>
         <button onclick="window.history.back()" type="button">Cancel</button>

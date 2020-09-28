@@ -27,17 +27,17 @@
         <tr>
             <jsp:useBean id="restaurant" type="ru.whereToEat.model.Restaurant"/>
 
-            <td>${restaurant.restaraunt_Id}</td>
+            <td>${restaurant.id}</td>
             <td>${restaurant.name}</td>
             <td>${restaurant.vote_count}</td>
-            <td><a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.restaraunt_Id}"/>">Update</a>
+            <td><a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.id}"/>">Update</a>
             </td>
-            <td><a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.restaraunt_Id}"/>">Delete</a>
+            <td><a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.id}"/>">Delete</a>
             </td>
-            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.restaraunt_Id}"/>
+            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}"/>
                          &count=1">За</a>
             </td>
-            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.restaraunt_Id}
+            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}
                          &count=-1"/>">Против</a>
             </td>
         </tr>

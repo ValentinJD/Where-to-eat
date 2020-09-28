@@ -1,9 +1,10 @@
-package ru.whereToEat.model;
+package ru.whereToEat.to;
 
-import java.io.Serializable;
+import ru.whereToEat.model.Meal;
+
 import java.util.List;
 
-public class Restaurant implements Serializable {
+public class RestaurantTO {
 
     private Integer id;
 
@@ -13,10 +14,7 @@ public class Restaurant implements Serializable {
 
     private List<Meal> menu;
 
-    public Restaurant() {
-    }
-
-    public Restaurant(String name) {
+    public RestaurantTO(String name) {
         this.name = name;
     }
 
@@ -58,7 +56,7 @@ public class Restaurant implements Serializable {
 
     @Override
     public String toString() {
-        return "Restaurant{" +
+        return "RestaurantTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", vote_count=" + vote_count +

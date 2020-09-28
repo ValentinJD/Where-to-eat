@@ -51,7 +51,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
                 // Parameters start with 1
                 preparedStatement.setString(1, restaurant.getName());
                 preparedStatement.setInt(2, restaurant.getVote_count());
-                preparedStatement.setInt(3, restaurant.getRestaraunt_Id());
+                preparedStatement.setInt(3, restaurant.getId());
 
                 int count = preparedStatement.executeUpdate();
 
@@ -115,7 +115,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                restaurant.setRestaraunt_Id(rs.getInt("id"));
+                restaurant.setId(rs.getInt("id"));
                 restaurant.setName(rs.getString("name"));
                 restaurant.setVote_count(rs.getInt("vote_count"));
             }
@@ -141,7 +141,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             ResultSet rs = statement.executeQuery("select * from restaurants");
             while (rs.next()) {
                 Restaurant restaurant = new Restaurant();
-                restaurant.setRestaraunt_Id(rs.getInt("id"));
+                restaurant.setId(rs.getInt("id"));
                 restaurant.setName(rs.getString("name"));
                 restaurant.setVote_count(rs.getInt("vote_count"));
                 restaurants.add(restaurant);

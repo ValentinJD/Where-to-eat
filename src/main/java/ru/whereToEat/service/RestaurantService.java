@@ -25,7 +25,7 @@ public class RestaurantService {
         restaurants.sort(new Comparator<Restaurant>() {
             @Override
             public int compare(Restaurant o1, Restaurant o2) {
-                return o1.getRestaraunt_Id().compareTo(o2.getRestaraunt_Id());
+                return o1.getId().compareTo(o2.getId());
             }
         });
         return setMealsForListRestaurants(restaurants);
@@ -62,7 +62,7 @@ public class RestaurantService {
         List<Restaurant> restaurantsWithMeals = new ArrayList<>();
         restaurants.forEach(
                 restaurant -> {
-                    restaurant.setMenu(getMeals(restaurant.getRestaraunt_Id()));
+                    restaurant.setMenu(getMeals(restaurant.getId()));
                     restaurantsWithMeals.add(restaurant);
                 }
         );
