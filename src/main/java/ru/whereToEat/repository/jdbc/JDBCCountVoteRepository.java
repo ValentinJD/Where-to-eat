@@ -2,6 +2,7 @@ package ru.whereToEat.repository.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.CountVote;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Repository
 public class JDBCCountVoteRepository implements CountVoteRepository {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -156,6 +158,37 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
             }
 
             log.info("getAll restaurantId {}", restaurantId);
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+        return countVotes;
+    }
+
+    @Override
+    public List<CountVote> getAll() {
+        connection = dbUtil.getConnection();
+
+        List<CountVote> countVotes = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.
+                    prepareStatement("select * from count_votes");
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                CountVote countVote = get(rs.getInt("id"));
+                countVotes.add(countVote);
+            }
+
+            if (countVotes.isEmpty()) {
+                log.info("Запись в базе количества голосов по данному ресторану в базе отсутствуют");
+                return countVotes;
+            }
+
+            log.info("getAll");
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();

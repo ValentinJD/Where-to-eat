@@ -22,4 +22,5 @@ public interface CountVoteRepository {
     List<CountVote> getAll(int restaurantId);
 
 
+    List<CountVote> getAll();
 }
