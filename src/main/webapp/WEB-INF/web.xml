@@ -46,4 +46,14 @@
         <url-pattern>/votes</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>countVoteServlet</servlet-name>
+        <servlet-class>ru.whereToEat.web.CountVoteServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>countVoteServlet</servlet-name>
+        <url-pattern>/countVotes</url-pattern>
+    </servlet-mapping>
+
 </web-app>
