@@ -6,22 +6,13 @@ import org.springframework.stereotype.Repository;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.CountVote;
-import ru.whereToEat.model.Meal;
-import ru.whereToEat.model.Restaurant;
-import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.CountVoteRepository;
-import ru.whereToEat.util.TimeUtil;
 import ru.whereToEat.util.dbUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -60,9 +51,8 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
                                 "where date = ? and restaurant_id=? ");
                 // Parameters start with 1
                 preparedStatement.setInt(1, countVote.getCount());
-                Date date = Date.from(countVote.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                preparedStatement.setDate(2, sqlDate);
+                Date date = Date.valueOf(countVote.getDate().toString());
+                preparedStatement.setDate(2, date);
                 preparedStatement.setInt(3, countVote.getRestaurantId());
 
                 int count = preparedStatement.executeUpdate();
@@ -119,9 +109,8 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
                 countVote.setId(rs.getInt("id"));
                 countVote.setRestaurantId(rs.getInt("restaurant_id"));
                 countVote.setCount(rs.getInt("count"));
-                Date input = rs.getDate("date");
-                LocalDate date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                countVote.setDate(date);
+                java.sql.Date input = rs.getDate("date");
+                countVote.setDate(input.toLocalDate());
             }
 
 
