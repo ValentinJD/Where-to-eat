@@ -1,34 +1,30 @@
 package ru.whereToEat.service;
 
 import org.springframework.stereotype.Service;
+import ru.whereToEat.model.CountVote;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
+import ru.whereToEat.repository.CountVoteRepository;
 import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.RestaurantRepository;
+import ru.whereToEat.to.RestaurantTO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final MealRepository mealRepository;
+    private final CountVoteRepository countVoteRepository;
 
-    public RestaurantService(RestaurantRepository restaurantRepository, MealRepository mealRepository) {
+    public RestaurantService(RestaurantRepository restaurantRepository, MealRepository mealRepository, CountVoteRepository countVoteRepository) {
         this.restaurantRepository = restaurantRepository;
         this.mealRepository = mealRepository;
-    }
-
-    public List<Restaurant> getAll() {
-        List<Restaurant> restaurants = restaurantRepository.getAll();
-        restaurants.sort(new Comparator<Restaurant>() {
-            @Override
-            public int compare(Restaurant o1, Restaurant o2) {
-                return o1.getId().compareTo(o2.getId());
-            }
-        });
-        return setMealsForListRestaurants(restaurants);
+        this.countVoteRepository = countVoteRepository;
     }
 
     public Restaurant get(int restaurantId) {
@@ -47,25 +43,25 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    public Restaurant getWithMeals(int restaurantId) {
-        Restaurant restaurant = new Restaurant();
-        List<Meal> list = mealRepository.getAll(restaurantId);
-        restaurant.setMenu(list);
-        return restaurant;
-    }
-
-    public List<Meal> getMeals(int restaurantId) {
+    private List<Meal> getMeals(int restaurantId) {
         return mealRepository.getAll(restaurantId);
     }
 
-    private List<Restaurant> setMealsForListRestaurants(List<Restaurant> restaurants) {
-        List<Restaurant> restaurantsWithMeals = new ArrayList<>();
-        restaurants.forEach(
-                restaurant -> {
-                    restaurant.setMenu(getMeals(restaurant.getId()));
-                    restaurantsWithMeals.add(restaurant);
-                }
-        );
-        return restaurantsWithMeals;
+    private CountVote getCountVote(int restaurantId) {
+        return countVoteRepository.get(restaurantId);
+    }
+
+    public List<RestaurantTO> getAllTO() {
+        return restaurantRepository.getAll().stream()
+                .map((restaurant) -> {
+                    RestaurantTO restaurantTO = new RestaurantTO("");
+                    restaurantTO.setId(restaurant.getId());
+                    restaurantTO.setName(restaurant.getName());
+                    restaurantTO.setMenu(getMeals(restaurant.getId()));
+                    restaurantTO.setVote_count(getCountVote(restaurant.getId()).getCount());
+                    return restaurantTO;
+                })
+                .sorted(Comparator.comparing(RestaurantTO::getId))
+                .collect(Collectors.toList());
     }
 }

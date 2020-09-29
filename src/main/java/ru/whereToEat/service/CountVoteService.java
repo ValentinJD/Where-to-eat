@@ -46,8 +46,8 @@ public class CountVoteService {
                         collect(Collectors.toList());
     }
 
-    public CountVote get(int countVoteId) {
-        return countVoteRepository.get(countVoteId);
+    public CountVote get(int restaurantId) {
+        return countVoteRepository.get(restaurantId);
     }
 
     public void save(CountVote countVote) throws NotFoundException, NotSaveOrUpdateException {

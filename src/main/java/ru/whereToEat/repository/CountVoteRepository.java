@@ -16,7 +16,7 @@ public interface CountVoteRepository {
     boolean delete(int countVoteId);
 
     // null if not found
-    CountVote get(int countVoteId);
+    CountVote get(int restaurantId);
 
     // empty list if not found
     List<CountVote> getAll(int restaurantId);

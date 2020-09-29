@@ -11,9 +11,11 @@ import ru.whereToEat.util.TimeUtil;
 import ru.whereToEat.util.dbUtil;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class JDBCVotesRepository implements VotesRepository {
@@ -242,12 +244,14 @@ public class JDBCVotesRepository implements VotesRepository {
 
 
     public boolean isNewVote(int userId, int restaurantId) {
-        boolean bool = true;
-        List<Vote> list = getAll(restaurantId);
+        boolean bool = false;
+        List<Vote> list = getAll(restaurantId).stream()
+                .filter(vote -> vote.getUserId() == userId)
+                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
+                .collect(Collectors.toList());
 
-        for (Vote vote : list) {
-            bool = bool && (vote.getUserId() != userId);
-        }
+        bool = list.isEmpty();
+
         log.info("isNewVote {}", bool);
 
         return bool;

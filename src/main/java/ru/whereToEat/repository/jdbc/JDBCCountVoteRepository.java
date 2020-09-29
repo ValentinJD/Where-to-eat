@@ -27,7 +27,7 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
 
         PreparedStatement preparedStatement = null;
 
-        if (countVote.isNew()) {
+        if (isNew(countVote)) {
 
             try {
                 preparedStatement = connection
@@ -51,8 +51,8 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
                                 "where date = ? and restaurant_id=? ");
                 // Parameters start with 1
                 preparedStatement.setInt(1, countVote.getCount());
-                Date date = Date.valueOf(countVote.getDate().toString());
-                preparedStatement.setDate(2, date);
+                //Date date = Date.valueOf(countVote.getDate().toString());
+                preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
                 preparedStatement.setInt(3, countVote.getRestaurantId());
 
                 int count = preparedStatement.executeUpdate();
@@ -71,6 +71,10 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
         }
 
         return null;
+    }
+
+    private boolean isNew(CountVote countVote) {
+        return get(countVote.getRestaurantId()).getId() == null;
     }
 
     @Override
@@ -94,15 +98,17 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
     }
 
     @Override
-    public CountVote get(int countVoteId) {
+    public CountVote get(int restaurantId) {
         connection = dbUtil.getConnection();
 
         CountVote countVote = new CountVote();
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from count_votes where id=?");
-            preparedStatement.setInt(1, countVoteId);
+                    prepareStatement("select * from count_votes" +
+                            " where restaurant_id=? and date = ?");
+            preparedStatement.setInt(1, restaurantId);
+            preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
@@ -113,14 +119,16 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
                 countVote.setDate(input.toLocalDate());
             }
 
+            log.info("get {}", restaurantId);
+
+            return countVote;
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();
+
         }
+        return null;
 
-        log.info("get {}", countVoteId);
-
-        return countVote;
     }
 
     @Override
