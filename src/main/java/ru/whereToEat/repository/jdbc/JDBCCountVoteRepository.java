@@ -11,7 +11,6 @@ import ru.whereToEat.util.dbUtil;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +50,6 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
                                 "where date = ? and restaurant_id=? ");
                 // Parameters start with 1
                 preparedStatement.setInt(1, countVote.getCount());
-                //Date date = Date.valueOf(countVote.getDate().toString());
                 preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
                 preparedStatement.setInt(3, countVote.getRestaurantId());
 
@@ -74,7 +72,9 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
     }
 
     private boolean isNew(CountVote countVote) {
-        return get(countVote.getRestaurantId()).getId() == null;
+        boolean bool = get(countVote.getRestaurantId()).getId() == null;
+        log.info("isNew {}", bool);
+        return bool;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
                 countVote.setDate(input.toLocalDate());
             }
 
-            log.info("get {}", restaurantId);
+            log.info("get {}", countVote);
 
             return countVote;
 
@@ -135,23 +135,24 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
     public List<CountVote> getAll(int restaurantId) {
         connection = dbUtil.getConnection();
 
-        List<CountVote> countVotes = new ArrayList<>();
+        List<CountVote> countVoteList = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from count_votes" +
-                            " where count_votes.restaurant_id = ?");
+                    prepareStatement("select * from count_votes where count_votes.restaurant_id = ?");
+
             preparedStatement.setInt(1, restaurantId);
+
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
                 CountVote countVote = get(rs.getInt("id"));
-                countVotes.add(countVote);
+                countVoteList.add(countVote);
             }
 
-            if (countVotes.isEmpty()) {
+            if (countVoteList.isEmpty()) {
                 log.info("Запись в базе количества голосов по данному ресторану в базе отсутствуют");
-                return countVotes;
+                return countVoteList;
             }
 
             log.info("getAll restaurantId {}", restaurantId);
@@ -160,14 +161,14 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
             throwable.printStackTrace();
         }
 
-        return countVotes;
+        return countVoteList;
     }
 
     @Override
     public List<CountVote> getAll() {
         connection = dbUtil.getConnection();
 
-        List<CountVote> countVotes = new ArrayList<>();
+        List<CountVote> countVoteList = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = connection.
@@ -177,12 +178,12 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
 
             while (rs.next()) {
                 CountVote countVote = get(rs.getInt("id"));
-                countVotes.add(countVote);
+                countVoteList.add(countVote);
             }
 
-            if (countVotes.isEmpty()) {
+            if (countVoteList.isEmpty()) {
                 log.info("Запись в базе количества голосов по данному ресторану в базе отсутствуют");
-                return countVotes;
+                return countVoteList;
             }
 
             log.info("getAll");
@@ -191,7 +192,7 @@ public class JDBCCountVoteRepository implements CountVoteRepository {
             throwable.printStackTrace();
         }
 
-        return countVotes;
+        return countVoteList;
     }
 
 

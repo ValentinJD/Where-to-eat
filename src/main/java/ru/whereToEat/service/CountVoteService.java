@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.CountVote;
-import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.CountVoteRepository;
 import ru.whereToEat.repository.RestaurantRepository;
-import ru.whereToEat.repository.VotesRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,9 +24,6 @@ public class CountVoteService {
     public CountVoteService(CountVoteRepository countVoteRepository, RestaurantRepository restaurantRepository) {
         this.countVoteRepository = countVoteRepository;
         this.restaurantRepository = restaurantRepository;
-    }
-
-    public void vote(CountVote countVote) {
     }
 
     public List<CountVote> getAll() {

@@ -29,10 +29,6 @@ public class UserService {
         return repository.get(id);
     }
 
-    /*public User getByEmail(String email) {
-        return repository.getByEmail(email), "email=" + email);
-    }*/
-
     public List<User> getAll() {
         return repository.getAll();
     }

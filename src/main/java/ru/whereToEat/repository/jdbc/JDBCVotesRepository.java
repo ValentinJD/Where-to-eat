@@ -3,14 +3,15 @@ package ru.whereToEat.repository.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.whereToEat.exceptions.NotFoundException;
-import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.util.TimeUtil;
 import ru.whereToEat.util.dbUtil;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ public class JDBCVotesRepository implements VotesRepository {
                                 "values (?,?,?)");
                 // Parameters start with 1
                 preparedStatement.setInt(1, vote.getUserId());
-                //preparedStatement.setTimestamp(2, new Timestamp(LocalDateTimeToLong(vote.getDate_vote())));
                 preparedStatement.setInt(2, vote.getRestaurantId());
                 preparedStatement.setInt(3, vote.getVote());
                 preparedStatement.executeUpdate();
@@ -56,15 +56,11 @@ public class JDBCVotesRepository implements VotesRepository {
                                 "and user_id = ?");
 
                 // Parameters start with 1
-                /*preparedStatement.setTimestamp(1,
-                        new Timestamp(TimeUtil.LocalDateTimeToLong(vote.getDate_vote())));*/
-
                 preparedStatement.setInt(1, vote.getVote());
                 preparedStatement.setInt(2, vote.getRestaurantId());
                 preparedStatement.setInt(3, vote.getUserId());
 
                 preparedStatement.executeUpdate();
-
 
                 log.info("update {}", vote);
                 return vote;
@@ -106,24 +102,22 @@ public class JDBCVotesRepository implements VotesRepository {
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select  * " +
-                            "from history_votes" +
-                            " where history_votes.id = ?");
+                    prepareStatement("select  * from history_votes where history_votes.id = ?");
             preparedStatement.setInt(1, voteId);
+
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
                 vote.setId(rs.getInt("id"));
                 vote.setUserId(rs.getInt("user_id"));
                 vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
-
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
                 vote.setVote(rs.getInt("vote"));
             } else {
                 return null;
             }
 
-            log.info("get");
+            log.info("get {}", vote);
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -140,9 +134,9 @@ public class JDBCVotesRepository implements VotesRepository {
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from history_votes" +
-                            " where history_votes.restaurant_id = ?");
+                    prepareStatement("select * from history_votes where history_votes.restaurant_id = ?");
             preparedStatement.setInt(1, restaurantId);
+
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -176,8 +170,7 @@ public class JDBCVotesRepository implements VotesRepository {
         List<Vote> votes = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from history_votes");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from history_votes");
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -244,13 +237,10 @@ public class JDBCVotesRepository implements VotesRepository {
 
 
     public boolean isNewVote(int userId, int restaurantId) {
-        boolean bool = false;
-        List<Vote> list = getAll(restaurantId).stream()
+        boolean bool =  getAll(restaurantId).stream()
                 .filter(vote -> vote.getUserId() == userId)
                 .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
-                .collect(Collectors.toList());
-
-        bool = list.isEmpty();
+                .collect(Collectors.toList()).isEmpty();
 
         log.info("isNewVote {}", bool);
 

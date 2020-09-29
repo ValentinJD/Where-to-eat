@@ -31,8 +31,6 @@ public class JDBCUserRepository implements UserRepository {
 
         if (user.isNew()) {
 
-            log.info("save {}", user);
-
             try {
                 preparedStatement = connection
                         .prepareStatement("insert into users(name,email,password) values (?, ?, ?)");
@@ -43,14 +41,15 @@ public class JDBCUserRepository implements UserRepository {
                 preparedStatement.executeUpdate();
 
                 setRole(user);
+
+                log.info("save {}", user);
+
                 return user;
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
 
         } else {
-
-            log.info("update {}", user);
 
             try {
                 preparedStatement = connection
@@ -66,6 +65,9 @@ public class JDBCUserRepository implements UserRepository {
                 int count = preparedStatement.executeUpdate();
 
                 setRole(user);
+
+                log.info("update {}", user);
+
                 if (count == 0) {
                     return null;
                 } else {
@@ -126,7 +128,7 @@ public class JDBCUserRepository implements UserRepository {
                 user.setRole(Role.valueOf(rs.getString("role")));
             }
 
-            log.info("get {}", id);
+            log.info("get {}", user);
 
             if (user.getId() == null) {
                 return null;
@@ -200,10 +202,9 @@ public class JDBCUserRepository implements UserRepository {
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
                 setRole(user);
-//                user.setRole(Role.valueOf(rs.getString("role")));
             }
 
-            log.info("get {}", email);
+            log.info("getByEmail {}", user);
 
             if (user.getId() == null) {
                 return null;
@@ -215,7 +216,6 @@ public class JDBCUserRepository implements UserRepository {
 
         return user;
     }
-
 
 
     private void setRole(User user) {

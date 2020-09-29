@@ -9,8 +9,6 @@ import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.to.RestaurantTO;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

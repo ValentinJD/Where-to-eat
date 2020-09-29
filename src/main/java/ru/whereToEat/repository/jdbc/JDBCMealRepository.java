@@ -121,7 +121,7 @@ public class JDBCMealRepository implements MealRepository {
             throwable.printStackTrace();
         }
 
-        log.info("get {}", mealId);
+        log.info("get {}", meal);
 
         return meal;
     }

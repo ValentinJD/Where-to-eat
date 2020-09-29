@@ -3,8 +3,6 @@ package ru.whereToEat.repository.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.whereToEat.exceptions.NotFoundException;
-import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.util.dbUtil;
@@ -71,14 +69,6 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
         return null;
     }
 
-    private List<Meal> getMenu(Restaurant restaurant) {
-        return new ArrayList<>();
-    }
-
-    private Integer getId(Restaurant restaurant) throws NotFoundException {
-        return null; // id
-    }
-
     @Override
     public boolean delete(int id) {
 
@@ -124,7 +114,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             throwable.printStackTrace();
         }
 
-        log.info("get {}", id);
+        log.info("get {}", restaurant);
 
         return restaurant;
     }
