@@ -43,7 +43,11 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
+        //String action = request.getParameter("action");
+
         String id = request.getParameter("userId");
+        /*SecurityUtil.setAuthUserId(loginUserId);
+        response.sendRedirect("restaurants");*/
 
 
         if (id.equals("")) {
