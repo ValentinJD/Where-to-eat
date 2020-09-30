@@ -37,4 +37,8 @@ public class MealService {
     public Meal update(Meal meal) {
         return repository.save(meal);
     }
+
+    public Meal create(Meal meal) {
+        return repository.save(meal);
+    }
 }

@@ -1,10 +1,8 @@
 package ru.whereToEat.service;
 
 import org.springframework.stereotype.Service;
-import ru.whereToEat.model.CountVote;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
-import ru.whereToEat.repository.CountVoteRepository;
 import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.RestaurantRepository;
 
@@ -58,5 +56,9 @@ public class RestaurantService {
 
         list.sort(Comparator.comparing(Restaurant::getId));
         return list;
+    }
+
+    public Restaurant create(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
     }
 }

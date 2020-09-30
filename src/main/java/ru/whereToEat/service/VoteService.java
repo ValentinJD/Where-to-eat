@@ -118,4 +118,12 @@ public class VoteService {
             throw new NotVoteException("Голосовать необходимо до 11 часов");
         }
     }
+
+    public Vote create(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
+        return votesRepository.save(vote);
+    }
+
+    public Vote update(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
+        return votesRepository.save(vote);
+    }
 }
