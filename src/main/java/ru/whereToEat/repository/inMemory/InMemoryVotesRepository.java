@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,11 @@ public class InMemoryVotesRepository implements VotesRepository {
 
     @Override
     public List<Vote> getByRestaurantAndUserId(int restaurantId, int userId) {
+        return null;
+    }
+
+    @Override
+    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
         return null;
     }
 }

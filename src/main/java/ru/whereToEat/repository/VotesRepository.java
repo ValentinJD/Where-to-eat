@@ -4,6 +4,7 @@ import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Vote;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface VotesRepository {
@@ -24,4 +25,5 @@ public interface VotesRepository {
     // empty if not found
     List<Vote> getByRestaurantAndUserId(int restaurantId, int userId);
 
+    Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt);
 }

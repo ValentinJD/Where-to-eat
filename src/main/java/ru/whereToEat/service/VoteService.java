@@ -7,6 +7,7 @@ import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.CountVote;
+import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.CountVoteRepository;
 import ru.whereToEat.repository.RestaurantRepository;
@@ -25,13 +26,11 @@ public class VoteService {
 
     RestaurantRepository restaurantRepository;
 
-    CountVoteRepository countVoteRepository;
 
-    public VoteService(VotesRepository votesRepository, RestaurantRepository restaurantRepository,
-                       CountVoteRepository countVoteRepository) {
+    public VoteService(VotesRepository votesRepository, RestaurantRepository restaurantRepository) {
         this.votesRepository = votesRepository;
         this.restaurantRepository = restaurantRepository;
-        this.countVoteRepository = countVoteRepository;
+
     }
 
     public List<Vote> getallbyrestarauntid(int restaurantId) {
@@ -40,6 +39,10 @@ public class VoteService {
                 .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(
                         LocalDate.now())).
                         collect(Collectors.toList());
+    }
+
+    public Vote getByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDate ldt) {
+        return votesRepository.getByRestaurantIdUserIdAndLocalDate(restaurantId, userId, ldt);
     }
 
     public List<Vote> getAll() {
@@ -59,7 +62,8 @@ public class VoteService {
         return LocalDateTime.now().getHour() < 24;
     }
 
-    public int getCountVote(List<Vote> voteList) {
+    public int getCountVote(int restaurantId) {
+        List<Vote> voteList = getallbyrestarauntid(restaurantId);
 
         int count = 0;
 
@@ -89,12 +93,13 @@ public class VoteService {
 
         if (isVoteUserInRestaurantBefore11Hour()) {
 
-            // получаем голоса за ресторан за сегодня
-            List<Vote> voteList = getallbyrestarauntid(restaurantId);
+            // получаем голос за ресторан за сегодня
 
-            Vote vote = voteList.isEmpty() ? new Vote() : voteList.get(0);
 
-            if (vote.isNew()) {
+            Vote vote = getByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDate.now());
+
+            if (vote == null) {
+                vote = new Vote();
                 vote.setUserId(userId);
                 vote.setRestaurantId(restaurantId);
             }
@@ -102,16 +107,12 @@ public class VoteService {
 
             votesRepository.save(vote);
 
-            // получаем голоса за ресторан за сегодня
-            voteList = getallbyrestarauntid(restaurantId);
+            int countInRestaurant = getCountVote(restaurantId);
 
-            int countInRestaurant = getCountVote(voteList);
+            Restaurant restaurant = restaurantRepository.get(restaurantId);
+            restaurant.setVote_count(countInRestaurant);
 
-            CountVote countVote1 = new CountVote();
-            countVote1.setCount(countInRestaurant);
-            countVote1.setRestaurantId(restaurantId);
-
-            countVoteRepository.save(countVote1);
+            restaurantRepository.save(restaurant);
 
         } else {
             throw new NotVoteException("Голосовать необходимо до 11 часов");

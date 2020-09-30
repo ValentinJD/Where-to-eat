@@ -23,26 +23,26 @@
         <th>Голос против</th>
     </tr>
 
-    <c:forEach var="restaurantTO" items="${restaurantsTO}">
+    <c:forEach var="restaurant" items="${restaurants}">
         <tr>
-            <jsp:useBean id="restaurantTO" type="ru.whereToEat.to.RestaurantTO"/>
+            <jsp:useBean id="restaurant" type="ru.whereToEat.model.Restaurant"/>
 
-            <td>${restaurantTO.id}</td>
-            <td>${restaurantTO.name}</td>
-            <td>${restaurantTO.vote_count}</td>
-            <td><a href="restaurants?action=update&restaurantId=<c:out value="${restaurantTO.id}"/>">Update</a>
+            <td>${restaurant.id}</td>
+            <td>${restaurant.name}</td>
+            <td>${restaurant.vote_count}</td>
+            <td><a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.id}"/>">Update</a>
             </td>
-            <td><a href="restaurants?action=delete&restaurantId=<c:out value="${restaurantTO.id}"/>">Delete</a>
+            <td><a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.id}"/>">Delete</a>
             </td>
-            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurantTO.id}"/>
+            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}"/>
                          &count=1">За</a>
             </td>
-            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurantTO.id}
+            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}
                          &count=-1"/>">Против</a>
             </td>
         </tr>
 
-        <c:forEach var="meal" items="${restaurantTO.menu}">
+        <c:forEach var="meal" items="${restaurant.menu}">
             <tr>
                 <jsp:useBean id="meal" type="ru.whereToEat.model.Meal"/>
                 <td>${meal.id}</td>

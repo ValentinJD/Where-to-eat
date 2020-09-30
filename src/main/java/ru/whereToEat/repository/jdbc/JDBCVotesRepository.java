@@ -8,10 +8,7 @@ import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.util.TimeUtil;
 import ru.whereToEat.util.dbUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -235,9 +232,44 @@ public class JDBCVotesRepository implements VotesRepository {
         return voteList;
     }
 
+    @Override
+    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
+        connection = dbUtil.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.
+                    prepareStatement("select  * " +
+                            "from history_votes" +
+                            " where history_votes.restaurant_id = ? and history_votes.user_id = ? and " +
+                            "history_votes.date_vote = ?");
+            preparedStatement.setInt(1, restaurantId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.setDate(3, Date.valueOf(ldt.toString()));
+            ResultSet rs = preparedStatement.executeQuery();
+
+            Vote vote;
+
+            if (rs.next()) {
+                vote = new Vote();
+                vote.setId(rs.getInt("id"));
+                vote.setUserId(rs.getInt("user_id"));
+                vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
+                vote.setRestaurantId(rs.getInt("restaurant_id"));
+                vote.setVote(rs.getInt("vote"));
+                log.info("get {}", vote);
+                return vote;
+            }
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public boolean isNewVote(int userId, int restaurantId) {
-        boolean bool =  getAll(restaurantId).stream()
+        boolean bool = getAll(restaurantId).stream()
                 .filter(vote -> vote.getUserId() == userId)
                 .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
                 .collect(Collectors.toList()).isEmpty();

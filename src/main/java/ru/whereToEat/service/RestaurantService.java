@@ -7,22 +7,21 @@ import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.CountVoteRepository;
 import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.RestaurantRepository;
-import ru.whereToEat.to.RestaurantTO;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final MealRepository mealRepository;
-    private final CountVoteRepository countVoteRepository;
+    private final VoteService voteService;
 
-    public RestaurantService(RestaurantRepository restaurantRepository, MealRepository mealRepository, CountVoteRepository countVoteRepository) {
+    public RestaurantService(RestaurantRepository restaurantRepository, MealRepository mealRepository, VoteService voteService) {
         this.restaurantRepository = restaurantRepository;
         this.mealRepository = mealRepository;
-        this.countVoteRepository = countVoteRepository;
+
+        this.voteService = voteService;
     }
 
     public Restaurant get(int restaurantId) {
@@ -45,21 +44,19 @@ public class RestaurantService {
         return mealRepository.getAll(restaurantId);
     }
 
-    private CountVote getCountVote(int restaurantId) {
-        return countVoteRepository.get(restaurantId);
+    private int getCountVote(int restaurantId) {
+        return voteService.getCountVote(restaurantId);
     }
 
-    public List<RestaurantTO> getAllTO() {
-        return restaurantRepository.getAll().stream()
-                .map((restaurant) -> {
-                    RestaurantTO restaurantTO = new RestaurantTO("");
-                    restaurantTO.setId(restaurant.getId());
-                    restaurantTO.setName(restaurant.getName());
-                    restaurantTO.setMenu(getMeals(restaurant.getId()));
-                    restaurantTO.setVote_count(getCountVote(restaurant.getId()).getCount());
-                    return restaurantTO;
-                })
-                .sorted(Comparator.comparing(RestaurantTO::getId))
-                .collect(Collectors.toList());
+    public List<Restaurant> getAll() {
+        List<Restaurant> list = restaurantRepository.getAll();
+
+        list.forEach((restaurant) -> {
+            restaurant.setMenu(getMeals(restaurant.getId()));
+            restaurant.setVote_count(getCountVote(restaurant.getId()));
+        });
+
+        list.sort(Comparator.comparing(Restaurant::getId));
+        return list;
     }
 }

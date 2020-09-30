@@ -8,8 +8,6 @@ DELETE
 FROM history_votes where id != 0;
 DELETE
 FROM meals where id != 0;
-DELETE
-FROM count_votes where id != 0;
 
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
@@ -46,10 +44,7 @@ VALUES (100000, 100002, 1),
        (100001, 100003, -1),
        (100001, 100004, -1);
 
-INSERT INTO count_votes(restaurant_id, count)
-VALUES (100002, 0),
-       (100003, 0),
-       (100004, 0);
+
 
 
 

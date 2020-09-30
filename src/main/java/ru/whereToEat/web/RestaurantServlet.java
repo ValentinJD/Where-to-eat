@@ -10,7 +10,6 @@ import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.service.VoteService;
-import ru.whereToEat.to.RestaurantTO;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -90,8 +89,8 @@ public class RestaurantServlet extends HttpServlet {
             case "all":
             default:
                 log.info("getAll");
-                Collection<RestaurantTO> restaurants = restaurantService.getAllTO();
-                request.setAttribute("restaurantsTO", restaurants);
+                Collection<Restaurant> restaurants = restaurantService.getAll();
+                request.setAttribute("restaurants", restaurants);
                 request.getRequestDispatcher("jsp/restaurants.jsp").forward(request, response);
                 break;
         }

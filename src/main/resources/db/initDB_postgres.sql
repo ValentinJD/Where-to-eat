@@ -42,18 +42,6 @@ CREATE TABLE IF NOT EXISTS history_votes
         REFERENCES "restaurants" ("id") ON DELETE CASCADE
 ) WITH ( OIDS= FALSE );
 
-CREATE TABLE IF NOT EXISTS count_votes
-(
-    "id"            INTEGER          DEFAULT nextval('global_seq'),
-    "date"          date             DEFAULT now() NOT NULL,
-    "restaurant_id" bigint  NOT NULL,
-    "count"         integer not null default 0,
-    CONSTRAINT count_votes_restaurant_idx UNIQUE (date, restaurant_id),
-    CONSTRAINT "count_votes_pk" PRIMARY KEY ("id"),
-    CONSTRAINT "count_votes_fk1" FOREIGN KEY (restaurant_id)
-        REFERENCES "restaurants" ("id") ON DELETE CASCADE
-) WITH ( OIDS= FALSE );
-
 CREATE TABLE IF NOT EXISTS "roles"
 (
     "user_id" bigint       NOT NULL,
