@@ -1,23 +1,28 @@
 DELETE
-FROM roles where user_id != 0;
+FROM roles
+where user_id != 0;
 DELETE
-FROM users where id != 0;
+FROM users
+where id != 0;
 DELETE
-FROM restaurants where id != 0;
+FROM restaurants
+where id != 0;
 DELETE
-FROM history_votes where id != 0;
+FROM history_votes
+where id != 0;
 DELETE
-FROM meals where id != 0;
+FROM meals
+where id != 0;
 
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
-VALUES ('User', 'user@yandex.ru', 'password'),
-       ('Admin', 'admin@gmail.com', 'admin');
+VALUES ('Admin', 'admin@gmail.com', 'admin'),
+       ('User', 'user@yandex.ru', 'password');
 
 INSERT INTO roles (role, user_id)
-VALUES ('USER', 100000),
-       ('ADMIN', 100001);
+VALUES ('ADMIN', 100000),
+       ('USER', 100001);
 
 
 INSERT INTO restaurants (name)

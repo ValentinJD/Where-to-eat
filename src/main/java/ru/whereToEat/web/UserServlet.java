@@ -69,7 +69,7 @@ public class UserServlet extends HttpServlet {
 
             userService.update(user);
         }
-        log.info(id == null ? "Create {}" : "Update {}");
+        log.info(id.equals("") ? "Create {}" : "Update {}");
         response.sendRedirect("users");
     }
 
