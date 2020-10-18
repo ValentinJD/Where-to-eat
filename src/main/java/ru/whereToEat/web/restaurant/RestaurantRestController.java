@@ -1,14 +1,15 @@
 package ru.whereToEat.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import ru.whereToEat.exceptions.NotEnoughRightsException;
-import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.web.SecurityUtil;
 
 import java.util.List;
 
+@Controller
 public class RestaurantRestController {
     @Autowired
     RestaurantService restaurantService;

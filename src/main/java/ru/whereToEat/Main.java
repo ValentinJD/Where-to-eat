@@ -14,6 +14,7 @@ import ru.whereToEat.repository.UserRepository;
 import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.repository.jdbc.JDBCMealRepository;
 import ru.whereToEat.service.VoteService;
+import ru.whereToEat.web.meal.MealRestController;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -29,6 +30,9 @@ public class Main {
 
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
+
+        MealRestController mealRestController = context.getBean(MealRestController.class);
+        System.out.println(mealRestController.get(100028));
         // Тестирование userRepository
         /*userRepository = context.getBean(UserRepository.class);
         User user = userRepository.get(100000);

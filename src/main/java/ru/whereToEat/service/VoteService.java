@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
-import ru.whereToEat.model.CountVote;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.Vote;
-import ru.whereToEat.repository.CountVoteRepository;
 import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.VotesRepository;
 
