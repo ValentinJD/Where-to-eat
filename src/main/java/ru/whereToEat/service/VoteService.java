@@ -76,7 +76,7 @@ public class VoteService {
         return count;
     }
 
-    public Vote vote(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
+    public Vote save(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
         log.info("vote {}", vote);
 
         if (isVoteUserInRestaurantBefore11Hour()) {

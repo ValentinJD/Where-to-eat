@@ -11,6 +11,9 @@ public class SecurityUtil {
     @Autowired
     private static UserService userService;
 
+
+
+
     private static int currentUser = 0;
 
     public static int authUserId() {

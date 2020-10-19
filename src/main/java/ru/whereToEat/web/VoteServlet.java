@@ -9,6 +9,7 @@ import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.service.VoteService;
+import ru.whereToEat.web.vote.VoteRestController;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -26,7 +27,8 @@ public class VoteServlet extends HttpServlet {
 
     private List<Vote> votes;
 
-    private VoteService voteService;
+    //private VoteService voteService;
+    private VoteRestController controller;
 
     private static String LIST_VOTES = "jsp/votes.jsp";
     private static String LIST_INDEX = "index.html";
@@ -38,7 +40,8 @@ public class VoteServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
-        voteService = context.getBean(VoteService.class);
+        //voteService = context.getBean(VoteService.class);
+        controller = context.getBean(VoteRestController.class);
     }
 
     @Override
@@ -66,11 +69,9 @@ public class VoteServlet extends HttpServlet {
         vote.setDate_vote(LocalDateTime.now());
         vote.setVote(Integer.parseInt(request.getParameter("vote")));
         try {
-            voteService.vote(vote);
+            controller.create(vote);
             request.setAttribute("vote", vote);
         } catch (NotSaveOrUpdateException e) {
-            e.printStackTrace();
-        } catch (NotVoteException e) {
             e.printStackTrace();
         } catch (NotFoundException e) {
             e.printStackTrace();
@@ -78,7 +79,7 @@ public class VoteServlet extends HttpServlet {
 
 
         List<Vote> voteList = null;
-        voteList = voteService.getAll();
+        voteList = controller.getAll();
 
         request.setAttribute("votes", voteList);
 
@@ -103,22 +104,22 @@ public class VoteServlet extends HttpServlet {
         if (action.equalsIgnoreCase("listVotes")) {
             forward = LIST_VOTES;
 
-            List<Vote> voteList = voteService.getAll();
+            List<Vote> voteList = controller.getAll();
             request.setAttribute("votes", voteList);
 
         } else if (action.equalsIgnoreCase("delete")) {
             int voteId = Integer.parseInt(request.getParameter("voteId"));
 
-            voteService.delete(voteId);
+            controller.delete(voteId);
             forward = LIST_VOTES;
-            List<Vote> voteList = voteService.getallbyrestarauntid(restaurantId);
+            List<Vote> voteList = controller.getallbyrestarauntid(restaurantId);
             request.setAttribute("votes", voteList);
 
         } else if (action.equalsIgnoreCase("edit")) {
             forward = INSERT_OR_UPDATE;
             int voteId = Integer.parseInt(request.getParameter("voteId"));
 
-            Vote vote = voteService.get(voteId);
+            Vote vote = controller.get(voteId);
             request.setAttribute("vote", vote);
 
         } else if (action.equalsIgnoreCase("create")) {

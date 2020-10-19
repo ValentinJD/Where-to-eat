@@ -59,4 +59,7 @@ public class VoteRestController {
         }
     }
 
+    public List<Vote> getallbyrestarauntid(int restaurantId) {
+        return voteService.getallbyrestarauntid(restaurantId);
+    }
 }
