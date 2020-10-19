@@ -14,8 +14,11 @@ import java.util.List;
 
 @Controller
 public class VoteRestController {
-    @Autowired
-    VoteService voteService;
+    final VoteService voteService;
+
+    public VoteRestController(VoteService voteService) {
+        this.voteService = voteService;
+    }
 
     public Vote get(int restaurantId) {
         int userId = SecurityUtil.authUserId();

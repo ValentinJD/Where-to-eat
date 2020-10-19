@@ -11,8 +11,11 @@ import java.util.List;
 
 @Controller
 public class MealRestController {
-    @Autowired
-    MealService mealService;
+    private final MealService mealService;
+
+    public MealRestController(MealService mealService) {
+        this.mealService = mealService;
+    }
 
     public Meal get(int mealId) {
         return mealService.get(mealId);
