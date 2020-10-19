@@ -12,6 +12,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -156,6 +157,8 @@ public class JDBCVotesRepository implements VotesRepository {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
+
+        votes.sort(Comparator.comparing(Vote::getDate_vote));
 
         return votes;
     }

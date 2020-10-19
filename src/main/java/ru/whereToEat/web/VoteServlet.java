@@ -40,9 +40,10 @@ public class VoteServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
-        //voteService = context.getBean(VoteService.class);
+
         controller = context.getBean(VoteRestController.class);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

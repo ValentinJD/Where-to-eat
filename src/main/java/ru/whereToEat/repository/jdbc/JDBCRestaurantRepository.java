@@ -9,6 +9,7 @@ import ru.whereToEat.util.dbUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -142,6 +143,7 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
         }
         log.info("getAll");
 
+        restaurants.sort(Comparator.comparing(Restaurant::getId));
         return restaurants;
     }
 

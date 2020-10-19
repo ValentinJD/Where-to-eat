@@ -11,6 +11,7 @@ import ru.whereToEat.util.dbUtil;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -156,6 +157,8 @@ public class JDBCMealRepository implements MealRepository {
 
         log.info("getAll");
 
+        meals.sort(Comparator.comparing(Meal::getId));
+
         return meals;
     }
 
@@ -185,8 +188,5 @@ public class JDBCMealRepository implements MealRepository {
         return meals;
     }
 
-    @Override
-    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return null;
-    }
+
 }

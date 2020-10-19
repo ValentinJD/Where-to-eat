@@ -18,11 +18,13 @@ public interface VotesRepository {
     Vote get(int voteId);
 
     // empty list if not found
+    //ordered by datetime
     List<Vote> getAll(int restaurantId);
-
+    //ordered by datetime
     List<Vote> getAllForTest();
 
     // empty if not found
+    //ordered by datetime
     List<Vote> getByRestaurantAndUserId(int restaurantId, int userId);
 
     Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt);

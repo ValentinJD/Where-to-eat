@@ -7,6 +7,7 @@ import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.util.TimeUtil;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,16 +34,17 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return storage.values().stream().filter(meal -> meal.getId() == userId).collect(Collectors.toList());
+        return storage.values().stream()
+                .filter(meal -> meal.getId() == userId)
+                .sorted(Comparator.comparing(Meal::getId))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Meal> getAll() {
-        return (List<Meal>) storage.values();
+        return storage.values().stream()
+                .sorted(Comparator.comparing(Meal::getId))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return null;
-    }
 }

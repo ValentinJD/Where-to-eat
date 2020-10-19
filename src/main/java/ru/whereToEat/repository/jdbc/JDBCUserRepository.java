@@ -13,6 +13,7 @@ import ru.whereToEat.util.dbUtil;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -175,7 +176,8 @@ public class JDBCUserRepository implements UserRepository {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+        users.sort(Comparator.comparing(User::getName));
+        users.sort(Comparator.comparing(User::getEmail));
         return users;
     }
 

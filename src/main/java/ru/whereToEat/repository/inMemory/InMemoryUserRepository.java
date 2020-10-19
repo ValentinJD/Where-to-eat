@@ -4,9 +4,11 @@ import org.springframework.stereotype.Repository;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryUserRepository implements UserRepository {
@@ -29,11 +31,16 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public List<User> getAll() {
-        return (List<User>) storage.values();
+        return (List<User>) storage.values()
+                .stream()
+                .sorted(Comparator.comparing(User::getName))
+                .collect(Collectors.toList());
     }
 
     @Override
     public User getByEmail(String email) {
-        return null;
+        return storage.values().stream()
+                .filter((user -> user.getEmail().equals(email)))
+                .findFirst().orElse(null);
     }
 }

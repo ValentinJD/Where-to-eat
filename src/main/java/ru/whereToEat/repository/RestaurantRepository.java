@@ -16,6 +16,7 @@ public interface RestaurantRepository {
     Restaurant get(int restaurantId);
 
     // empty list if not found
+    //ordered by restaurantId
     List<Restaurant> getAll();
 
 

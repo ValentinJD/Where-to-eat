@@ -1,20 +1,24 @@
 package ru.whereToEat.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.service.UserService;
 
+@Component
 public class SecurityUtil {
     private static int admin = 100000;
     private static int user = 100001;
 
-    @Autowired
     private static UserService userService;
 
+    private static int currentUser = admin;
 
-
-
-    private static int currentUser = 0;
+    public SecurityUtil(UserService userService) {
+        this.userService = userService;
+    }
 
     public static int authUserId() {
         return currentUser;

@@ -4,9 +4,11 @@ import org.springframework.stereotype.Repository;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.RestaurantRepository;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryRestaurantRepository implements RestaurantRepository {
@@ -29,6 +31,9 @@ public class InMemoryRestaurantRepository implements RestaurantRepository {
 
     @Override
     public List<Restaurant> getAll() {
-        return (List<Restaurant>) storage.values();
+        return storage.values()
+                .stream()
+                .sorted(Comparator.comparing(Restaurant::getId))
+                .collect(Collectors.toList());
     }
 }
