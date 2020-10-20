@@ -11,6 +11,15 @@
 <h3><a href="index.html">На главную</a></h3>
 <hr>
 <h2>Restaurants List</h2>
+<form method="get" action="restaurants">
+    <input type="hidden" name="action" value="filter">
+    <dl>
+        <dt>Name Restaurant</dt>
+        <dd><input name="nameRestaurant" value=""></dd>
+    </dl>
+
+    <button type="submit">Filter</button>
+</form>
 <table align="center" border="1">
 
     <tr>

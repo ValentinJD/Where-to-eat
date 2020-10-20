@@ -7,7 +7,10 @@ import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.web.SecurityUtil;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Controller
 public class RestaurantRestController {
@@ -51,5 +54,19 @@ public class RestaurantRestController {
         } else {
             throw new NotEnoughRightsException("Только для администраторов");
         }
+    }
+
+    public List<Restaurant> getFilteredByName(String name) {
+        Predicate<Restaurant> filter = restaurant -> {
+            if (!name.equals("")){
+                return restaurant.getName().toLowerCase().contains(name.toLowerCase());
+            }
+            return true;
+        };
+        return getAll().stream()
+                .filter(filter)
+                .sorted(Comparator.comparing(Restaurant::getId))
+                .collect(Collectors.toList());
+
     }
 }

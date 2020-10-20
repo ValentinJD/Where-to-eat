@@ -10,6 +10,7 @@ import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.service.VoteService;
+import ru.whereToEat.web.restaurant.RestaurantRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ public class RestaurantServlet extends HttpServlet {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private RestaurantService restaurantService;
+    private RestaurantRestController controller;
 
     private VoteService voteService;
 
@@ -32,6 +34,7 @@ public class RestaurantServlet extends HttpServlet {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         restaurantService = context.getBean(RestaurantService.class);
         voteService = context.getBean(VoteService.class);
+        controller = context.getBean(RestaurantRestController.class);
     }
 
     @Override
@@ -86,6 +89,11 @@ public class RestaurantServlet extends HttpServlet {
                 request.setAttribute("restaurant", restaurant);
                 request.getRequestDispatcher("jsp/restaurantForm.jsp").forward(request, response);
                 break;
+            case "filter":
+                String nameRestaurant = request.getParameter("nameRestaurant");
+                Collection<Restaurant> filteredRestaurants = controller.getFilteredByName(nameRestaurant);
+                request.setAttribute("restaurants", filteredRestaurants);
+                request.getRequestDispatcher("jsp/restaurants.jsp").forward(request, response);
             case "all":
             default:
                 log.info("getAll");
