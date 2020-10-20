@@ -6,9 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
-import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Vote;
-import ru.whereToEat.service.VoteService;
 import ru.whereToEat.web.vote.VoteRestController;
 
 import javax.servlet.RequestDispatcher;
@@ -53,10 +51,6 @@ public class VoteServlet extends HttpServlet {
 
         forward = LIST_VOTES;
 
-
-        final LocalTime startTime = LocalTime.of(0, 0);
-        final LocalTime endTime = LocalTime.of(23, 59, 59);
-
         Vote vote = new Vote();
         String voteId = request.getParameter("voteId");
         if (voteId != null) {
@@ -72,15 +66,11 @@ public class VoteServlet extends HttpServlet {
         try {
             controller.create(vote);
             request.setAttribute("vote", vote);
-        } catch (NotSaveOrUpdateException e) {
-            e.printStackTrace();
-        } catch (NotFoundException e) {
+        } catch (NotSaveOrUpdateException | NotFoundException e) {
             e.printStackTrace();
         }
 
-
-        List<Vote> voteList = null;
-        voteList = controller.getAll();
+        List<Vote> voteList = controller.getAll();
 
         request.setAttribute("votes", voteList);
 
@@ -98,9 +88,6 @@ public class VoteServlet extends HttpServlet {
         if (request.getParameter("action") != null) {
             action = request.getParameter("action");
         }
-
-        final LocalTime startTime = LocalTime.of(0, 0);
-        final LocalTime endTime = LocalTime.of(23, 59, 59);
 
         if (action.equalsIgnoreCase("listVotes")) {
             forward = LIST_VOTES;

@@ -1,5 +1,7 @@
 package ru.whereToEat.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -11,6 +13,8 @@ import ru.whereToEat.service.UserService;
 public class SecurityUtil {
     private static int admin = 100000;
     private static int user = 100001;
+
+    protected static final Logger log = LoggerFactory.getLogger(SecurityUtil.class);
 
     private static UserService userService;
 
@@ -26,6 +30,7 @@ public class SecurityUtil {
 
     public static void setUserId(int userId) {
         currentUser = userId;
+        log.info("Login user {}", userId);
     }
 
     public static boolean isAdmin(int userId) {

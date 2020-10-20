@@ -11,6 +11,7 @@ import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.service.VoteService;
 import ru.whereToEat.web.restaurant.RestaurantRestController;
+import ru.whereToEat.web.vote.VoteRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -22,19 +23,16 @@ import java.util.Collection;
 import java.util.Objects;
 
 public class RestaurantServlet extends HttpServlet {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private RestaurantService restaurantService;
     private RestaurantRestController controller;
+    private VoteRestController voteRestController;
 
-    private VoteService voteService;
 
     @Override
     public void init(ServletConfig config) {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
-        restaurantService = context.getBean(RestaurantService.class);
-        voteService = context.getBean(VoteService.class);
         controller = context.getBean(RestaurantRestController.class);
+        voteRestController = context.getBean(VoteRestController.class);
     }
 
     @Override
@@ -46,15 +44,15 @@ public class RestaurantServlet extends HttpServlet {
             Restaurant restaurant = new Restaurant();
             restaurant.setName(request.getParameter("name"));
             restaurant.setVote_count(getRestaurantCount(request));
-            restaurantService.save(restaurant);
+            controller.create(restaurant);
         } else {
             int restaurantId = getRestaurantId(request);
-            Restaurant restaurant = restaurantService.get(restaurantId);
+            Restaurant restaurant = controller.get(restaurantId);
             restaurant.setName(request.getParameter("name"));
             restaurant.setVote_count(getRestaurantCount(request));
-            restaurantService.update(restaurant);
+            controller.update(restaurant);
         }
-        log.info(id.equals("") ? "Create {}" : "Update {}");
+
         response.sendRedirect("restaurants");
     }
 
@@ -69,7 +67,7 @@ public class RestaurantServlet extends HttpServlet {
                 int countVote = getRestaurantCount(request);
                 int userId = SecurityUtil.authUserId();
                 try {
-                    voteService.voter(restaurantId, userId, countVote);
+                    voteRestController.voter(restaurantId, userId, countVote);
                 } catch (NotFoundException | NotSaveOrUpdateException | NotVoteException e) {
                     e.printStackTrace();
                 }
@@ -77,15 +75,14 @@ public class RestaurantServlet extends HttpServlet {
                 break;
             case "delete":
                 int id = getRestaurantId(request);
-                log.info("Delete {}", id);
-                restaurantService.delete(id);
+                controller.delete(id);
                 response.sendRedirect("restaurants");
                 break;
             case "create":
             case "update":
                 final Restaurant restaurant = "create".equals(action) ?
                         new Restaurant() :
-                        restaurantService.get(getRestaurantId(request));
+                        controller.get(getRestaurantId(request));
                 request.setAttribute("restaurant", restaurant);
                 request.getRequestDispatcher("jsp/restaurantForm.jsp").forward(request, response);
                 break;
@@ -96,8 +93,7 @@ public class RestaurantServlet extends HttpServlet {
                 request.getRequestDispatcher("jsp/restaurants.jsp").forward(request, response);
             case "all":
             default:
-                log.info("getAll");
-                Collection<Restaurant> restaurants = restaurantService.getAll();
+                Collection<Restaurant> restaurants = controller.getAll();
                 request.setAttribute("restaurants", restaurants);
                 request.getRequestDispatcher("jsp/restaurants.jsp").forward(request, response);
                 break;

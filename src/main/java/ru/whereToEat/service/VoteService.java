@@ -34,8 +34,7 @@ public class VoteService {
     public List<Vote> getallbyrestarauntid(int restaurantId) {
 
         return votesRepository.getAll(restaurantId).stream()
-                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(
-                        LocalDate.now())).
+                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now())).
                         collect(Collectors.toList());
     }
 

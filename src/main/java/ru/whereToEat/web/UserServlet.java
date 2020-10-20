@@ -13,6 +13,7 @@ import ru.whereToEat.service.MealService;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.service.UserService;
 import ru.whereToEat.util.TimeUtil;
+import ru.whereToEat.web.user.AdminRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -31,19 +32,30 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UserServlet extends HttpServlet {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private UserService userService;
+    //private UserService userService;
+    private AdminRestController controller;
 
 
     @Override
     public void init(ServletConfig config) {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
-        userService = context.getBean(UserService.class);
+        //userService = context.getBean(UserService.class);
+        controller = context.getBean(AdminRestController.class);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
+
         String id = request.getParameter("userId");
+
+        String login = request.getParameter("login");
+
+        if (login != null && request.getParameter("login").equals("yes")) {
+            SecurityUtil.setUserId(getId(request));
+            response.sendRedirect("users");
+            return;
+        }
 
 
         if (id.equals("")) {
@@ -56,10 +68,10 @@ public class UserServlet extends HttpServlet {
             user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(request.getParameter("registered"))));
             user.setRole(Role.valueOf(request.getParameter("role")));
 
-            userService.create(user);
+            controller.create(user);
         } else {
             int userId = getId(request);
-            User user = userService.get(userId);
+            User user = controller.get(userId);
             user.setName(request.getParameter("name"));
             user.setEmail(request.getParameter("email"));
             user.setPassword(request.getParameter("password"));
@@ -67,7 +79,7 @@ public class UserServlet extends HttpServlet {
             user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(request.getParameter("registered"))));
             user.setRole(Role.valueOf(request.getParameter("role")));
 
-            userService.update(user);
+            controller.update(user, SecurityUtil.authUserId());
         }
         log.info(id.equals("") ? "Create {}" : "Update {}");
         response.sendRedirect("users");
@@ -81,21 +93,21 @@ public class UserServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
-                userService.delete(id);
+                controller.delete(id);
                 response.sendRedirect("users");
                 break;
             case "create":
             case "update":
                 final User user = "create".equals(action) ?
                         new User() :
-                        userService.get(getId(request));
+                        controller.get(getId(request));
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("jsp/userForm.jsp").forward(request, response);
                 break;
             case "all":
             default:
                 log.info("getAll");
-                Collection<User> users = userService.getAll();
+                Collection<User> users = controller.getAll();
                 request.setAttribute("users", users);
                 request.getRequestDispatcher("jsp/users.jsp").forward(request, response);
                 break;
