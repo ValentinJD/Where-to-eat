@@ -6,10 +6,7 @@ import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -48,7 +45,9 @@ public class InMemoryVotesRepository implements VotesRepository {
 
     @Override
     public List<Vote> getAllForTest() {
-        return sortByDateTime((List<Vote>) storage.values());
+        List<Vote> list = new ArrayList<>();
+        storage.forEach((integer, vote) -> list.add(vote));
+        return sortByDateTime(list);
     }
 
     @Override

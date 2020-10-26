@@ -8,6 +8,7 @@ import ru.whereToEat.repository.UserRepository;
 import java.util.List;
 
 import static ru.whereToEat.util.ValidationUtil.checkNotFound;
+import static ru.whereToEat.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
     }
 
     public void delete(int id) {
-        repository.delete(id);
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
     public User get(int id) {
