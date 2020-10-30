@@ -23,7 +23,7 @@ public class dbUtil {
         else {
             try {
                 Properties prop = new Properties();
-                InputStream inputStream = dbUtil.class.getClassLoader().getResourceAsStream("db/postgress.properties");
+                InputStream inputStream = dbUtil.class.getClassLoader().getResourceAsStream("db/postgres.properties");
                 prop.load(inputStream);
                 String driver = prop.getProperty("driver");
                 String url = prop.getProperty("url");
