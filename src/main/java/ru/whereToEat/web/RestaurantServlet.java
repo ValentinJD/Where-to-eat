@@ -30,7 +30,7 @@ public class RestaurantServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         controller = context.getBean(RestaurantRestController.class);
         voteRestController = context.getBean(VoteRestController.class);
     }

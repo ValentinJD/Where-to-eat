@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public User get(int id) {
-        return repository.get(id);
+        return checkNotFoundWithId(repository.get(id), id);
     }
 
     public List<User> getAll() {

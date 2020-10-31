@@ -13,6 +13,7 @@ import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.UserRepository;
 import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.repository.jdbc.JDBCMealRepository;
+import ru.whereToEat.repository.springJdbc.SpringJdbcUserRepository;
 import ru.whereToEat.service.VoteService;
 import ru.whereToEat.web.meal.MealRestController;
 
@@ -28,11 +29,15 @@ public class Main {
         UserRepository userRepository;
 //                new JDBCUserRepository();
 
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
 
-        MealRestController mealRestController = context.getBean(MealRestController.class);
-        System.out.println(mealRestController.get(100028));
+        SpringJdbcUserRepository repository = context.getBean(SpringJdbcUserRepository.class);
+        /*User
+        repository.save()*/
+
+        /*MealRestController mealRestController = context.getBean(MealRestController.class);
+        System.out.println(mealRestController.get(100028));*/
         // Тестирование userRepository
         /*userRepository = context.getBean(UserRepository.class);
         User user = userRepository.get(100000);

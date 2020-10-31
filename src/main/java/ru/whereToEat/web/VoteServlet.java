@@ -37,7 +37,7 @@ public class VoteServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
 
         controller = context.getBean(VoteRestController.class);
     }

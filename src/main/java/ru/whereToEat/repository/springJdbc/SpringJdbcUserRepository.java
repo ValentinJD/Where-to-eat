@@ -25,7 +25,9 @@ public class SpringJdbcUserRepository implements UserRepository {
     private final SimpleJdbcInsert insertUser;
 
     @Autowired
-    public SpringJdbcUserRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public SpringJdbcUserRepository(
+            JdbcTemplate jdbcTemplate,
+            NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertUser = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("users")
                 .usingGeneratedKeyColumns("id");

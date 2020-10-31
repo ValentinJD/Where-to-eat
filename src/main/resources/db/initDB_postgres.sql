@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS "users"
     id           INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     "name"       TEXT                              NOT NULL,
     "email"      TEXT                              NOT NULL UNIQUE,
-    "password"   char(255)                         NOT NULL,
+    "password"   TEXT                              NOT NULL,
     "enabled"    BOOL                DEFAULT TRUE  NOT NULL,
     "registered" TIMESTAMP           DEFAULT now() NOT NULL
 ) WITH ( OIDS= FALSE );
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS history_votes
 CREATE TABLE IF NOT EXISTS "roles"
 (
     "user_id" bigint       NOT NULL,
-    "role"    varchar(255) NOT NULL,
+    "role"    text NOT NULL,
     CONSTRAINT user_roles_idx UNIQUE (user_id, role),
     CONSTRAINT "roles_fk0" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE
 ) WITH ( OIDS= FALSE );

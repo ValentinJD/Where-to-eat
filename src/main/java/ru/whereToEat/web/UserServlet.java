@@ -38,7 +38,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         //userService = context.getBean(UserService.class);
         controller = context.getBean(AdminRestController.class);
     }

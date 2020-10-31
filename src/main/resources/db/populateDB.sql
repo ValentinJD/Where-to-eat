@@ -17,7 +17,7 @@ where id != 0;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
-VALUES ('Admin', 'admin@gmail.com', 'admin'),
+VALUES ('Admin', 'admin@gmail.com', 'password'),
        ('User', 'user@yandex.ru', 'password');
 
 INSERT INTO roles (role, user_id)

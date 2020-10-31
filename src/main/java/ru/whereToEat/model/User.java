@@ -3,11 +3,7 @@ package ru.whereToEat.model;
 import java.time.LocalDateTime;
 
 
-public class User extends AbstractNamedEntity{
-
-    /*private Integer userId;
-
-    private String name;*/
+public class User extends AbstractNamedEntity {
 
     private String email;
 
@@ -19,24 +15,25 @@ public class User extends AbstractNamedEntity{
 
     private Role role;
 
+
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRole());
+    }
+
     public User() {
-        super(null, null);
     }
 
     public User(Integer userId, String name, String email, String password, boolean enabled, LocalDateTime registered, Role role) {
         super(userId, name);
-//        this.userId = userId;
-//        this.name = name;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.registered = registered;
-        this.role = role;
+
     }
 
     public User(String name, String email, String password, boolean enabled, LocalDateTime registered, Role role) {
         super(null, name);
-//        this.name = name;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
@@ -45,20 +42,18 @@ public class User extends AbstractNamedEntity{
     }
 
     public User(String name, String email, String password, Role role) {
-        super(null,name);
-//        this.name = name;
+        super(null, name);
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-//    public Integer getUserId() {
-//        return userId;
-//    }
-
-//    public String getName() {
-//        return name;
-//    }
+    public User(Integer id, String name, String email, String password, Role user) {
+        super(id, name);
+        this.email = email;
+        this.password = password;
+        this.role = user;
+    }
 
     public String getEmail() {
         return email;
@@ -79,10 +74,6 @@ public class User extends AbstractNamedEntity{
     public Role getRole() {
         return role;
     }
-
-//    public void setUserId(Integer userId) {
-//        this.userId = userId;
-//    }
 
     public void setName(String name) {
         this.name = name;
@@ -108,11 +99,6 @@ public class User extends AbstractNamedEntity{
         this.role = role;
     }
 
-//    public boolean isNew(){
-//        return userId == null;
-//    }
-
-
     @Override
     public String toString() {
         return "User{" +
@@ -121,6 +107,8 @@ public class User extends AbstractNamedEntity{
                 ", enabled=" + enabled +
                 ", registered=" + registered +
                 ", role=" + role +
+                ", name='" + name + '\'' +
+                ", id=" + id +
                 '}';
     }
 }
