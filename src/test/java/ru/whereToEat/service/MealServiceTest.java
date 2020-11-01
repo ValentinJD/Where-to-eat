@@ -1,7 +1,5 @@
 package ru.whereToEat.service;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +7,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.whereToEat.MealTestData;
 import ru.whereToEat.TestMatcher;
 import ru.whereToEat.model.Meal;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 import static ru.whereToEat.MealTestData.*;
 
 @ContextConfiguration({
@@ -59,7 +56,6 @@ public class MealServiceTest {
         TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
         testMatcher.assertMatch(actual, updated);
         testMatcher.assertMatch(actual, service.get(id));
-
     }
 
     @Test
@@ -67,7 +63,6 @@ public class MealServiceTest {
         List<Meal> expected = service.getAll();
         TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
         testMatcher.assertMatch(MEALS, expected);
-
     }
 
     @Test

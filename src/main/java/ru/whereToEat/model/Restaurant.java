@@ -20,6 +20,12 @@ public class Restaurant implements Serializable {
         this.name = name;
     }
 
+    public Restaurant(Integer id, String name, int vote_count) {
+        this.id = id;
+        this.name = name;
+        this.vote_count = vote_count;
+    }
+
     public boolean isNew(){
         return id == null;
     }
