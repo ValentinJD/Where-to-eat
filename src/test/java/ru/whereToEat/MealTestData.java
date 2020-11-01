@@ -42,6 +42,8 @@ public class MealTestData {
 
     public static final List<Meal> MEALS = Arrays.asList(MEAL9,MEAL8, MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
 
+    public static final List<Meal> MEALS_PERCHINI = Arrays.asList(MEAL3, MEAL2, MEAL1);
+
     public static Meal getNew() {
         return new Meal("новая еда", 100f, PERCHINI);
     }

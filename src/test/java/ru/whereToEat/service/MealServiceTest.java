@@ -71,6 +71,13 @@ public class MealServiceTest {
     }
 
     @Test
+    public void getAllByRestaurant() {
+        List<Meal> expected = service.getAll(PERCHINI_ID);
+        TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
+        testMatcher.assertMatch(MEALS_PERCHINI, expected);
+    }
+
+    @Test
     public void create() {
         Meal actual = getUpdated();
         Meal updated = service.create(getUpdated());
