@@ -22,6 +22,19 @@ public class Meal  {
         this.price = price;
     }
 
+    public Meal(String description, Float price, Restaurant restaurant) {
+        this.description = description;
+        this.price = price;
+        this.restaurant = restaurant;
+    }
+
+    public Meal(Integer id, String description, Float price, Restaurant restaurant) {
+        this.id = id;
+        this.description = description;
+        this.price = price;
+        this.restaurant = restaurant;
+    }
+
     public Integer getId() {
         return id;
     }
