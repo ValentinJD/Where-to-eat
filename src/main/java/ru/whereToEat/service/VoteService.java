@@ -56,7 +56,7 @@ public class VoteService {
     }
 
     private boolean isVoteUserInRestaurantBefore11Hour() {
-        return LocalDateTime.now().getHour() < 24;
+        return LocalDateTime.now().getHour() < 11;
     }
 
     public int getCountVote(int restaurantId) {
@@ -75,7 +75,7 @@ public class VoteService {
         return count;
     }
 
-    public Vote save(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
+    private Vote save(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
         log.info("vote {}", vote);
 
         if (isVoteUserInRestaurantBefore11Hour()) {
@@ -84,6 +84,8 @@ public class VoteService {
         }
         throw new NotVoteException("голосование проходит только до 11 часов");
     }
+
+
 
 
     public void voter(int restaurantId, int userId, int countVote) throws NotFoundException, NotSaveOrUpdateException, NotVoteException {

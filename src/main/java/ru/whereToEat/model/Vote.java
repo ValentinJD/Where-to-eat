@@ -25,6 +25,14 @@ public class Vote {
     public Vote() {
     }
 
+    public Vote(Integer id, int userId, LocalDateTime date_vote, int restaurantId, int vote) {
+        this.id = id;
+        this.userId = userId;
+        this.date_vote = date_vote;
+        this.restaurantId = restaurantId;
+        this.vote = vote;
+    }
+
     public boolean isNew(){
         return id == null;
     }
