@@ -65,11 +65,18 @@ public class RestaurantServiceTest {
     @Test
     public void getAll() {
         List<Restaurant> expected = service.getAll();
-        TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("vote_count");
+        TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("vote_count", "menu");
         testMatcher.assertMatch(RestaurantTestData.RESTAURANTS, expected);
     }
 
     @Test
     public void create() {
+        Restaurant actual = RestaurantTestData.getNew();
+        Restaurant newRestaurant = service.create(RestaurantTestData.getNew());
+        Integer id = newRestaurant.getId();
+        actual.setId(id);
+        TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("vote_count");
+        testMatcher.assertMatch(actual, newRestaurant);
+        testMatcher.assertMatch(actual, service.get(id));
     }
 }
