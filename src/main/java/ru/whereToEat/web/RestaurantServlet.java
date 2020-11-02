@@ -8,6 +8,7 @@ import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Restaurant;
+import ru.whereToEat.model.Vote;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.service.VoteService;
 import ru.whereToEat.web.restaurant.RestaurantRestController;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -67,7 +69,9 @@ public class RestaurantServlet extends HttpServlet {
                 int countVote = getRestaurantCount(request);
                 int userId = SecurityUtil.authUserId();
                 try {
-                    voteRestController.voter(restaurantId, userId, countVote);
+                    Vote vote = new Vote(null, userId, LocalDateTime.now(), restaurantId, countVote);
+                    voteRestController.voter(vote);
+                    //voteRestController.voter(restaurantId, userId, countVote);
                 } catch (NotFoundException | NotSaveOrUpdateException | NotVoteException e) {
                     e.printStackTrace();
                 }

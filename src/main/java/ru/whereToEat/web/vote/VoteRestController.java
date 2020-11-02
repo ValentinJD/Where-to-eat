@@ -79,7 +79,12 @@ public class VoteRestController {
         return voteService.getallbyrestarauntid(restaurantId);
     }
 
-    public void voter(int restaurantId, int userId, int countVote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
-        voteService.voter(restaurantId, userId,countVote);
+
+
+    public void voter(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
+        voteService.voter(vote);
+        //voteService.voter(vote.getRestaurantId(), vote.getUserId(),vote.getVote());
     }
+
+
 }

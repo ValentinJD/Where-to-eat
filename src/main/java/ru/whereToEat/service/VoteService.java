@@ -14,6 +14,7 @@ import ru.whereToEat.repository.VotesRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,8 +56,9 @@ public class VoteService {
         return votesRepository.get(voteId);
     }
 
-    private boolean isVoteUserInRestaurantBefore11Hour() {
-        return LocalDateTime.now().getHour() < 11;
+    private boolean isVoteUserInRestaurantBefore11Hour(Vote vote) {
+        Objects.requireNonNull(vote);
+        return vote.getDate_vote().getHour() < 24;
     }
 
     public int getCountVote(int restaurantId) {
@@ -78,7 +80,7 @@ public class VoteService {
     private Vote save(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
         log.info("vote {}", vote);
 
-        if (isVoteUserInRestaurantBefore11Hour()) {
+        if (isVoteUserInRestaurantBefore11Hour(vote)) {
 
             return votesRepository.save(vote);
         }
@@ -88,9 +90,12 @@ public class VoteService {
 
 
 
-    public void voter(int restaurantId, int userId, int countVote) throws NotFoundException, NotSaveOrUpdateException, NotVoteException {
+    public void voter(Vote vote1) throws NotFoundException, NotSaveOrUpdateException, NotVoteException {
+        int restaurantId = vote1.getRestaurantId();
+        int userId = vote1.getUserId();
+        int countVote = vote1.getVote();
 
-        if (isVoteUserInRestaurantBefore11Hour()) {
+        if (isVoteUserInRestaurantBefore11Hour(vote1)) {
 
             // получаем голос за ресторан за сегодня
 
@@ -101,6 +106,7 @@ public class VoteService {
                 vote = new Vote();
                 vote.setUserId(userId);
                 vote.setRestaurantId(restaurantId);
+                vote.setDate_vote(vote1.getDate_vote());
             }
             vote.setVote(countVote);
 
