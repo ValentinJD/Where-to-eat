@@ -13,6 +13,7 @@ import ru.whereToEat.repository.VotesRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,8 +36,9 @@ public class VoteService {
     public List<Vote> getallbyrestarauntid(int restaurantId) {
 
         return votesRepository.getAll(restaurantId).stream()
-                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now())).
-                        collect(Collectors.toList());
+                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
+                        .sorted(Comparator.comparing(Vote::getId))
+                        .collect(Collectors.toList());
     }
 
     public Vote getByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDate ldt) {
@@ -58,7 +60,7 @@ public class VoteService {
 
     private boolean isVoteUserInRestaurantBefore11Hour(Vote vote) {
         Objects.requireNonNull(vote);
-        return vote.getDate_vote().getHour() < 24;
+        return vote.getDate_vote().getHour() < 11;
     }
 
     public int getCountVote(int restaurantId) {
@@ -86,8 +88,6 @@ public class VoteService {
         }
         throw new NotVoteException("голосование проходит только до 11 часов");
     }
-
-
 
 
     public void voter(Vote vote1) throws NotFoundException, NotSaveOrUpdateException, NotVoteException {

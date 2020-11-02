@@ -1,5 +1,6 @@
 package ru.whereToEat.service;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,18 +8,22 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.TestMatcher;
+import ru.whereToEat.VoteTestData;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Meal;
+import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.Vote;
 
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneOffset;
+import java.time.*;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static ru.whereToEat.MealTestData.*;
+import static ru.whereToEat.UserTestData.ADMIN;
+import static ru.whereToEat.UserTestData.ADMIN_ID;
 import static ru.whereToEat.VoteTestData.*;
 
 @ContextConfiguration({
@@ -48,46 +53,63 @@ public class VoteServiceTest {
 
 
     @Test
-    public void voteBefore11oClock() throws NotVoteException, NotSaveOrUpdateException {
-        Vote before11 = getNewBefore11oClock();
-
-        //assertThrows(NotVoteException.class, ()->
-              //  service.voter(before11.getRestaurantId(),before11.getUserId(), before11.getVote()));
-    }
-
-    /*@Test
-    public void voteAfter11oClock() throws NotVoteException, NotSaveOrUpdateException {
-        Vote after11 = getNewAfter11oClock();
-                assertThrows(NotVoteException.class, ()->
-                        service.voter(after11.getRestaurantId(),after11.getUserId(), after11.getVote()));
-    }*/
-
-    @Test
-    public void voter() {
-
-    }
-
-    @Test
-    public void create() {
-    }
-
-    @Test
-    public void update() {
-    }
-
-    @Test
-    public void getallbyrestarauntid() {
-    }
-
-    @Test
-    public void getByRestaurantIdUserIdAndLocalDate() {
-    }
-
-    @Test
-    public void getAll() {
+    public void getVoteExceptionVoteAfter11oClock() throws NotVoteException, NotSaveOrUpdateException {
+        Vote after11 = getNewBefore11oClock();
+        assertThrows(NotVoteException.class, () -> service.voter(after11));
     }
 
     @Test
     public void getCountVote() {
+        assertEquals(0, service.getCountVote(PERCHINI_ID));
+        assertEquals(-2, service.getCountVote(TRI_OLENYA_ID));
     }
+
+    @Test
+    public void create() throws NotSaveOrUpdateException {
+        Vote actual = VoteTestData.getNewBefore11oClock();
+        Vote vote = service.create(VoteTestData.getNewBefore11oClock());
+        Integer id = vote.getId();
+        actual.setId(id);
+        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
+        testMatcher.assertMatch(actual, vote);
+        testMatcher.assertMatch(actual, service.get(id));
+    }
+
+    @Test
+    public void update() throws NotSaveOrUpdateException {
+        Vote actual = VoteTestData.getUpdatedAfter11oClock();
+        Vote updated = service.update(VoteTestData.getUpdatedAfter11oClock());
+        Integer id = updated.getId();
+        actual.setId(id);
+        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
+        testMatcher.assertMatch(actual, updated);
+        testMatcher.assertMatch(actual, service.get(id));
+    }
+
+    @Test
+    public void getallbyrestarauntid() {
+        List<Vote> expected = service.getallbyrestarauntid(PERCHINI_ID);
+        List<Vote> actual = VOTES_ON_PERCHINI;
+        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
+        testMatcher.assertMatch(actual, expected);
+    }
+
+    @Ignore
+    @Test
+    public void getByRestaurantIdUserIdAndLocalDate() {
+        Vote expected = service.getByRestaurantIdUserIdAndLOcalDate(PERCHINI_ID, ADMIN_ID, LocalDate.now());
+        Vote actual = VoteTestData.getVoteAdminOnPerchiniToday();
+        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
+        testMatcher.assertMatch(actual, expected);
+    }
+
+    @Test
+    public void getAll() {
+        List<Vote> actual = service.getAll();
+        List<Vote> expected = ALL_VOTES;
+        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
+        testMatcher.assertMatch(actual, expected);
+    }
+
+
 }
