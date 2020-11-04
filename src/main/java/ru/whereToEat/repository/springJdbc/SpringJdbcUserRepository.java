@@ -64,7 +64,7 @@ public class SpringJdbcUserRepository implements UserRepository {
 
     @Override
     public User get(Integer id) {
-        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE id=?", ROW_MAPPER, id);
+        List<User> users = jdbcTemplate.query("SELECT * FROM users, roles WHERE users.id=? and roles.user_id=? ", ROW_MAPPER, id, id);
         return DataAccessUtils.singleResult(users);
     }
 

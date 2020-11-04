@@ -19,6 +19,7 @@ public class Main {
         System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
 
         SpringJdbcUserRepository repository = context.getBean(SpringJdbcUserRepository.class);
+        repository.get(100000);
         /*User
         repository.save()*/
 
