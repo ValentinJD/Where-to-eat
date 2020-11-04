@@ -6,6 +6,8 @@ import ru.whereToEat.repository.MealRepository;
 
 import java.util.List;
 
+import static ru.whereToEat.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 public class MealService {
     private final MealRepository repository;
@@ -27,10 +29,12 @@ public class MealService {
     }
 
     public void delete(int mealId) {
-        repository.delete(mealId);
+        checkNotFoundWithId(repository.delete(mealId), mealId);
+
     }
 
     public Meal save(Meal meal) {
+
         return repository.save(meal);
     }
 

@@ -8,11 +8,13 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.whereToEat.TestMatcher;
+import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Meal;
 
 import java.util.List;
 
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static ru.whereToEat.MealTestData.*;
 
 @ContextConfiguration({
@@ -36,7 +38,7 @@ public class MealServiceTest {
     @Test
     public void delete() {
         service.delete(MEDALYONY_IZ_GOVYADINY_ID);
-        assertNull(service.get(MEDALYONY_IZ_GOVYADINY_ID));
+        assertThrows(NotFoundException.class, ()->service.delete(MEDALYONY_IZ_GOVYADINY_ID));
     }
 
     @Test

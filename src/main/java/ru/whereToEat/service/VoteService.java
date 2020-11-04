@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static ru.whereToEat.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 public class VoteService {
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -51,7 +53,7 @@ public class VoteService {
 
 
     public void delete(int voteId) {
-        votesRepository.delete(voteId);
+        checkNotFoundWithId(votesRepository.delete(voteId), voteId);
     }
 
     public Vote get(int voteId) {

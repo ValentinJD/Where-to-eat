@@ -9,6 +9,8 @@ import ru.whereToEat.repository.RestaurantRepository;
 import java.util.Comparator;
 import java.util.List;
 
+import static ru.whereToEat.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
@@ -27,7 +29,7 @@ public class RestaurantService {
     }
 
     public void delete(int restaurantId) {
-        restaurantRepository.delete(restaurantId);
+        checkNotFoundWithId(restaurantRepository.delete(restaurantId), restaurantId);
     }
 
     public Restaurant save(Restaurant restaurant) {

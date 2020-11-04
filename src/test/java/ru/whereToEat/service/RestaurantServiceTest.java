@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.whereToEat.MealTestData;
 import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.TestMatcher;
+import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 
@@ -40,7 +41,7 @@ public class RestaurantServiceTest {
     @Test
     public void delete() {
         service.delete(RestaurantTestData.PERCHINI_ID);
-        assertNull(service.get(RestaurantTestData.PERCHINI_ID));
+        assertThrows(NotFoundException.class, ()-> service.delete(RestaurantTestData.PERCHINI_ID));
     }
 
     @Test

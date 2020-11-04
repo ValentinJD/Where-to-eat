@@ -31,9 +31,6 @@ public class UserServiceTest {
     @Autowired
     private UserService service;
 
-    @Autowired
-    private UserRepository repository;
-
     @Test
     public void create() throws Exception {
         User created = service.create(getNew());
@@ -54,7 +51,8 @@ public class UserServiceTest {
     @Test
     public void delete() throws Exception {
         service.delete(USER_ID);
-        assertNull(repository.get(USER_ID));
+        assertThrows(NotFoundException.class,()-> service.delete(USER_ID));
+
     }
 
     @Test

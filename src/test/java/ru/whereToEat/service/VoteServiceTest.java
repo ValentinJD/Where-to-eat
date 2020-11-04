@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.TestMatcher;
 import ru.whereToEat.VoteTestData;
+import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Meal;
@@ -39,9 +40,8 @@ public class VoteServiceTest {
 
     @Test
     public void delete() {
-        assertNotNull(service.get(VOTE_ADMIN_ID1_ON_PERCHINI));
         service.delete(VOTE_ADMIN_ID1_ON_PERCHINI);
-        assertNull(service.get(VOTE_ADMIN_ID1_ON_PERCHINI));
+        assertThrows(NotFoundException.class, ()-> service.delete(VOTE_ADMIN_ID1_ON_PERCHINI));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class VoteServiceTest {
 
     @Test
     public void getVoteExceptionVoteAfter11oClock() throws NotVoteException, NotSaveOrUpdateException {
-        Vote after11 = getNewBefore11oClock();
+        Vote after11 = getNewAfter11oClock();
         assertThrows(NotVoteException.class, () -> service.voter(after11));
     }
 
