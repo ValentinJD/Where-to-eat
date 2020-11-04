@@ -1,27 +1,13 @@
 package ru.whereToEat;
 
-import ru.whereToEat.exceptions.NotFoundException;
-import ru.whereToEat.exceptions.NotSaveOrUpdateException;
-import ru.whereToEat.model.Meal;
-import ru.whereToEat.model.Restaurant;
-import ru.whereToEat.model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.whereToEat.model.Vote;
-import ru.whereToEat.repository.MealRepository;
-import ru.whereToEat.repository.RestaurantRepository;
+import ru.whereToEat.exceptions.NotFoundException;
+import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.repository.UserRepository;
-import ru.whereToEat.repository.VotesRepository;
-import ru.whereToEat.repository.jdbc.JDBCMealRepository;
 import ru.whereToEat.repository.springJdbc.SpringJdbcUserRepository;
-import ru.whereToEat.service.VoteService;
-import ru.whereToEat.web.meal.MealRestController;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {

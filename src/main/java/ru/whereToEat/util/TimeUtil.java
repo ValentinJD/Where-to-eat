@@ -10,6 +10,9 @@ import java.util.function.Predicate;
 
 public class TimeUtil {
 
+    private TimeUtil() {
+    }
+
     public static final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static String toDateFormatString(String date) {

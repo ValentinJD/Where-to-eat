@@ -1,6 +1,7 @@
 package ru.whereToEat.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.MealRepository;
@@ -32,11 +33,8 @@ public class RestaurantService {
         checkNotFoundWithId(restaurantRepository.delete(restaurantId), restaurantId);
     }
 
-    public Restaurant save(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
-    }
-
     public Restaurant update(Restaurant restaurant) {
+        Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
     }
 
@@ -61,6 +59,7 @@ public class RestaurantService {
     }
 
     public Restaurant create(Restaurant restaurant) {
+        Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
     }
 }

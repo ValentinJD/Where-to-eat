@@ -1,6 +1,7 @@
 package ru.whereToEat.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
@@ -19,6 +20,7 @@ public class UserService {
     }
 
     public User create(User user) {
+        Assert.notNull(user, "user must not be null");
         return repository.save(user);
     }
 
@@ -35,10 +37,12 @@ public class UserService {
     }
 
     public void update(User user) {
+        Assert.notNull(user, "user must not be null");
         repository.save(user);
     }
 
     public User getByEmail(String email) throws NotFoundException {
+        Assert.notNull(email, "user must not be null");
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 }

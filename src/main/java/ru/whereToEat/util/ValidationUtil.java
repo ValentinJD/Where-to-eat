@@ -6,6 +6,9 @@ import ru.whereToEat.model.AbstractBaseEntity;
 
 public class ValidationUtil {
 
+    private ValidationUtil() {
+    }
+
     public static <T> T checkNotFoundWithId(T object, int id)  {
         checkNotFoundWithId(object != null, id);
         return object;

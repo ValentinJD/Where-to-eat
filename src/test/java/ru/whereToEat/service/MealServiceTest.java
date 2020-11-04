@@ -13,7 +13,6 @@ import ru.whereToEat.model.Meal;
 
 import java.util.List;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static ru.whereToEat.MealTestData.*;
 
@@ -32,22 +31,15 @@ public class MealServiceTest {
     public void get() {
         Meal expected = service.get(MEDALYONY_IZ_GOVYADINY_ID);
         TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
-        testMatcher.assertMatch(MEAL_FOR_GET,expected);
+        testMatcher.assertMatch(MEAL_FOR_GET, expected);
     }
 
     @Test
     public void delete() {
         service.delete(MEDALYONY_IZ_GOVYADINY_ID);
-        assertThrows(NotFoundException.class, ()->service.delete(MEDALYONY_IZ_GOVYADINY_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(MEDALYONY_IZ_GOVYADINY_ID));
     }
 
-    @Test
-    public void save() {
-        Meal actual = service.save(getNew());
-        Meal expected = service.get(actual.getId());
-        TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
-        testMatcher.assertMatch(actual,expected);
-    }
 
     @Test
     public void update() {

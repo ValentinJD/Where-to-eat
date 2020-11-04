@@ -14,6 +14,8 @@ public class dbUtil {
     private static String user = "user";
     private static String password = "password";
 
+    private dbUtil() {
+    }
 
     private static Connection connection = null;
 

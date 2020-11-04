@@ -3,6 +3,7 @@ package ru.whereToEat.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
@@ -12,7 +13,6 @@ import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.VotesRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -28,19 +28,17 @@ public class VoteService {
 
     RestaurantRepository restaurantRepository;
 
-
     public VoteService(VotesRepository votesRepository, RestaurantRepository restaurantRepository) {
         this.votesRepository = votesRepository;
         this.restaurantRepository = restaurantRepository;
-
     }
 
     public List<Vote> getallbyrestarauntid(int restaurantId) {
 
         return votesRepository.getAll(restaurantId).stream()
                 .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
-                        .sorted(Comparator.comparing(Vote::getId))
-                        .collect(Collectors.toList());
+                .sorted(Comparator.comparing(Vote::getId))
+                .collect(Collectors.toList());
     }
 
     public Vote getByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDate ldt) {
@@ -81,27 +79,14 @@ public class VoteService {
         return count;
     }
 
-    private Vote save(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
-        log.info("vote {}", vote);
-
-        if (isVoteUserInRestaurantBefore11Hour(vote)) {
-
-            return votesRepository.save(vote);
-        }
-        throw new NotVoteException("голосование проходит только до 11 часов");
-    }
-
-
     public void voter(Vote vote1) throws NotFoundException, NotSaveOrUpdateException, NotVoteException {
+        Assert.notNull(vote1, "vote must not be null");
         int restaurantId = vote1.getRestaurantId();
         int userId = vote1.getUserId();
         int countVote = vote1.getVote();
 
         if (isVoteUserInRestaurantBefore11Hour(vote1)) {
-
             // получаем голос за ресторан за сегодня
-
-
             Vote vote = getByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDate.now());
 
             if (vote == null) {

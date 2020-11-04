@@ -7,17 +7,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.whereToEat.MealTestData;
 import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.TestMatcher;
 import ru.whereToEat.exceptions.NotFoundException;
-import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static ru.whereToEat.MealTestData.*;
+import static org.junit.Assert.assertThrows;
 
 
 @ContextConfiguration({
@@ -35,22 +32,15 @@ public class RestaurantServiceTest {
     public void get() {
         Restaurant expected = service.get(RestaurantTestData.PERCHINI_ID);
         TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("vote_count");
-        testMatcher.assertMatch(RestaurantTestData.PERCHINI,expected);
+        testMatcher.assertMatch(RestaurantTestData.PERCHINI, expected);
     }
 
     @Test
     public void delete() {
         service.delete(RestaurantTestData.PERCHINI_ID);
-        assertThrows(NotFoundException.class, ()-> service.delete(RestaurantTestData.PERCHINI_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(RestaurantTestData.PERCHINI_ID));
     }
 
-    @Test
-    public void save() {
-        Restaurant actual = service.save(RestaurantTestData.getNew());
-        Restaurant expected = service.get(actual.getId());
-        TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("vote_count");
-        testMatcher.assertMatch(actual,expected);
-    }
 
     @Test
     public void update() {
