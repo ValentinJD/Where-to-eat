@@ -24,7 +24,7 @@ public class UserTestData {
 
 
     public static User getNew() {
-        return new User(null, "NewName", "new@gmail.com", "newPassword", false,  LocalDateTime.now(), Role.USER);
+        return new User(null, "NewName", "new@gmail.com", "newPassword", true,  LocalDateTime.now(), Role.USER);
     }
 
     public static User getUpdated() {

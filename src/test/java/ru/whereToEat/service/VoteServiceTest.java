@@ -68,11 +68,13 @@ public class VoteServiceTest {
     public void create() throws NotSaveOrUpdateException {
         Vote actual = VoteTestData.getNewBefore11oClock();
         Vote vote = service.create(VoteTestData.getNewBefore11oClock());
-        Integer id = vote.getId();
-        actual.setId(id);
+        //Integer id = vote.getId();
+        //actual.setId(id);
         TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
         testMatcher.assertMatch(actual, vote);
-        testMatcher.assertMatch(actual, service.get(id));
+        /*testMatcher.assertMatch(actual, service.getByRestaurantIdUserIdAndLOcalDate(
+                vote.getRestaurantId(), vote.getUserId(), vote.getDate_vote().toLocalDate()
+        ));*/
     }
 
     @Test

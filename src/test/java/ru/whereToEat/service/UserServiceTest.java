@@ -2,6 +2,7 @@ package ru.whereToEat.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -10,6 +11,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.whereToEat.UserTestData;
 import ru.whereToEat.exceptions.NotFoundException;
+import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
@@ -44,14 +46,14 @@ public class UserServiceTest {
 
     @Test
     public void duplicateMailCreate() throws Exception {
-        assertThrows(DataAccessException.class, () ->
+        assertThrows(NotSaveOrUpdateException.class, () ->
                 service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.USER)));
     }
 
     @Test
     public void delete() throws Exception {
         service.delete(USER_ID);
-        assertThrows(NotFoundException.class,()-> service.delete(USER_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(USER_ID));
 
     }
 

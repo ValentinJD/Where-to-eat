@@ -39,6 +39,13 @@ public class JDBCVotesRepository implements VotesRepository {
                 preparedStatement.setInt(2, vote.getRestaurantId());
                 preparedStatement.setInt(3, vote.getVote());
                 preparedStatement.executeUpdate();
+                vote.setId(
+                        getByRestaurantIdUserIdAndLocalDate(
+                                vote.getRestaurantId(),
+                                vote.getUserId(),
+                                vote.getDate_vote().toLocalDate())
+                                .getId()
+                );
 
                 log.info("save {}", vote);
 

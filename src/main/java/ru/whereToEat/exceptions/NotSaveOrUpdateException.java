@@ -1,4 +1,4 @@
 package ru.whereToEat.exceptions;
 
-public class NotSaveOrUpdateException extends Exception {
+public class NotSaveOrUpdateException extends RuntimeException {
 }

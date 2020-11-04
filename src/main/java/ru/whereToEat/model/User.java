@@ -29,6 +29,7 @@ public class User extends AbstractNamedEntity {
         this.password = password;
         this.enabled = enabled;
         this.registered = registered;
+        this.role = role;
 
     }
 

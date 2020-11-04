@@ -2,8 +2,10 @@ package ru.whereToEat.repository.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import ru.whereToEat.exceptions.NotFoundException;
+import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
@@ -40,14 +42,15 @@ public class JDBCUserRepository implements UserRepository {
                 preparedStatement.setString(2, user.getEmail());
                 preparedStatement.setString(3, user.getPassword());
                 preparedStatement.executeUpdate();
-
-                setRole(user);
+                user.setId(getId(user));
+                saveRole(user);
 
                 log.info("save {}", user);
 
                 return user;
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (NotSaveOrUpdateException | SQLException t) {
+
+                throw new NotSaveOrUpdateException();
             }
 
         } else {
@@ -65,7 +68,7 @@ public class JDBCUserRepository implements UserRepository {
 
                 int count = preparedStatement.executeUpdate();
 
-                setRole(user);
+                saveRole(user);
 
                 log.info("update {}", user);
 
@@ -203,7 +206,8 @@ public class JDBCUserRepository implements UserRepository {
                 user.setPassword(rs.getString("password"));
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
-                setRole(user);
+                user.setRole(getRole(user.getId()));
+                saveRole(user);
             }
 
             log.info("getByEmail {}", user);
@@ -219,8 +223,12 @@ public class JDBCUserRepository implements UserRepository {
         return user;
     }
 
+    private Role getRole(int userId) {
+        return get(userId).getRole();
+    }
 
-    private void setRole(User user) {
+
+    private void saveRole(User user) {
 
         connection = dbUtil.getConnection();
 

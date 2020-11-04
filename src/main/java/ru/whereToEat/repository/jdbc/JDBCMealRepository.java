@@ -157,7 +157,7 @@ public class JDBCMealRepository implements MealRepository {
 
         log.info("getAll");
 
-        meals.sort(Comparator.comparing(Meal::getId));
+        meals.sort(Comparator.comparing(Meal::getId).reversed());
 
         return meals;
     }
@@ -184,7 +184,7 @@ public class JDBCMealRepository implements MealRepository {
         }
 
         log.info("getAll");
-
+        meals.sort(Comparator.comparing(Meal::getId).reversed());
         return meals;
     }
 
