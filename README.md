@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/730b8c819b384cc383f02cf00cb249ef)](https://www.codacy.com/gh/ValentinJD/Where-to-eat/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ValentinJD/Where-to-eat&amp;utm_campaign=Badge_Grade)
 # Where-to-eat
 Vote for the restaurant with the best food
 -
