@@ -1,5 +1,8 @@
 package ru.whereToEat.model;
 
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
 public class Meal  {
     private Integer id;
 
@@ -7,6 +10,7 @@ public class Meal  {
 
     private Float price;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     private Restaurant restaurant;
 
     public Meal() {

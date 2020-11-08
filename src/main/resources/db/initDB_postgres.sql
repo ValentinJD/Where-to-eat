@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS "users"
     "registered" TIMESTAMP           DEFAULT now() NOT NULL
 ) WITH ( OIDS= FALSE );
 
+CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
+
 CREATE TABLE IF NOT EXISTS "restaurants"
 (
     "id"         INTEGER       DEFAULT nextval('global_seq'),
