@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS "users"
     "email"      TEXT                              NOT NULL UNIQUE,
     "password"   TEXT                              NOT NULL,
     "enabled"    BOOL                DEFAULT TRUE  NOT NULL,
-    "registered" TIMESTAMP           DEFAULT now() NOT NULL
+    "registered" TIMESTAMP           DEFAULT now() NOT NULL,
+    "role"       text                              NOT NULL
 ) WITH ( OIDS= FALSE );
 
 CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
@@ -44,13 +45,13 @@ CREATE TABLE IF NOT EXISTS history_votes
         REFERENCES "restaurants" ("id") ON DELETE CASCADE
 ) WITH ( OIDS= FALSE );
 
-CREATE TABLE IF NOT EXISTS "roles"
+/*CREATE TABLE IF NOT EXISTS "roles"
 (
     "user_id" bigint       NOT NULL,
     "role"    text NOT NULL,
     CONSTRAINT user_roles_idx UNIQUE (user_id, role),
     CONSTRAINT "roles_fk0" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE
-) WITH ( OIDS= FALSE );
+) WITH ( OIDS= FALSE );*/
 
 CREATE TABLE IF NOT EXISTS "meals"
 (
