@@ -36,14 +36,15 @@ public class JDBCUserRepository implements UserRepository {
 
             try {
                 preparedStatement = connection
-                        .prepareStatement("insert into users(name,email,password) values (?, ?, ?)");
+                        .prepareStatement("insert into users(name,email,password, role) values (?, ?, ?, ?)");
                 // Parameters start with 1
                 preparedStatement.setString(1, user.getName());
                 preparedStatement.setString(2, user.getEmail());
                 preparedStatement.setString(3, user.getPassword());
+                preparedStatement.setString(4, user.getRole().name());
                 preparedStatement.executeUpdate();
                 user.setId(getId(user));
-                saveRole(user);
+                //saveRole(user);
 
                 log.info("save {}", user);
 
@@ -57,18 +58,19 @@ public class JDBCUserRepository implements UserRepository {
 
             try {
                 preparedStatement = connection
-                        .prepareStatement("update users set name=?,email=?,password=?, enabled=?" +
+                        .prepareStatement("update users set name=?,email=?,password=?, enabled=?, role=?" +
                                 "where id=?");
                 // Parameters start with 1
                 preparedStatement.setString(1, user.getName());
                 preparedStatement.setString(2, user.getEmail());
                 preparedStatement.setString(3, user.getPassword());
                 preparedStatement.setBoolean(4, user.isEnabled());
-                preparedStatement.setInt(5, user.getId());
+                preparedStatement.setString(5, user.getRole().name());
+                preparedStatement.setInt(6, user.getId());
 
                 int count = preparedStatement.executeUpdate();
 
-                saveRole(user);
+                //saveRole(user);
 
                 log.info("update {}", user);
 
@@ -116,9 +118,9 @@ public class JDBCUserRepository implements UserRepository {
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select users.*, roles.role" +
-                            " from users, roles" +
-                            " where users.id = roles.user_id and users.id=?");
+                    prepareStatement("select users.*" +
+                            " from users" +
+                            " where users.id=?");
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -161,9 +163,8 @@ public class JDBCUserRepository implements UserRepository {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select users.*, roles.role" +
-                    " from users, roles" +
-                    " where users.id = roles.user_id");
+            ResultSet rs = statement.executeQuery("select users.*" +
+                    " from users");
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
@@ -206,8 +207,8 @@ public class JDBCUserRepository implements UserRepository {
                 user.setPassword(rs.getString("password"));
                 user.setEnabled(rs.getBoolean("enabled"));
                 user.setRegistered(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("registered"))));
-                user.setRole(getRole(user.getId()));
-                saveRole(user);
+                user.setRole(Role.valueOf(rs.getString("role")));
+                //saveRole(user);
             }
 
             log.info("getByEmail {}", user);
@@ -221,27 +222,6 @@ public class JDBCUserRepository implements UserRepository {
         }
 
         return user;
-    }
-
-    private Role getRole(int userId) {
-        return get(userId).getRole();
-    }
-
-
-    private void saveRole(User user) {
-
-        connection = dbUtil.getConnection();
-
-        try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into roles(user_id, role) values (?, ?)");
-            preparedStatement.setInt(1, getId(user));
-            preparedStatement.setString(2, user.getRole().name());
-            int count = preparedStatement.executeUpdate();
-            log.info("setRole {} count {}", user.getRole(), count);
-        } catch (SQLException | NotFoundException throwables) {
-            throwables.printStackTrace();
-        }
     }
 
 
