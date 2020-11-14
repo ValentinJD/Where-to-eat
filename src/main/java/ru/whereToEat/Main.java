@@ -4,20 +4,30 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
+import ru.whereToEat.model.Role;
+import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
 import ru.whereToEat.repository.springJdbc.SpringJdbcUserRepository;
 
+import javax.persistence.EntityManagerFactory;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
         System.out.println("Main Тест");
-        UserRepository userRepository;
+        //UserRepository userRepository;
 //                new JDBCUserRepository();
 
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
-        System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
+        System.out.println("Bean definition names: " );
+        Arrays.asList(context.getBeanDefinitionNames()).forEach(
+                name -> System.out.println(name));
 
+        UserRepository userRepository1 = context.getBean(UserRepository.class);
+        User user = userRepository1.save(new User("test", "@bvz", "passTTT", true, LocalDateTime.now(), Role.USER ));
+        System.out.println();
+        //((org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean)em).f
         /*SpringJdbcUserRepository repository = context.getBean(SpringJdbcUserRepository.class);
         repository.get(100000);*/
         /*User

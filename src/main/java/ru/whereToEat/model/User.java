@@ -1,5 +1,8 @@
 package ru.whereToEat.model;
 
+import net.bytebuddy.build.Plugin;
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -29,10 +32,8 @@ public class User extends AbstractNamedEntity {
     @NotNull
     private LocalDateTime registered;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "roles")
+    @Enumerated(value = EnumType.STRING)
     private Role role;
-
 
     public User(User u) {
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRole());
