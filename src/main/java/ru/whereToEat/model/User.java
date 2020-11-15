@@ -1,5 +1,8 @@
 package ru.whereToEat.model;
 
+import net.bytebuddy.build.Plugin;
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
