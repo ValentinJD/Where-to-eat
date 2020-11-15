@@ -1,8 +1,12 @@
 package ru.whereToEat.repository.jpa;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
 
@@ -31,12 +35,17 @@ public class JpaUserRepository implements UserRepository {
     @Override
     @Transactional
     public User save(User user) {
-        if (user.isNew()) {
-            em.persist(user);
-            return user;
-        } else {
-            return em.merge(user);
+        try {
+            if (user.isNew()) {
+                em.persist(user);
+                return user;
+            } else {
+                return em.merge(user);
+            }
+        } catch (RuntimeException e) {
+            throw new NotSaveOrUpdateException();
         }
+
     }
 
     @Override
@@ -50,19 +59,26 @@ public class JpaUserRepository implements UserRepository {
 
 /*      User ref = em.getReference(User.class, id);
         em.remove(ref);
-*/
+
         Query query = em.createQuery("DELETE FROM User u WHERE u.id=:id");
         return query.setParameter("id", id).executeUpdate() != 0;
+*/
+        return em.createNamedQuery(User.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
+
     }
 
     @Override
     public User getByEmail(String email) {
-        return null;
+        List<User> users = em.createNamedQuery(User.BY_EMAIL, User.class)
+                .setParameter(1, email)
+                .getResultList();
+        return DataAccessUtils.singleResult(users);
     }
 
     @Override
     public List<User> getAll() {
-
-        return null;
+        return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();
     }
 }

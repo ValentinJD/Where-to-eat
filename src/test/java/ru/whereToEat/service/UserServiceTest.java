@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -16,6 +17,7 @@ import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.Assert.assertNull;
@@ -46,8 +48,8 @@ public class UserServiceTest {
 
     @Test
     public void duplicateMailCreate() throws Exception {
-        assertThrows(NotSaveOrUpdateException.class, () ->
-                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.USER)));
+        assertThrows(DataAccessException.class, () ->
+                service.create(new User(null,"name", "user@yandex.ru","Duplicate", true, LocalDateTime.now(), Role.USER)));
     }
 
     @Test

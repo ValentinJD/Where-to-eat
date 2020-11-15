@@ -25,8 +25,11 @@ public class Main {
                 name -> System.out.println(name));
 
         UserRepository userRepository1 = context.getBean(UserRepository.class);
-        User user = userRepository1.save(new User("test", "@bvz", "passTTT", true, LocalDateTime.now(), Role.USER ));
+        //User user = userRepository1.save(new User("test", "@bvz", "passTTT", true, LocalDateTime.now(), Role.USER ));
+
+        userRepository1.save(new User(null,"name", "user@yandex.ru","Duplicate", true, LocalDateTime.now(), Role.USER));
         System.out.println();
+
         //((org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean)em).f
         /*SpringJdbcUserRepository repository = context.getBean(SpringJdbcUserRepository.class);
         repository.get(100000);*/
