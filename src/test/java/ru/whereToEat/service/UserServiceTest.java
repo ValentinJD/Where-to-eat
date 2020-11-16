@@ -19,6 +19,7 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ru.whereToEat.UserTestData.*;
 
+
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
@@ -44,7 +45,7 @@ public class UserServiceTest {
     @Test
     public void duplicateMailCreate() {
         assertThrows(DataAccessException.class, () ->
-                service.create(new User(null,"name", "user@yandex.ru","Duplicate", true, LocalDateTime.now(), Role.USER)));
+                service.create(new User(null, "name", "user@yandex.ru", "Duplicate", true, LocalDateTime.now(), Role.USER)));
     }
 
     @Test
