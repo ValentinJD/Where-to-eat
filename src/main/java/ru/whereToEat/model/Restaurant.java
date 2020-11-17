@@ -80,7 +80,7 @@ public class Restaurant implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", vote_count=" + vote_count +
-                ", menu=" + menu +
+                ", menu=" + "menu lazy Test" +
                 '}';
     }
 }

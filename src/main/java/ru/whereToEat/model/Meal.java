@@ -10,8 +10,8 @@ import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
 @Table(name = "meals")
 @Access(AccessType.FIELD)
 @NamedQueries({
-        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m ORDER BY m.id"),
-        @NamedQuery(name = Meal.ALL_SORTED_BY_RESTAURANT_ID, query = "SELECT m FROM Meal m WHERE m.restaurant.id=?1 order by m.id")
+        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m left JOIN FETCH m.restaurant ORDER BY m.id desc "),
+        @NamedQuery(name = Meal.ALL_SORTED_BY_RESTAURANT_ID, query = "SELECT m FROM Meal m WHERE m.restaurant.id=?1 order by m.id desc ")
 })
 public class Meal  {
     public static final String ALL_SORTED = "Meal.AllSorted";
@@ -105,7 +105,7 @@ public class Meal  {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", restaurant=" + restaurant +
+                ", restaurant=" + "lazy Test " +
                 '}';
     }
 }

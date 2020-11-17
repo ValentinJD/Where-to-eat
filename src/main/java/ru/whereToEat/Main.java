@@ -4,14 +4,17 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
+import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
+import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.UserRepository;
 import ru.whereToEat.repository.springJdbc.SpringJdbcUserRepository;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
@@ -24,11 +27,13 @@ public class Main {
         Arrays.asList(context.getBeanDefinitionNames()).forEach(
                 name -> System.out.println(name));
 
-        UserRepository userRepository1 = context.getBean(UserRepository.class);
+        MealRepository repository1 = context.getBean(MealRepository.class);
+        List<Meal> list = repository1.getAll(100002);
+        System.out.println(list);
         //User user = userRepository1.save(new User("test", "@bvz", "passTTT", true, LocalDateTime.now(), Role.USER ));
 
-        userRepository1.save(new User(null,"name", "user@yandex.ru","Duplicate", true, LocalDateTime.now(), Role.USER));
-        System.out.println();
+        /*userRepository1.save(new User(null,"name", "user@yandex.ru","Duplicate", true, LocalDateTime.now(), Role.USER));
+        System.out.println();*/
 
         //((org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean)em).f
         /*SpringJdbcUserRepository repository = context.getBean(SpringJdbcUserRepository.class);
