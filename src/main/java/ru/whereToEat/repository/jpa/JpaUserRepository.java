@@ -1,33 +1,18 @@
 package ru.whereToEat.repository.jpa;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.TransactionSystemException;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.Query;
 import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
 public class JpaUserRepository implements UserRepository {
-
-/*
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    private Session openSession() {
-        return sessionFactory.getCurrentSession();
-    }
-*/
 
     @PersistenceContext
     private EntityManager em;
@@ -35,17 +20,12 @@ public class JpaUserRepository implements UserRepository {
     @Override
     @Transactional
     public User save(User user) {
-        try {
-            if (user.isNew()) {
-                em.persist(user);
-                return user;
-            } else {
-                return em.merge(user);
-            }
-        } catch (RuntimeException e) {
-            throw new NotSaveOrUpdateException();
+        if (user.isNew()) {
+            em.persist(user);
+            return user;
+        } else {
+            return em.merge(user);
         }
-
     }
 
     @Override
