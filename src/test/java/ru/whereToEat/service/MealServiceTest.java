@@ -16,6 +16,7 @@ import ru.whereToEat.TestMatcher;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Meal;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -67,7 +68,8 @@ public class MealServiceTest {
     @Test
     public void delete() {
         service.delete(MEDALYONY_IZ_GOVYADINY_ID);
-        assertThrows(NotFoundException.class, () -> service.delete(MEDALYONY_IZ_GOVYADINY_ID));
+        assertThrows(EntityNotFoundException.class,
+                () -> service.delete(MEDALYONY_IZ_GOVYADINY_ID));
     }
 
 
@@ -100,7 +102,7 @@ public class MealServiceTest {
     public void create() {
         Meal actual = getUpdated();
         Meal updated = service.create(getUpdated());
-        Integer id = updated.getId();
+        int id = updated.id();
         actual.setId(id);
         TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
         testMatcher.assertMatch(actual, updated);

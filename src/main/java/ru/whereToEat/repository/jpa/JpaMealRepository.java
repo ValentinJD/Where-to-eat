@@ -1,64 +1,59 @@
 package ru.whereToEat.repository.jpa;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.whereToEat.model.Meal;
+import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.MealRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class JpaMealRepository implements MealRepository {
 
+    @PersistenceContext
+    private EntityManager em;
+
     @Override
+    @Transactional
     public Meal save(Meal meal) {
-        return null;
+        if (meal.isNew()) {
+            em.persist(meal);
+            return meal;
+        } else {
+            return em.merge(meal);
+        }
     }
 
     @Override
+    @Transactional
     public boolean delete(int mealId) {
-        return false;
+        Meal meal = em.getReference(Meal.class, mealId);
+        em.remove(meal);
+        return !em.contains(meal);
     }
 
     @Override
     public Meal get(int mealId) {
-        return null;
+        return em.find(Meal.class, mealId);
     }
 
     @Override
     public List<Meal> getAll(int restaurantId) {
-        return null;
+        return em.createNamedQuery(Meal.ALL_SORTED_BY_RESTAURANT_ID, Meal.class)
+                .setParameter(1, restaurantId)
+                .getResultList();
     }
 
     @Override
     public List<Meal> getAll() {
-        return null;
+        return em.createNamedQuery(Meal.ALL_SORTED, Meal.class)
+                .getResultList();
     }
-
-    /*@Override
-    public Meal save(Meal meal, int userId) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(int id, int userId) {
-        return false;
-    }
-
-    @Override
-    public Meal get(int id, int userId) {
-        return null;
-    }
-
-    @Override
-    public List<Meal> getAll(int userId) {
-        return null;
-    }
-
-    @Override
-    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        return null;
-    }*/
 
 
 }
