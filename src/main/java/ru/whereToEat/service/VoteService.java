@@ -55,7 +55,8 @@ public class VoteService {
     }
 
     public Vote get(int voteId) {
-        return votesRepository.get(voteId);
+        return checkNotFoundWithId(votesRepository.get(voteId), voteId);
+        //return votesRepository.get(voteId);
     }
 
     private boolean isVoteUserInRestaurantBefore11Hour(Vote vote) {

@@ -1,17 +1,47 @@
 package ru.whereToEat.model;
 
+import org.springframework.util.Assert;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
+
+@Entity
+@Access(AccessType.FIELD)
+@Table(name = "history_votes",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "restaurant_id", "date_vote"}, name = "history_votes_user_restaurant_idx")})
+@NamedQueries({
+        @NamedQuery(name = Vote.ALL_SORTED_BY_RESTAURANT_ID, query = "SELECT v FROM Vote v WHERE v.restaurantId=?1 ORDER BY v.id"),
+        @NamedQuery(name = Vote.ALL_SORTED, query = "SELECT v FROM Vote v ORDER BY v.id"),
+        @NamedQuery(name = Vote.ALL_SORTED_BY_RESTAURANT_ID_AND_USER_ID,
+                query = "SELECT v FROM Vote v WHERE v.restaurantId=?1 AND v.userId =?2 ORDER BY v.id"),
+        @NamedQuery(name = Vote.ALL_SORTED_BY_RESTAURANT_ID_AND_USER_ID_AND_DATEVOTE,
+                query = "SELECT v FROM Vote v WHERE v.restaurantId=?1 AND v.userId =?2 AND v.date_vote=?3 ORDER BY v.id")
+})
 public class Vote {
 
+    public static final String ALL_SORTED_BY_RESTAURANT_ID = "Vote.getAllSortedByRestaurantId";
+    public static final String ALL_SORTED = "Vote.getAllSorted";
+    public static final String ALL_SORTED_BY_RESTAURANT_ID_AND_USER_ID = "Vote.getAllSortedByRestaurantIdAndUserId";
+    public static final String ALL_SORTED_BY_RESTAURANT_ID_AND_USER_ID_AND_DATEVOTE =
+            "Vote.getAllSortedByRestaurantIdAndUserIdAndDateVote";
+
+    @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     private Integer id;
 
+    @Column(name = "user_id", nullable = false)
     private int userId;
 
+    @Column(name = "date_vote", nullable = false)
     private LocalDateTime date_vote;
 
+    @Column(name = "restaurant_id", nullable = false)
     private int restaurantId;
 
+    @Column(name = "vote", nullable = false)
     private int vote;
 
     public int getVote() {
@@ -33,8 +63,14 @@ public class Vote {
         this.vote = vote;
     }
 
-    public boolean isNew(){
+    public boolean isNew() {
         return id == null;
+    }
+
+    // doesn't work for hibernate lazy proxy
+    public int id() {
+        Assert.notNull(id, "Entity must has id");
+        return id;
     }
 
     public Integer getId() {

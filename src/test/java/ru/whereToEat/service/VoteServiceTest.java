@@ -8,22 +8,21 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.TestMatcher;
 import ru.whereToEat.VoteTestData;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
-import ru.whereToEat.model.Meal;
-import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.Vote;
 
-import java.time.*;
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static ru.whereToEat.MealTestData.*;
-import static ru.whereToEat.UserTestData.ADMIN;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static ru.whereToEat.MealTestData.PERCHINI_ID;
+import static ru.whereToEat.MealTestData.TRI_OLENYA_ID;
 import static ru.whereToEat.UserTestData.ADMIN_ID;
 import static ru.whereToEat.VoteTestData.*;
 
@@ -41,7 +40,7 @@ public class VoteServiceTest {
     @Test
     public void delete() {
         service.delete(VOTE_ADMIN_ID1_ON_PERCHINI);
-        assertThrows(NotFoundException.class, ()-> service.delete(VOTE_ADMIN_ID1_ON_PERCHINI));
+        assertThrows(EntityNotFoundException.class, ()-> service.delete(VOTE_ADMIN_ID1_ON_PERCHINI));
     }
 
     @Test
@@ -68,8 +67,8 @@ public class VoteServiceTest {
     public void create() throws NotSaveOrUpdateException {
         Vote actual = VoteTestData.getNewBefore11oClock();
         Vote vote = service.create(VoteTestData.getNewBefore11oClock());
-        //Integer id = vote.getId();
-        //actual.setId(id);
+        int id = vote.id();
+        actual.setId(id);
         TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
         testMatcher.assertMatch(actual, vote);
         /*testMatcher.assertMatch(actual, service.getByRestaurantIdUserIdAndLOcalDate(
@@ -85,7 +84,7 @@ public class VoteServiceTest {
         actual.setId(id);
         TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
         testMatcher.assertMatch(actual, updated);
-        testMatcher.assertMatch(actual, service.get(id));
+        //testMatcher.assertMatch(actual, service.get(id));
     }
 
     @Test
