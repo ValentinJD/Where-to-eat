@@ -40,9 +40,9 @@ public class MealTestData {
     public static final Meal MEAL9 = new Meal(100013,"Медальоны из телячьей вырезки с бефстроганов под сморчками на картофельном пюре", 394.53f, TRI_OLENYA);
 
 
-    public static final List<Meal> MEALS = Arrays.asList(MEAL9,MEAL8, MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
+    public static final List<Meal> MEALS = List.of(MEAL9,MEAL8, MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
 
-    public static final List<Meal> MEALS_PERCHINI = Arrays.asList(MEAL3, MEAL2, MEAL1);
+    public static final List<Meal> MEALS_PERCHINI = List.of(MEAL3, MEAL2, MEAL1);
 
     public static Meal getNew() {
         return new Meal("новая еда", 100f, PERCHINI);

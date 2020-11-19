@@ -19,10 +19,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
         System.out.println("Main Тест");
-        //UserRepository userRepository;
+        UserRepository userRepository;
 //                new JDBCUserRepository();
 
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
+        var context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         System.out.println("Bean definition names: " );
         Arrays.asList(context.getBeanDefinitionNames()).forEach(
                 name -> System.out.println(name));

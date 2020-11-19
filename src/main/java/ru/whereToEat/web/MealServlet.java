@@ -64,27 +64,23 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         switch (action == null ? "all" : action) {
-            case "delete":
+            case "delete" -> {
                 int id = getMealId(request);
-
                 mealRestController.delete(id);
                 response.sendRedirect("meals");
-                break;
-            case "create":
-            case "update":
+            }
+            case "create", "update" -> {
                 final Meal meal = "create".equals(action) ?
                         new Meal("", 0f) :
                         mealRestController.get(getMealId(request));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("jsp/mealForm.jsp").forward(request, response);
-                break;
-            case "all":
-            default:
-
+            }
+            default -> {
                 Collection<Meal> meals = mealRestController.getAll();
                 request.setAttribute("meals", meals);
                 request.getRequestDispatcher("jsp/meals.jsp").forward(request, response);
-                break;
+            }
         }
     }
 
