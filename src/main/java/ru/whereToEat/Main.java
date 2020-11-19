@@ -29,7 +29,7 @@ public class Main {
 
         MealRepository repository1 = context.getBean(MealRepository.class);
         List<Meal> list = repository1.getAll(100002);
-        System.out.println(list);
+        list.forEach(System.out::println);
         //User user = userRepository1.save(new User("test", "@bvz", "passTTT", true, LocalDateTime.now(), Role.USER ));
 
         /*userRepository1.save(new User(null,"name", "user@yandex.ru","Duplicate", true, LocalDateTime.now(), Role.USER));

@@ -1,5 +1,7 @@
 package ru.whereToEat.model;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -9,8 +11,12 @@ import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
 @Entity
 @Table(name = "restaurants")
 @Access(AccessType.FIELD)
+@NamedQueries(
+        @NamedQuery(name = Restaurant.ALL_SORTED, query = "SELECT r FROM Restaurant r order by r.id")
+)
 public class Restaurant implements Serializable {
 
+    public static final String ALL_SORTED = "Restaurant.AllSorted";
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
@@ -23,6 +29,7 @@ public class Restaurant implements Serializable {
     private int vote_count;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "meals")
     private List<Meal> menu;
 
     public Restaurant() {
@@ -36,6 +43,12 @@ public class Restaurant implements Serializable {
         this.id = id;
         this.name = name;
         this.vote_count = vote_count;
+    }
+
+    // doesn't work for hibernate lazy proxy
+    public int id() {
+        Assert.notNull(id, "Entity must has id");
+        return id;
     }
 
     public boolean isNew() {
