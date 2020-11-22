@@ -9,10 +9,12 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.whereToEat.Profiles;
 import ru.whereToEat.UserTestData;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Role;
@@ -33,6 +35,7 @@ import static ru.whereToEat.UserTestData.*;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
+@ActiveProfiles(Profiles.HSQL_DB)
 public class UserServiceTest {
     private static final Logger log = getLogger("result");
 
