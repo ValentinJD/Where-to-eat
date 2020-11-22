@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.whereToEat.ActiveDbProfileResolver;
 import ru.whereToEat.Profiles;
 import ru.whereToEat.UserTestData;
 import ru.whereToEat.exceptions.NotFoundException;
@@ -35,7 +36,7 @@ import static ru.whereToEat.UserTestData.*;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.HSQL_DB)
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public class UserServiceTest {
     private static final Logger log = getLogger("result");
 

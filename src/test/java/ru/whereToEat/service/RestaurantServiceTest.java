@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.whereToEat.ActiveDbProfileResolver;
 import ru.whereToEat.Profiles;
 import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.TestMatcher;
@@ -33,7 +34,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.HSQL_DB)
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public class RestaurantServiceTest {
     private static final Logger log = getLogger("result");
 
