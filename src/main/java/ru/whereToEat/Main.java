@@ -18,11 +18,15 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
+        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.REPOSITORY_IMPLEMENTATION);
+        context.refresh();
+
         System.out.println("Main Тест");
         UserRepository userRepository;
 //                new JDBCUserRepository();
 
-        var context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
+        //var context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         System.out.println("Bean definition names: " );
         Arrays.asList(context.getBeanDefinitionNames()).forEach(
                 name -> System.out.println(name));

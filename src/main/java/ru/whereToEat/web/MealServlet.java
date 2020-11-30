@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.whereToEat.Profiles;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.MealService;
@@ -29,8 +30,10 @@ public class MealServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
-       // mealService = context.getBean(MealService.class);
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
+        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile());
+       context.refresh();
+        // mealService = context.getBean(MealService.class);
         restaurantService = context.getBean(RestaurantService.class);
         mealRestController = context.getBean(MealRestController.class);
     }
