@@ -3,12 +3,10 @@ package ru.whereToEat.repository.jpa;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.whereToEat.model.Meal;
-import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.MealRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository

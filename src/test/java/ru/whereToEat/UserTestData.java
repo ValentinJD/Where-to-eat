@@ -5,8 +5,6 @@ import ru.whereToEat.model.User;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;

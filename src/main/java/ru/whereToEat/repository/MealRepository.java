@@ -2,7 +2,6 @@ package ru.whereToEat.repository;
 
 import ru.whereToEat.model.Meal;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MealRepository {

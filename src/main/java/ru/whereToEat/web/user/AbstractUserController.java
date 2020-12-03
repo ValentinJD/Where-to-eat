@@ -9,7 +9,6 @@ import ru.whereToEat.service.UserService;
 
 import java.util.List;
 
-import static ru.whereToEat.util.ValidationUtil.assureIdConsistent;
 import static ru.whereToEat.util.ValidationUtil.checkNew;
 
 public abstract class AbstractUserController {

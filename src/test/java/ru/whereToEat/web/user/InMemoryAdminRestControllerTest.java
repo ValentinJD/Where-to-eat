@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.exceptions.NotFoundException;
-import ru.whereToEat.repository.UserRepository;
 import ru.whereToEat.repository.inMemory.InMemoryUserRepository;
 
 import java.util.Arrays;

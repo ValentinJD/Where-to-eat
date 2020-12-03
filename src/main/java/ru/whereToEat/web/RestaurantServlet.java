@@ -1,7 +1,5 @@
 package ru.whereToEat.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.Profiles;
@@ -10,8 +8,6 @@ import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.Vote;
-import ru.whereToEat.service.RestaurantService;
-import ru.whereToEat.service.VoteService;
 import ru.whereToEat.web.restaurant.RestaurantRestController;
 import ru.whereToEat.web.vote.VoteRestController;
 

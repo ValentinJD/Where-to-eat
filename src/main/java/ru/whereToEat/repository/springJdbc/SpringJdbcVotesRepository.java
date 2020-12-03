@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
-import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 

@@ -5,14 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.Profiles;
-import ru.whereToEat.model.Meal;
-import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
-import ru.whereToEat.repository.jdbc.JDBCUserRepository;
-import ru.whereToEat.service.MealService;
-import ru.whereToEat.service.RestaurantService;
-import ru.whereToEat.service.UserService;
 import ru.whereToEat.util.TimeUtil;
 import ru.whereToEat.web.user.AdminRestController;
 
@@ -22,13 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UserServlet extends HttpServlet {
     protected final Logger log = LoggerFactory.getLogger(getClass());

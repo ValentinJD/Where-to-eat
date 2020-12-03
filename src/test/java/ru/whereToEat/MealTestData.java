@@ -3,7 +3,6 @@ package ru.whereToEat;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 
-import java.util.Arrays;
 import java.util.List;
 
 

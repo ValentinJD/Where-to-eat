@@ -1,13 +1,10 @@
 package ru.whereToEat.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.Profiles;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
-import ru.whereToEat.service.MealService;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.web.meal.MealRestController;
 

@@ -44,7 +44,8 @@ public class SpringJdbcUserRepository implements UserRepository {
                 .addValue("email", user.getEmail())
                 .addValue("password", user.getPassword())
                 .addValue("registered", user.getRegistered())
-                .addValue("enabled", user.isEnabled());
+                .addValue("enabled", user.isEnabled())
+                .addValue("role",user.getRole());
 
         if (user.isNew()) {
             Number newKey = insertUser.executeAndReturnKey(map);
@@ -64,7 +65,7 @@ public class SpringJdbcUserRepository implements UserRepository {
 
     @Override
     public User get(Integer id) {
-        List<User> users = jdbcTemplate.query("SELECT * FROM users, roles WHERE users.id=? and roles.user_id=? ", ROW_MAPPER, id, id);
+        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE users.id=?", ROW_MAPPER, id);
         return DataAccessUtils.singleResult(users);
     }
 

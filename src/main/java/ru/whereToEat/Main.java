@@ -5,14 +5,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Meal;
-import ru.whereToEat.model.Role;
-import ru.whereToEat.model.User;
 import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.UserRepository;
-import ru.whereToEat.repository.springJdbc.SpringJdbcUserRepository;
 
-import javax.persistence.EntityManagerFactory;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 

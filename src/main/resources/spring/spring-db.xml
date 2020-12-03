@@ -57,6 +57,10 @@
 
     </beans>
 
+    <beans profile="jdbc">
+        <context:component-scan base-package="ru.whereToEat.repository.jdbc"/>
+    </beans>
+
     <beans profile="datajpa, jpa">
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
               p:dataSource-ref="dataSource"
@@ -89,12 +93,8 @@
 
     </beans>
 
-    <beans profile="jdbc">
-
-    </beans>
-
     <beans profile="springjdbc">
-        <context:component-scan base-package="ru.whereToEat.**.repository.jdbc"/>
+        <context:component-scan base-package="ru.whereToEat.**.repository.springJdbc"/>
         <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
             <constructor-arg ref="dataSource"/>
         </bean>

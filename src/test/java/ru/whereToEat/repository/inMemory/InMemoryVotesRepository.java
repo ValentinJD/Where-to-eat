@@ -1,7 +1,6 @@
 package ru.whereToEat.repository.inMemory;
 
 import org.springframework.stereotype.Repository;
-import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 

@@ -14,9 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.whereToEat.ActiveDbProfileResolver;
-import ru.whereToEat.Profiles;
 import ru.whereToEat.TestMatcher;
-import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Meal;
 
 import javax.persistence.EntityNotFoundException;
