@@ -27,7 +27,7 @@ public class dbUtil {
                 Properties prop = new Properties();
                 InputStream inputStream = dbUtil.class.getClassLoader().getResourceAsStream("db/postgres.properties");
                 prop.load(inputStream);
-                String driver = prop.getProperty("driver");
+                String driver = prop.getProperty("database.driver");
                 String url = prop.getProperty("database.url");
                 String user = prop.getProperty("database.user");
                 String password = prop.getProperty("database.password");

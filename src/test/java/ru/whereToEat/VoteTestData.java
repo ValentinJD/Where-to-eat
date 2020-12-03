@@ -1,5 +1,6 @@
 package ru.whereToEat;
 
+import ru.whereToEat.model.User;
 import ru.whereToEat.model.Vote;
 
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static ru.whereToEat.RestaurantTestData.*;
 import static ru.whereToEat.UserTestData.ADMIN_ID;
 import static ru.whereToEat.UserTestData.USER_ID;
@@ -73,5 +75,9 @@ public class VoteTestData {
         Vote updated = new Vote(VOTE_ADMIN_ID1_ON_PERCHINI, ADMIN_ID, LocalDateTime.of(LocalDate.now(), LocalTime.of(01, 00)), PERCHINI_ID, 0);
         updated.setVote(1);
         return updated;
+    }
+
+    public static void assertMatch(Vote actual, Vote expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "date_vote");
     }
 }

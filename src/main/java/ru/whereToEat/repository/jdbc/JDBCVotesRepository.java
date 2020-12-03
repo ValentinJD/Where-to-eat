@@ -67,6 +67,14 @@ public class JDBCVotesRepository implements VotesRepository {
 
                 preparedStatement.executeUpdate();
 
+                vote.setId(
+                        getByRestaurantIdUserIdAndLocalDate(
+                                vote.getRestaurantId(),
+                                vote.getUserId(),
+                                vote.getDate_vote().toLocalDate())
+                                .getId()
+                );
+
                 log.info("update {}", vote);
                 return vote;
 
@@ -244,7 +252,12 @@ public class JDBCVotesRepository implements VotesRepository {
 
     @Override
     public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
-        connection = dbUtil.getConnection();
+        return getAll(restaurantId).stream()
+                .filter(vote -> vote.getUserId() == userId)
+                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
+                .findFirst().get();
+
+        /*connection = dbUtil.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.
@@ -273,8 +286,8 @@ public class JDBCVotesRepository implements VotesRepository {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
-
-        return null;
+*/
+     //   return null;
     }
 
 
