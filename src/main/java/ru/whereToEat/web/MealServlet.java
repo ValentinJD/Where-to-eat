@@ -28,7 +28,7 @@ public class MealServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
-        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile());
+        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), "jpa");
        context.refresh();
         // mealService = context.getBean(MealService.class);
         restaurantService = context.getBean(RestaurantService.class);

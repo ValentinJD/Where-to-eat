@@ -38,7 +38,7 @@ public class VoteServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
-        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile());
+        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), "jpa");
         context.refresh();
         //ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
 
