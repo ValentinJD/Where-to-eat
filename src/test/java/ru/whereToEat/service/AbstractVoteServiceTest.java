@@ -1,8 +1,10 @@
 package ru.whereToEat.service;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import ru.whereToEat.TestMatcher;
 import ru.whereToEat.VoteTestData;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
@@ -12,6 +14,7 @@ import ru.whereToEat.model.Vote;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -24,6 +27,14 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected VoteService service;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Before
+    public void setUp() throws Exception {
+        Objects.requireNonNull(cacheManager.getCache("votes")).clear();
+    }
 
     @Test
     public void delete() {

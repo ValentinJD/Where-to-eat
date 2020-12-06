@@ -1,5 +1,7 @@
 package ru.whereToEat.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.whereToEat.model.Meal;
@@ -29,14 +31,17 @@ public class RestaurantService {
         return restaurantRepository.get(restaurantId);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(int restaurantId) {
         checkNotFoundWithId(restaurantRepository.delete(restaurantId), restaurantId);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
     }
+
 
     private List<Meal> getMeals(int restaurantId) {
         return mealRepository.getAll(restaurantId);
@@ -46,6 +51,7 @@ public class RestaurantService {
         return voteService.getCountVote(restaurantId);
     }
 
+    @Cacheable("restaurants")
     public List<Restaurant> getAll() {
         List<Restaurant> list = restaurantRepository.getAll();
 
@@ -58,6 +64,7 @@ public class RestaurantService {
         return list;
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);

@@ -1,19 +1,30 @@
 package ru.whereToEat.service;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.TestMatcher;
 import ru.whereToEat.model.Restaurant;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertThrows;
 
 abstract public class AbstractRestaurantServiceTest extends AbstractServiceTest {
     @Autowired
     protected RestaurantService service;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Before
+    public void setUp() throws Exception {
+        Objects.requireNonNull(cacheManager.getCache("restaurants")).clear();
+    }
 
     @Test
     public void get() {

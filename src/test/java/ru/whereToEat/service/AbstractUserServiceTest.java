@@ -12,6 +12,7 @@ import ru.whereToEat.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertThrows;
 import static ru.whereToEat.UserTestData.*;
@@ -26,7 +27,7 @@ abstract public class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        cacheManager.getCache("users").clear();
+        Objects.requireNonNull(cacheManager.getCache("users")).clear();
     }
 
     @Test

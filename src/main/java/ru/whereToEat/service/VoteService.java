@@ -2,6 +2,8 @@ package ru.whereToEat.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.whereToEat.exceptions.NotFoundException;
@@ -33,6 +35,7 @@ public class VoteService {
         this.restaurantRepository = restaurantRepository;
     }
 
+    @Cacheable("votes")
     public List<Vote> getallbyrestarauntid(int restaurantId) {
 
         return votesRepository.getAll(restaurantId).stream()
@@ -41,10 +44,12 @@ public class VoteService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable("votes")
     public Vote getByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDate ldt) {
         return votesRepository.getByRestaurantIdUserIdAndLocalDate(restaurantId, userId, ldt);
     }
 
+    @Cacheable("votes")
     public List<Vote> getAll() {
         return votesRepository.getAllForTest();
     }
@@ -116,6 +121,7 @@ public class VoteService {
         return votesRepository.save(vote);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public Vote update(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
         return votesRepository.save(vote);
     }
