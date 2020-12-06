@@ -1,5 +1,8 @@
 package ru.whereToEat.util;
 
+import org.springframework.context.annotation.Profile;
+import ru.whereToEat.Profiles;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +28,14 @@ public class dbUtil {
         else {
             try {
                 Properties prop = new Properties();
-                InputStream inputStream = dbUtil.class.getClassLoader().getResourceAsStream("db/postgres.properties");
-                prop.load(inputStream);
+                InputStream inputStream;
+                if (Profiles.getActiveDbProfile().equals(Profiles.POSTGRES_DB)) {
+                    inputStream = dbUtil.class.getClassLoader().getResourceAsStream("db/postgres.properties");
+                    prop.load(inputStream);
+                } else {
+                    inputStream = dbUtil.class.getClassLoader().getResourceAsStream("db/hsqldb.properties");
+                    prop.load(inputStream);
+                }
                 String driver = prop.getProperty("database.driver");
                 String url = prop.getProperty("database.url");
                 String user = prop.getProperty("database.user");
@@ -34,6 +43,7 @@ public class dbUtil {
 
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, user, password);
+
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
