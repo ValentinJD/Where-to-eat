@@ -18,21 +18,21 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
 
     @Override
     public Restaurant save(Restaurant restaurant) {
-        return null;
+        return crudRestaurantRepository.save(restaurant);
     }
 
     @Override
     public boolean delete(int restaurantId) {
-        return false;
+        return crudRestaurantRepository.delete(restaurantId) != 0;
     }
 
     @Override
     public Restaurant get(int restaurantId) {
-        return null;
+        return crudRestaurantRepository.findById(restaurantId).orElse(null);
     }
 
     @Override
     public List<Restaurant> getAll() {
-        return null;
+        return crudRestaurantRepository.findAll();
     }
 }

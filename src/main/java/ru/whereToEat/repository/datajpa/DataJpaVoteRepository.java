@@ -20,36 +20,37 @@ public class DataJpaVoteRepository implements VotesRepository {
 
     @Override
     public Vote save(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
-        return null;
+        return crudVoteRepository.save(vote);
     }
 
     @Override
     public boolean delete(int voteId) {
-        return false;
+        return crudVoteRepository.delete(voteId) != 0;
     }
 
     @Override
     public Vote get(int voteId) {
-        return null;
+        return crudVoteRepository.findById(voteId).orElse(null);
     }
 
     @Override
     public List<Vote> getAll(int restaurantId) {
-        return null;
+        return crudVoteRepository.findAllByRestaurantId(restaurantId);
     }
 
     @Override
     public List<Vote> getAllForTest() {
-        return null;
+        return crudVoteRepository.findAll();
     }
 
     @Override
     public List<Vote> getByRestaurantAndUserId(int restaurantId, int userId) {
-        return null;
+        return crudVoteRepository.findAllByRestaurantIdAndUserId(restaurantId, userId);
     }
 
     @Override
     public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
-        return null;
+        return crudVoteRepository.
+                getByRestaurantIdAndUserIdAndDate_vote(restaurantId, userId, ldt);
     }
 }
