@@ -39,6 +39,7 @@ public class User extends AbstractNamedEntity {
     private LocalDateTime registered;
 
     @Enumerated(value = EnumType.STRING)
+    @NotNull
     private Role role;
 
     public User(User u) {

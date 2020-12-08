@@ -10,9 +10,12 @@ import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import static org.junit.Assert.assertThrows;
 import static ru.whereToEat.UserTestData.*;
@@ -87,6 +90,16 @@ abstract public class AbstractUserServiceTest extends AbstractServiceTest {
     public void getAll() {
         List<User> all = service.getAll();
         assertMatch(all, ADMIN, USER);
+    }
+
+
+    @Test
+    public void createWithException() throws Exception {
+        validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", true, LocalDateTime.now(), null)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", true, null, Role.USER)), ConstraintViolationException.class);
     }
 
 
