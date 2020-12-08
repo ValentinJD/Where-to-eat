@@ -1,5 +1,6 @@
 package ru.whereToEat.model;
 
+import org.hibernate.annotations.BatchSize;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -29,6 +30,8 @@ public class Restaurant implements Serializable {
     private int vote_count;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @BatchSize(size = 200)
+    @OrderBy("id ASC ")
     private List<Meal> menu;
 
     public Restaurant() {
