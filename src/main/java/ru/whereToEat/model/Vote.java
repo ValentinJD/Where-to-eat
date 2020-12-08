@@ -3,6 +3,8 @@ package ru.whereToEat.model;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
@@ -36,6 +38,7 @@ public class Vote {
     private int userId;
 
     @Column(name = "date_vote", nullable = false)
+    @NotNull
     private LocalDateTime date_vote;
 
     @Column(name = "restaurant_id", nullable = false)

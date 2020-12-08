@@ -4,6 +4,8 @@ import org.hibernate.annotations.BatchSize;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class Restaurant implements Serializable {
     private Integer id;
 
     @Column(name = "name", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 1000)
     private String name;
 
     @Column(name = "vote_count", nullable = false)

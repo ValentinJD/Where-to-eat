@@ -1,8 +1,12 @@
 package ru.whereToEat.model;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
 
@@ -13,7 +17,7 @@ import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
         @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m left JOIN FETCH m.restaurant ORDER BY m.id desc "),
         @NamedQuery(name = Meal.ALL_SORTED_BY_RESTAURANT_ID, query = "SELECT m FROM Meal m WHERE m.restaurant.id=?1 order by m.id desc ")
 })
-public class Meal  {
+public class Meal {
     public static final String ALL_SORTED = "Meal.AllSorted";
     public static final String ALL_SORTED_BY_RESTAURANT_ID = "Meal.AllSortedByRestaurantId";
 
@@ -23,9 +27,13 @@ public class Meal  {
     private Integer id;
 
     @Column(name = "description", nullable = false)
+    @NotBlank
+    @Size(min = 5, max = 1000)
     private String description;
 
     @Column(name = "price", nullable = false)
+    @NotNull
+    @Range(min = 0)
     private Float price;
 
     @ManyToOne(fetch = FetchType.LAZY)
