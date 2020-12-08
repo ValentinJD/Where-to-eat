@@ -28,8 +28,7 @@ public class Restaurant implements Serializable {
     @Column(name = "vote_count", nullable = false)
     private int vote_count;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "meals")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     private List<Meal> menu;
 
     public Restaurant() {

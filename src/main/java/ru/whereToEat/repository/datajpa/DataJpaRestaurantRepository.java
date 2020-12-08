@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public class DataJpaRestaurantRepository implements RestaurantRepository {
 
+
     private final CrudRestaurantRepository crudRestaurantRepository;
 
     public DataJpaRestaurantRepository(CrudRestaurantRepository crudRestaurantRepository) {
@@ -35,4 +36,11 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
     public List<Restaurant> getAll() {
         return crudRestaurantRepository.findAll();
     }
+
+    @Override
+    public Restaurant getWithMeals(int restaurantId) {
+        return crudRestaurantRepository.getWithMeals(restaurantId);
+    }
+
+
 }

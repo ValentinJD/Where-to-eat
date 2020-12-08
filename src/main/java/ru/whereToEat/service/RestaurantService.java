@@ -31,6 +31,11 @@ public class RestaurantService {
         return restaurantRepository.get(restaurantId);
     }
 
+    public Restaurant getWithMeals(int restaurantId) {
+        checkNotFoundWithId(get(restaurantId), restaurantId);
+        return restaurantRepository.getWithMeals(restaurantId);
+    }
+
     @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(int restaurantId) {
         checkNotFoundWithId(restaurantRepository.delete(restaurantId), restaurantId);

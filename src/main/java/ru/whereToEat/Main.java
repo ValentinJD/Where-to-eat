@@ -5,8 +5,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Meal;
+import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.repository.datajpa.DataJpaRestaurantRepository;
+import ru.whereToEat.repository.datajpa.DataJpaUserRepository;
+import ru.whereToEat.service.MealService;
+import ru.whereToEat.service.RestaurantService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,9 +31,13 @@ public class Main {
         Arrays.asList(context.getBeanDefinitionNames()).forEach(
                 name -> System.out.println(name));
 
-        MealRepository repository1 = context.getBean(MealRepository.class);
-        List<Meal> list = repository1.getAll(100002);
-        list.forEach(System.out::println);
+       /* RestaurantService service = context.getBean(RestaurantService.class);
+        List<Restaurant> list = service.getAll();
+        list.forEach(System.out::println);*/
+
+        DataJpaRestaurantRepository repository = context.getBean(DataJpaRestaurantRepository.class);
+        Restaurant restaurant = repository.getWithMeals(100002);
+        System.out.println(restaurant);
         //User user = userRepository1.save(new User("test", "@bvz", "passTTT", true, LocalDateTime.now(), Role.USER ));
 
         /*userRepository1.save(new User(null,"name", "user@yandex.ru","Duplicate", true, LocalDateTime.now(), Role.USER));
