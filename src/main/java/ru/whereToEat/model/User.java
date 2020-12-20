@@ -1,5 +1,8 @@
 package ru.whereToEat.model;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import org.hibernate.annotations.Cache;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -7,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NamedQueries({
         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
         @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u WHERE u.email=?1"),
@@ -38,6 +42,7 @@ public class User extends AbstractNamedEntity {
     @NotNull
     private LocalDateTime registered;
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(value = EnumType.STRING)
     @NotNull
     private Role role;

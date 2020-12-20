@@ -7,6 +7,7 @@ import org.springframework.cache.CacheManager;
 import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.TestMatcher;
 import ru.whereToEat.model.Restaurant;
+import ru.whereToEat.repository.JpaUtil;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -21,9 +22,15 @@ abstract public class AbstractRestaurantServiceTest extends AbstractServiceTest 
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired(required = false)
+    private JpaUtil jpaUtil;
+
     @Before
     public void setUp() throws Exception {
         Objects.requireNonNull(cacheManager.getCache("restaurants")).clear();
+        if (isJpaBased()) {
+            jpaUtil.clear2ndLevelHibernateCache();
+        }
     }
 
     @Test

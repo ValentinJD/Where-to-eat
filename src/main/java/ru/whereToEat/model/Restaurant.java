@@ -1,6 +1,8 @@
 package ru.whereToEat.model;
 
+import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "restaurants")
 @Access(AccessType.FIELD)
@@ -33,6 +36,7 @@ public class Restaurant implements Serializable {
     @Column(name = "vote_count", nullable = false)
     private int vote_count;
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @BatchSize(size = 200)
     @OrderBy("id ASC ")

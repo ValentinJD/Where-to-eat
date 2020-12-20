@@ -10,6 +10,7 @@ import ru.whereToEat.UserTestData;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
+import ru.whereToEat.repository.JpaUtil;
 
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
@@ -29,9 +30,15 @@ abstract public class AbstractUserServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired(required = false)
+    private JpaUtil jpaUtil;
+
     @Before
     public void setUp() throws Exception {
         Objects.requireNonNull(cacheManager.getCache("users")).clear();
+        if (isJpaBased()) {
+            jpaUtil.clear2ndLevelHibernateCache();
+        }
     }
 
     @Test
