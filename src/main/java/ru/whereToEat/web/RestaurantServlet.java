@@ -42,7 +42,13 @@ public class RestaurantServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("restaurantId");
 
-        if (id.equals("")) {
+        // чему соответствует id
+        // если "" то ресторан новый
+        // если не "" то проверить есть ли в базе
+        Restaurant restaurantIsNew = id.equals("") ? new Restaurant() :controller.get(getRestaurantId(request));
+
+
+        if (restaurantIsNew.isNew()) {
             Restaurant restaurant = new Restaurant();
             restaurant.setName(request.getParameter("name"));
             restaurant.setVote_count(getRestaurantCount(request));

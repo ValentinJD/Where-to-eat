@@ -255,7 +255,7 @@ public class JDBCVotesRepository implements VotesRepository {
         return getAll(restaurantId).stream()
                 .filter(vote -> vote.getUserId() == userId)
                 .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
-                .findFirst().get();
+                .findFirst().orElse(null);
 
         /*connection = dbUtil.getConnection();
 

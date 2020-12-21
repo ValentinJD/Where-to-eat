@@ -23,7 +23,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
-        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.JDBC);
+        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.JPA);
         context.refresh();
 
         System.out.println("Main Тест");
@@ -93,7 +93,8 @@ public class Main {
         //Получение голосов конкретного ресторана
         //List<Vote> votes = votesRepository.getAll(100002);
         //votes.forEach(System.out::println);
-        Vote vote = votesRepository.getByRestaurantIdUserIdAndLocalDate(100002,100000, LocalDate.now().atStartOfDay());
+        Vote vote = votesRepository.getByRestaurantIdUserIdAndLocalDate(100002,100000,
+                LocalDateTime.parse("2020-12-21T21:17:18.385646"));
         System.out.println();
         //Сохранение голоса
         /*Vote vote = new Vote();

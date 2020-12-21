@@ -54,7 +54,7 @@ public class VoteTestData {
     );
 
     public static Vote getVoteAdminOnPerchiniToday() {
-        return new Vote(VOTE_ADMIN_ID1_ON_PERCHINI, ADMIN_ID, LocalDateTime.now(), PERCHINI_ID, 0);
+        return new Vote(VOTE_ADMIN_ID1_ON_PERCHINI, ADMIN_ID, LocalDateTime.now(), PERCHINI_ID, 1);
     }
 
     public static Vote getNewBefore11oClock() {

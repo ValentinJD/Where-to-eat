@@ -70,11 +70,18 @@ public class JpaVotesRepository implements VotesRepository {
 
     @Override
     public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
-
+/*
         return em.createNamedQuery(Vote.ALL_SORTED_BY_RESTAURANT_ID_AND_USER_ID_AND_DATEVOTE, Vote.class)
                 .setParameter(1, restaurantId)
                 .setParameter(2, userId)
                 .setParameter(3, ldt)
-                .getSingleResult();
+                .getSingleResult();*/
+
+        return getAll(restaurantId).stream()
+                .filter(vote -> vote.getUserId() == userId)
+                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
+                .findFirst().orElse(null);
+
+
     }
 }

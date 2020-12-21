@@ -88,9 +88,13 @@ public class SpringJdbcVotesRepository implements VotesRepository {
 
     @Override
     public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
-        List<Vote> votes = jdbcTemplate.query("SELECT * FROM history_votes where restaurant_id=? and user_id=?" +
+/*        List<Vote> votes = jdbcTemplate.query("SELECT * FROM history_votes where restaurant_id=? and user_id=?" +
                 "and date_vote=?" +
                 " Order By id", ROW_MAPPER, restaurantId, userId, ldt);
-        return DataAccessUtils.singleResult(votes);
+        return DataAccessUtils.singleResult(votes);*/
+        return getAll(restaurantId).stream()
+                .filter(vote -> vote.getUserId() == userId)
+                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
+                .findFirst().orElse(null);
     }
 }

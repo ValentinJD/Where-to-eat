@@ -51,7 +51,11 @@ public class DataJpaVoteRepository implements VotesRepository {
 
     @Override
     public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
-        return crudVoteRepository.
-                getByRestaurantIdAndUserIdAndDate_vote(restaurantId, userId, ldt);
+ /*       return crudVoteRepository.
+                getByRestaurantIdAndUserIdAndDate_vote(restaurantId, userId, ldt);*/
+        return getAll(restaurantId).stream()
+                .filter(vote -> vote.getUserId() == userId)
+                .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))
+                .findFirst().orElse(null);
     }
 }
