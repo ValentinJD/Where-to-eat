@@ -1,5 +1,7 @@
 package ru.whereToEat.model;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
@@ -12,6 +14,7 @@ import javax.validation.constraints.Size;
 
 import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "meals")
 @Access(AccessType.FIELD)

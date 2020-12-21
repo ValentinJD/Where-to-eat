@@ -36,7 +36,7 @@ public class UserService {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
-  //  @Cacheable("users")
+    @Cacheable("users")
     public List<User> getAll() {
         return repository.getAll();
     }
