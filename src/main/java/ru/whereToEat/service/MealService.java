@@ -29,6 +29,7 @@ public class MealService {
         return repository.getAll();
     }
 
+    @Cacheable("meals")
     public Meal get(int mealId) {
         return repository.get(mealId);
     }

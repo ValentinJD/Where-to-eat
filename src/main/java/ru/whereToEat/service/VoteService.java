@@ -67,8 +67,8 @@ public class VoteService {
 
     private boolean isVoteUserInRestaurantBefore11Hour(Vote vote) {
         Objects.requireNonNull(vote);
-//        return vote.getDate_vote().getHour() < 11;
-        return true;
+        return vote.getDate_vote().getHour() < 11;
+//        return true;
     }
 
     public int getCountVote(int restaurantId) {

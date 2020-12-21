@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import ru.whereToEat.TestMatcher;
 import ru.whereToEat.model.Meal;
+import ru.whereToEat.repository.JpaUtil;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -23,9 +24,15 @@ abstract public class AbstractMealServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired(required = false)
+    private JpaUtil jpaUtil;
+
     @Before
     public void setUp() throws Exception {
         Objects.requireNonNull(cacheManager.getCache("meals")).clear();
+        if (isJpaBased()) {
+            jpaUtil.clear2ndLevelHibernateCache();
+        }
     }
 
     @Test
