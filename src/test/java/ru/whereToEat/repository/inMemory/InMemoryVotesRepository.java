@@ -5,6 +5,7 @@ import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -59,7 +60,7 @@ public class InMemoryVotesRepository implements VotesRepository {
     }
 
     @Override
-    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
+    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
         return storage.values().stream()
                 .filter((vote) -> vote.getRestaurantId() == restaurantId)
                 .filter(vote -> vote.getUserId() == userId)

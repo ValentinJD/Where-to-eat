@@ -15,6 +15,7 @@ import ru.whereToEat.repository.RestaurantRepository;
 import ru.whereToEat.repository.VotesRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +36,7 @@ public class VoteService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    @Cacheable("votes")
+   // @Cacheable("votes")
     public List<Vote> getallbyrestarauntid(int restaurantId) {
 
         return votesRepository.getAll(restaurantId).stream()
@@ -44,12 +45,12 @@ public class VoteService {
                 .collect(Collectors.toList());
     }
 
-    @Cacheable("votes")
-    public Vote getByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDate ldt) {
+   // @Cacheable("votes")
+    public Vote getByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDateTime ldt) {
         return votesRepository.getByRestaurantIdUserIdAndLocalDate(restaurantId, userId, ldt);
     }
 
-    @Cacheable("votes")
+   // @Cacheable("votes")
     public List<Vote> getAll() {
         return votesRepository.getAllForTest();
     }
@@ -66,7 +67,8 @@ public class VoteService {
 
     private boolean isVoteUserInRestaurantBefore11Hour(Vote vote) {
         Objects.requireNonNull(vote);
-        return vote.getDate_vote().getHour() < 11;
+//        return vote.getDate_vote().getHour() < 23;
+        return true;
     }
 
     public int getCountVote(int restaurantId) {
@@ -93,7 +95,7 @@ public class VoteService {
 
         if (isVoteUserInRestaurantBefore11Hour(vote1)) {
             // получаем голос за ресторан за сегодня
-            Vote vote = getByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDate.now());
+            Vote vote = getByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDateTime.now());
 
             if (vote == null) {
                 vote = new Vote();
@@ -121,7 +123,7 @@ public class VoteService {
         return votesRepository.save(vote);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
+  //  @CacheEvict(value = "users", allEntries = true)
     public Vote update(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
         return votesRepository.save(vote);
     }

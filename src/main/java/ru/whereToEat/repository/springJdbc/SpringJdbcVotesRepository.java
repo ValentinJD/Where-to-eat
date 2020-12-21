@@ -13,6 +13,7 @@ import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -86,7 +87,7 @@ public class SpringJdbcVotesRepository implements VotesRepository {
     }
 
     @Override
-    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
+    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
         List<Vote> votes = jdbcTemplate.query("SELECT * FROM history_votes where restaurant_id=? and user_id=?" +
                 "and date_vote=?" +
                 " Order By id", ROW_MAPPER, restaurantId, userId, ldt);

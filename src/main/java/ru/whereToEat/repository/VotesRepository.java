@@ -5,6 +5,7 @@ import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Vote;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface VotesRepository {
@@ -27,5 +28,7 @@ public interface VotesRepository {
     //ordered by datetime
     List<Vote> getByRestaurantAndUserId(int restaurantId, int userId);
 
-    Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt);
+    Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt);
+
+
 }

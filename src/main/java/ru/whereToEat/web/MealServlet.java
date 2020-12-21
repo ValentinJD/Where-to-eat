@@ -2,6 +2,8 @@ package ru.whereToEat.web;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import ru.whereToEat.Profiles;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
@@ -20,19 +22,17 @@ import java.util.Objects;
 public class MealServlet extends HttpServlet {
 
 
-    //private MealService mealService;
+
     private RestaurantService restaurantService;
 
     private MealRestController mealRestController;
 
     @Override
-    public void init(ServletConfig config) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
-        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), "jpa");
-       context.refresh();
-        // mealService = context.getBean(MealService.class);
-        restaurantService = context.getBean(RestaurantService.class);
-        mealRestController = context.getBean(MealRestController.class);
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+        restaurantService = springContext.getBean(RestaurantService.class);
+        mealRestController = springContext.getBean(MealRestController.class);
     }
 
     @Override

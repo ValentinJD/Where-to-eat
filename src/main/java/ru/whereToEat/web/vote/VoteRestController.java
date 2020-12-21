@@ -12,6 +12,7 @@ import ru.whereToEat.service.VoteService;
 import ru.whereToEat.web.SecurityUtil;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -26,7 +27,7 @@ public class VoteRestController {
 
     public Vote get(int restaurantId) {
         int userId = SecurityUtil.authUserId();
-        Vote vote = voteService.getByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDate.now());
+        Vote vote = voteService.getByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDateTime.now());
         log.info("get() {}", vote);
         return vote;
     }

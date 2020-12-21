@@ -6,20 +6,24 @@ import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
+import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.repository.VotesRepository;
 import ru.whereToEat.repository.datajpa.DataJpaRestaurantRepository;
 import ru.whereToEat.repository.datajpa.DataJpaUserRepository;
 import ru.whereToEat.service.MealService;
 import ru.whereToEat.service.RestaurantService;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
-        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.REPOSITORY_IMPLEMENTATION);
+        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.JDBC);
         context.refresh();
 
         System.out.println("Main Тест");
@@ -35,9 +39,9 @@ public class Main {
         List<Restaurant> list = service.getAll();
         list.forEach(System.out::println);*/
 
-        DataJpaRestaurantRepository repository = context.getBean(DataJpaRestaurantRepository.class);
-        Restaurant restaurant = repository.getWithMeals(100002);
-        System.out.println(restaurant);
+        //DataJpaRestaurantRepository repository = context.getBean(DataJpaRestaurantRepository.class);
+       // Restaurant restaurant = repository.getWithMeals(100002);
+        //System.out.println(restaurant);
         //User user = userRepository1.save(new User("test", "@bvz", "passTTT", true, LocalDateTime.now(), Role.USER ));
 
         /*userRepository1.save(new User(null,"name", "user@yandex.ru","Duplicate", true, LocalDateTime.now(), Role.USER));
@@ -85,11 +89,12 @@ public class Main {
         meals.forEach(System.out::println);*/
 
         // Тестирование VotesRepository
-        //VotesRepository votesRepository = context.getBean(VotesRepository.class);
+        VotesRepository votesRepository = context.getBean(VotesRepository.class);
         //Получение голосов конкретного ресторана
         //List<Vote> votes = votesRepository.getAll(100002);
         //votes.forEach(System.out::println);
-
+        Vote vote = votesRepository.getByRestaurantIdUserIdAndLocalDate(100002,100000, LocalDate.now().atStartOfDay());
+        System.out.println();
         //Сохранение голоса
         /*Vote vote = new Vote();
         vote.setUserId(100000);

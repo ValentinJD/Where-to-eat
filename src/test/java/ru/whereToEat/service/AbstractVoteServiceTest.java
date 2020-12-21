@@ -13,6 +13,7 @@ import ru.whereToEat.model.Vote;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,10 +97,10 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
         testMatcher.assertMatch(actual, expected);
     }
 
-    @Ignore
+
     @Test
     public void getByRestaurantIdUserIdAndLocalDate() {
-        Vote expected = service.getByRestaurantIdUserIdAndLOcalDate(PERCHINI_ID, ADMIN_ID, LocalDate.now());
+        Vote expected = service.getByRestaurantIdUserIdAndLOcalDate(PERCHINI_ID, ADMIN_ID, LocalDateTime.now());
         Vote actual = VoteTestData.getVoteAdminOnPerchiniToday();
         TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
         testMatcher.assertMatch(actual, expected);

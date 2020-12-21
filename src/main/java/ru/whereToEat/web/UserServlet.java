@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import ru.whereToEat.Profiles;
 import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
@@ -23,18 +25,14 @@ import java.util.Objects;
 public class UserServlet extends HttpServlet {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    //private UserService userService;
+
     private AdminRestController controller;
 
-
     @Override
-    public void init(ServletConfig config) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
-        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), "jpa");
-        context.refresh();
-        //ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
-        //userService = context.getBean(UserService.class);
-        controller = context.getBean(AdminRestController.class);
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+        controller = springContext.getBean(AdminRestController.class);
     }
 
     @Override

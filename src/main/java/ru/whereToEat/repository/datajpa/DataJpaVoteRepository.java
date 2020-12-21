@@ -7,6 +7,7 @@ import ru.whereToEat.model.Vote;
 import ru.whereToEat.repository.VotesRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -49,7 +50,7 @@ public class DataJpaVoteRepository implements VotesRepository {
     }
 
     @Override
-    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
+    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
         return crudVoteRepository.
                 getByRestaurantIdAndUserIdAndDate_vote(restaurantId, userId, ldt);
     }

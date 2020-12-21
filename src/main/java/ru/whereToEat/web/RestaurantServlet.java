@@ -2,6 +2,8 @@ package ru.whereToEat.web;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import ru.whereToEat.Profiles;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
@@ -28,13 +30,11 @@ public class RestaurantServlet extends HttpServlet {
 
 
     @Override
-    public void init(ServletConfig config) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
-        context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), "jpa");
-        context.refresh();
-        //ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
-        controller = context.getBean(RestaurantRestController.class);
-        voteRestController = context.getBean(VoteRestController.class);
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+        controller = springContext.getBean(RestaurantRestController.class);
+        voteRestController = springContext.getBean(VoteRestController.class);
     }
 
     @Override

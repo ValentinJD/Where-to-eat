@@ -43,7 +43,7 @@ public class JDBCVotesRepository implements VotesRepository {
                         getByRestaurantIdUserIdAndLocalDate(
                                 vote.getRestaurantId(),
                                 vote.getUserId(),
-                                vote.getDate_vote().toLocalDate())
+                                vote.getDate_vote())
                                 .getId()
                 );
 
@@ -71,7 +71,7 @@ public class JDBCVotesRepository implements VotesRepository {
                         getByRestaurantIdUserIdAndLocalDate(
                                 vote.getRestaurantId(),
                                 vote.getUserId(),
-                                vote.getDate_vote().toLocalDate())
+                                vote.getDate_vote())
                                 .getId()
                 );
 
@@ -251,7 +251,7 @@ public class JDBCVotesRepository implements VotesRepository {
     }
 
     @Override
-    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
+    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
         return getAll(restaurantId).stream()
                 .filter(vote -> vote.getUserId() == userId)
                 .filter(vote -> vote.getDate_vote().toLocalDate().isEqual(LocalDate.now()))

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.whereToEat.model.Vote;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -27,5 +28,5 @@ public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
     Vote getByRestaurantIdAndUserIdAndDate_vote(
             @Param("restaurantId") int restaurantId,
             @Param("userId") int userId,
-            @Param("ldt") LocalDate ldt);
+            @Param("ldt") LocalDateTime ldt);
 }

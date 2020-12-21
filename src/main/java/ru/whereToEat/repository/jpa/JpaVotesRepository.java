@@ -10,6 +10,7 @@ import ru.whereToEat.repository.VotesRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -65,8 +66,11 @@ public class JpaVotesRepository implements VotesRepository {
                 .getResultList();
     }
 
+
+
     @Override
-    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDate ldt) {
+    public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
+
         return em.createNamedQuery(Vote.ALL_SORTED_BY_RESTAURANT_ID_AND_USER_ID_AND_DATEVOTE, Vote.class)
                 .setParameter(1, restaurantId)
                 .setParameter(2, userId)
