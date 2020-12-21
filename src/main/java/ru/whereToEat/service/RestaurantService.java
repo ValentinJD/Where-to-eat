@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
-import ru.whereToEat.repository.MealRepository;
 import ru.whereToEat.repository.RestaurantRepository;
 
 import java.util.Comparator;
@@ -17,12 +16,12 @@ import static ru.whereToEat.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
-    private final MealRepository mealRepository;
+    private final MealService mealService;
     private final VoteService voteService;
 
-    public RestaurantService(RestaurantRepository restaurantRepository, MealRepository mealRepository, VoteService voteService) {
+    public RestaurantService(RestaurantRepository restaurantRepository, MealService mealService, VoteService voteService) {
         this.restaurantRepository = restaurantRepository;
-        this.mealRepository = mealRepository;
+        this.mealService = mealService;
 
         this.voteService = voteService;
     }
@@ -36,12 +35,12 @@ public class RestaurantService {
         return restaurantRepository.getWithMeals(restaurantId);
     }
 
-   // @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(int restaurantId) {
         checkNotFoundWithId(restaurantRepository.delete(restaurantId), restaurantId);
     }
 
-   // @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
@@ -49,14 +48,14 @@ public class RestaurantService {
 
 
     private List<Meal> getMeals(int restaurantId) {
-        return mealRepository.getAll(restaurantId);
+        return mealService.getAll(restaurantId);
     }
 
     private int getCountVote(int restaurantId) {
         return voteService.getCountVote(restaurantId);
     }
 
-    //@Cacheable("restaurants")
+    @Cacheable("restaurants")
     public List<Restaurant> getAll() {
         List<Restaurant> list = restaurantRepository.getAll();
 
@@ -69,7 +68,7 @@ public class RestaurantService {
         return list;
     }
 
-   // @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
