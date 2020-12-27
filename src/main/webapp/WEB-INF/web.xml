@@ -19,9 +19,16 @@
         </param-value>
     </context-param>
 
+    <!-- Spring MVC -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+<!--
+
+    <welcome-file-list>
+        <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
+    </welcome-file-list>
+-->
 
     <servlet>
         <servlet-name>userServlet</servlet-name>

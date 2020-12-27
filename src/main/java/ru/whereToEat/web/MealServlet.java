@@ -74,12 +74,12 @@ public class MealServlet extends HttpServlet {
                         new Meal("", 0f) :
                         mealRestController.get(getMealId(request));
                 request.setAttribute("meal", meal);
-                request.getRequestDispatcher("jsp/mealForm.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/mealForm.jsp").forward(request, response);
             }
             default -> {
                 Collection<Meal> meals = mealRestController.getAll();
                 request.setAttribute("meals", meals);
-                request.getRequestDispatcher("jsp/meals.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/meals.jsp").forward(request, response);
             }
         }
     }

@@ -45,7 +45,7 @@ public class UserServlet extends HttpServlet {
 
         if (login != null && request.getParameter("login").equals("yes")) {
             SecurityUtil.setUserId(getId(request));
-            response.sendRedirect("users");
+            response.sendRedirect("restaurants");
             return;
         }
 
@@ -94,14 +94,15 @@ public class UserServlet extends HttpServlet {
                         new User() :
                         controller.get(getId(request));
                 request.setAttribute("user", user);
-                request.getRequestDispatcher("jsp/userForm.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/userForm.jsp").forward(request, response);
                 break;
             case "all":
             default:
                 log.info("getAll");
                 Collection<User> users = controller.getAll();
                 request.setAttribute("users", users);
-                request.getRequestDispatcher("jsp/users.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/users.jsp").forward(request, response);
+                //src/main/webapp/WEB-INF/jsp/users.jsp
                 break;
         }
 

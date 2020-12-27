@@ -94,18 +94,18 @@ public class RestaurantServlet extends HttpServlet {
                         new Restaurant() :
                         controller.get(getRestaurantId(request));
                 request.setAttribute("restaurant", restaurant);
-                request.getRequestDispatcher("jsp/restaurantForm.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/restaurantForm.jsp").forward(request, response);
                 break;
             case "filter":
                 String nameRestaurant = request.getParameter("nameRestaurant");
                 Collection<Restaurant> filteredRestaurants = controller.getFilteredByName(nameRestaurant);
                 request.setAttribute("restaurants", filteredRestaurants);
-                request.getRequestDispatcher("jsp/restaurants.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/restaurants.jsp").forward(request, response);
             case "all":
             default:
                 Collection<Restaurant> restaurants = controller.getAll();
                 request.setAttribute("restaurants", restaurants);
-                request.getRequestDispatcher("jsp/restaurants.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/restaurants.jsp").forward(request, response);
                 break;
         }
 
