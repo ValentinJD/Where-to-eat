@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
+<head >
     <title>Votes</title>
 </head>
-<body>
+<body class="main">
 <hr>
-<h3><a href="index.html">На главную</a></h3>
+<h3><a href="/">На главную</a></h3>
 <hr>
 <h2>Votes List2</h2>
 <table align="center" border="1">

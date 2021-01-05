@@ -1,14 +1,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="fragments/headTag.jsp"/>
+
 <html>
-<head>
-    <title>Meals</title>
-</head>
-<body>
-<hr>
-<h3><a href="index.html">На главную</a></h3>
-<hr>
+
+<body class="main">
+
+<jsp:include page="fragments/bodyHeader.jsp"/>
+
 <h2>Meals List</h2>
 <table align="center" border="1">
 

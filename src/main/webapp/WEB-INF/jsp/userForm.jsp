@@ -1,15 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:include page="fragments/headTag.jsp"/>
+
 <html>
-<head>
-    <title>Users</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+
+<body class="main">
+
+<jsp:include page="fragments/bodyHeader.jsp"/>
+
 <section>
-    <h3><a href="index.html">Home</a></h3>
-    <hr>
     <h2>${param.action == 'create' ? 'Create user' : 'Edit user'}</h2>
     <jsp:useBean id="user" type="ru.whereToEat.model.User" scope="request"/>
     <form method="post" action="users">

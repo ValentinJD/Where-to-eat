@@ -31,7 +31,7 @@ public class RestaurantRestController {
         int id = SecurityUtil.authUserId();
         if (SecurityUtil.isAdmin(id)) {
             restaurantService.delete(restaurantId);
-            log.info("delete() {}", restaurantId);
+            log.info("Удален ресторан() {}", restaurantId);
         } else {
             throw new NotEnoughRightsException("Только для администраторов");
         }

@@ -22,7 +22,6 @@ import java.util.Objects;
 public class MealServlet extends HttpServlet {
 
 
-
     private RestaurantService restaurantService;
 
     private MealRestController mealRestController;
@@ -73,6 +72,9 @@ public class MealServlet extends HttpServlet {
                 final Meal meal = "create".equals(action) ?
                         new Meal("", 0f) :
                         mealRestController.get(getMealId(request));
+                if (action.equals("create")) {
+                    request.setAttribute("restaurantId", getRestaurantId(request));
+                }
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("WEB-INF/jsp/mealForm.jsp").forward(request, response);
             }
@@ -93,8 +95,6 @@ public class MealServlet extends HttpServlet {
         String paramId = Objects.requireNonNull(request.getParameter("restaurantId"));
         return Integer.parseInt(paramId);
     }
-
-
 
 
 }

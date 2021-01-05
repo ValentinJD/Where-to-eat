@@ -30,3 +30,64 @@ header, footer {
     padding: 5px 20px;
     margin: 6px 0;
 }
+
+BODY {
+    background: url(/Where_to_eat_war_exploded/resources/images/photo.jpg)
+    no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+DIV {
+    margin: auto; /* Отступы вокруг блока */
+    width: 90%; /* Ширина блока */
+    border-radius: 15px;
+    text-align: center; /* Выравнивание текста по левому краю */
+    padding: 10px; /* Поля вокруг текста */
+    background: #A6C9E2; /* Цвет фона */
+
+}
+
+table{
+    align-content: center;
+    background-color: #A6C9E2;
+    text-align: center;
+}
+
+
+.c {
+    border: 1px solid #333; /* Рамка */
+    display: inline-block;
+    padding: 5px 15px; /* Поля */
+    text-decoration: none; /* Убираем подчёркивание */
+    color: #000; /* Цвет текста */
+    background-color: #A6C9E2;
+}
+.c:hover {
+    box-shadow: 0 0 5px rgba(0,0,0,0.3); /* Тень */
+    background: linear-gradient(to bottom, #fcfff4, #e9e9ce); /* Градиент */
+    color: #a00;
+}
+
+.main{
+    width: 80%; /* Ширина блока */
+    height: 60%; /* Высота блока */
+    margin: auto;
+}
+
+.restaurant{
+    background-color: #2E6E9E;
+    opacity: 0.9;
+    border-radius: 20px;
+    border-color: black;
+    padding: 1%;
+    width: auto;
+    border: 3px solid #fff; /* Белая рамка */
+    outline: 2px gold #000; /* Чёрная рамка */
+}
+
+p{
+    padding-bottom: 5px;
+    text-align: center;
+}

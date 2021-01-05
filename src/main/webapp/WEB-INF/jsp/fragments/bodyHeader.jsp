@@ -3,5 +3,7 @@
 
 <fmt:setBundle basename="messages.app"/>
 <header>
-    <a href="restaurants"><fmt:message key="app.title"/></a> | <a href="users"><fmt:message key="user.title"/></a>
+    <a href="restaurants"><fmt:message key="app.title"/></a>
+    | <a href="users"><fmt:message key="user.title"/></a>
+    | <a href="${pageContext.request.contextPath}"><fmt:message key="app.home"/></a>
 </header>

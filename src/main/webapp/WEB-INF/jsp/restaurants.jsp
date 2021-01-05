@@ -2,68 +2,86 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<jsp:include page="fragments/headTag.jsp"/>
+
 <html>
-<head>
-    <title>Restaurants</title>
-</head>
-<body>
-<hr>
-<h3><a href="index.html">На главную</a></h3>
-<hr>
-<h2>Restaurants List</h2>
-<form method="get" action="restaurants">
-    <input type="hidden" name="action" value="filter">
-    <dl>
-        <dt>Name Restaurant</dt>
-        <dd><input name="nameRestaurant" value=""></dd>
-    </dl>
 
-    <button type="submit">Filter</button>
-</form>
-<table align="center" border="1">
+<body class="main">
 
-    <tr>
-        <th>restaraunt_Id</th>
-        <th>name_restaraunt</th>
-        <th>vote_count</th>
-        <th></th>
-        <th></th>
-        <th>Голос за</th>
-        <th>Голос против</th>
-    </tr>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<div>
+    <form method="get" action="restaurants">
+        <input type="hidden" name="action" value="filter">
+        <dl>
 
-    <c:forEach var="restaurant" items="${restaurants}">
-        <tr>
-            <jsp:useBean id="restaurant" type="ru.whereToEat.model.Restaurant"/>
+            <dd><input name="nameRestaurant" value="" placeholder="Введите наименование ресторана" size="80%"></dd>
+            <button type="submit">Filter</button>
+        </dl>
 
-            <td>${restaurant.id}</td>
-            <td>${restaurant.name}</td>
-            <td>${restaurant.vote_count}</td>
-            <td><a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.id}"/>">Update</a>
-            </td>
-            <td><a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.id}"/>">Delete</a>
-            </td>
-            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}"/>
-                         &count=1">За</a>
-            </td>
-            <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}
-                         &count=-1"/>">Против</a>
-            </td>
-        </tr>
 
-        <c:forEach var="meal" items="${restaurant.menu}">
-            <tr>
-                <jsp:useBean id="meal" type="ru.whereToEat.model.Meal"/>
-                <td>${meal.id}</td>
-                <td></td>
-                <td>${meal.description}</td>
-                <td>${meal.price}</td>
-                <td></td>
-            </tr>
+    </form>
+</div>
 
-        </c:forEach>
-    </c:forEach>
-</table>
-<a href="restaurants?action=create">Создать</a>
+
+<c:forEach var="restaurant" items="${restaurants}">
+    <div class="restaurant">
+        <div>
+            <table align="center">
+                <tr>
+                    <td>Наименование</td>
+                    <td>Голоса</td>
+                    <td>За</td>
+                    <td>Против</td>
+                </tr>
+                <tr>
+                    <td>${restaurant.name}</td>
+                    <td>${restaurant.vote_count}</td>
+                    <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}"/>&count=1"
+                           class="c">+</a></td>
+                    <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}&count=-1"/>"
+                           class="c">-</a></td>
+                </tr>
+            </table>
+            <br>
+
+
+
+            <a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.id}"/>" class="c">Update</a>
+            <a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.id}"/>" class="c">Delete</a>
+
+        </div>
+        <div>
+            <table align="center">
+                <tr>
+                    <td>Наименование</td>
+                    <td>Цена, руб</td>
+                    <td>Обновить</td>
+                    <td>Удалить</td>
+                </tr>
+                <c:forEach var="meal1" items="${restaurant.menu}">
+
+                    <tr>
+                        <jsp:useBean id="meal1" type="ru.whereToEat.model.Meal"/>
+                            <%--                        <td>${meal1.id}</td>--%>
+                        <td>${meal1.description}</td>
+                        <td>${meal1.price}</td>
+                        <td><a href="meals?action=update&mealId=<c:out value="${meal1.id}
+                        &restaurantId=${restaurant.id}"/>" class="c">Update</a></td>
+                        <td><a href="meals?action=delete&mealId=<c:out value="${meal1.id}
+                        &restaurantId=${restaurant.id}"/>" class="c">Delete</a></td>
+                    </tr>
+
+                </c:forEach>
+            </table>
+            <a href="meals?action=create&restaurantId=${restaurant.id}" class="c">Добавить меню</a>
+        </div>
+    </div>
+    <br>
+</c:forEach>
+<div>
+    <a href="restaurants?action=create" class="c">Создать новый ресторан</a>
+</div>
+
 </body>
 </html>

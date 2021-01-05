@@ -45,13 +45,13 @@ public class RestaurantServlet extends HttpServlet {
         // чему соответствует id
         // если "" то ресторан новый
         // если не "" то проверить есть ли в базе
-        Restaurant restaurantIsNew = id.equals("") ? new Restaurant() :controller.get(getRestaurantId(request));
+        Restaurant restaurantIsNew = (id==null) ? new Restaurant() :controller.get(getRestaurantId(request));
 
 
         if (restaurantIsNew.isNew()) {
             Restaurant restaurant = new Restaurant();
             restaurant.setName(request.getParameter("name"));
-            restaurant.setVote_count(getRestaurantCount(request));
+            restaurant.setVote_count(0);
             controller.create(restaurant);
         } else {
             int restaurantId = getRestaurantId(request);

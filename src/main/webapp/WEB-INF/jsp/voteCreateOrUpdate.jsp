@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html lang="ru">
-<head>
+<head class="main">
     <title>Обновление(Редактирование) Vote</title>
     <meta charset="utf-8">
 </head>
