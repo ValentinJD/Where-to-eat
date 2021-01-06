@@ -7,9 +7,11 @@
 <jsp:include page="fragments/headTag.jsp"/>
 <html>
 <body class="main">
+
 <div class="main op">
     <jsp:include page="fragments/bodyHeader.jsp"/>
-<p class="restaurant">Имя пользователя : <%=SecurityUtil.getUserName() %></p>
+    <p class="restaurant">Имя пользователя : <%=SecurityUtil.getUserName() %>
+    </p>
     <br>
     <div class="restaurant">
         <section>
@@ -23,9 +25,10 @@
             </form>
         </section>
     </div>
-    <br>
+
 
     <jsp:include page="fragments/footer.jsp"/>
 </div>
+
 </body>
 </html>

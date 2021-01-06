@@ -2,15 +2,11 @@ package ru.whereToEat.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import ru.whereToEat.Profiles;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Vote;
-import ru.whereToEat.web.user.AdminRestController;
 import ru.whereToEat.web.vote.VoteRestController;
 
 import javax.servlet.RequestDispatcher;
@@ -31,10 +27,10 @@ public class VoteServlet extends HttpServlet {
 
     private VoteRestController controller;
 
-    private static String LIST_VOTES = "jsp/votes.jsp";
+    private static String LIST_VOTES = "WEB-INF/jsp/votes.jsp";
     private static String LIST_INDEX = "index.html";
-    private static String INSERT_OR_UPDATE = "jsp/voteCreateOrUpdate.jsp";
-    private static String UPDATE = "jsp/updateVote.jsp";
+    private static String INSERT_OR_UPDATE = "WEB-INF/jsp/voteCreateOrUpdate.jsp";
+    private static String UPDATE = "WEB-INF/jsp/updateVote.jsp";
     private static int restaurantId = 100003;
 
     @Override
@@ -84,7 +80,7 @@ public class VoteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        String forward = "";
+        String forward = "WEB-INF/jsp/votes.jsp";
         String action = "";
 
         if (request.getParameter("action") != null) {
@@ -115,7 +111,8 @@ public class VoteServlet extends HttpServlet {
         } else if (action.equalsIgnoreCase("create")) {
             forward = INSERT_OR_UPDATE;
         } else {
-            forward = LIST_INDEX;
+            forward = "WEB-INF/jsp/votes.jsp";
+            request.setAttribute("votes", controller.getAll());
         }
 
         log.debug("doGet()");

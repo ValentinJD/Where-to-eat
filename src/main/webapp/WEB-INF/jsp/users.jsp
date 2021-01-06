@@ -3,16 +3,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <fmt:setBundle basename="messages.app"/>
 <jsp:include page="fragments/headTag.jsp"/>
 <html>
 
 <body class="main">
-
+<div>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <p class="restaurant">Имя пользователя : <%=SecurityUtil.getUserName() %></p>
-<div class="restaurant">
+<div class="restaurant  op">
     <h3><fmt:message key="user.title"/></h3>
 
     <section>
@@ -56,6 +55,6 @@
 </div>
 
 <jsp:include page="fragments/footer.jsp"/>
-
+</div>
 </body>
 </html>

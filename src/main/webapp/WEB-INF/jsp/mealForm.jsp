@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<fmt:setBundle basename="messages.app"/>
 <jsp:include page="fragments/headTag.jsp"/>
 
 <html>
@@ -14,16 +15,17 @@
         <jsp:useBean id="meal" type="ru.whereToEat.model.Meal" scope="request"/>
         <form method="post" action="meals">
             <input type="hidden" name="mealId" value="${meal.id}">
-
-            Description:
-            <input type="text" value="${meal.description}" size=50 name="description" required>
-
-
-            Price:
-            <input type="number" value="${meal.price}" name="price" required>
-
-
             <input type="hidden" value="${param.restaurantId}" name="restaurantId" required>
+
+            <dl>
+                <dt> Description:</dt>
+                <dd><input type="text" value="${meal.description}" size=50 name="description" required></dd>
+            </dl>
+            <dl>
+                <dt> Price:</dt>
+                <dd><input type="number" value="${meal.price}" name="price" required></dd>
+            </dl>
+
 
             <button type="submit">Save</button>
             <button onclick="window.history.back()" type="button">Cancel</button>
