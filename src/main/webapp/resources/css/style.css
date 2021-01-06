@@ -1,12 +1,12 @@
 dl {
-    background: none repeat scroll 0 0 #FAFAFA;
-    margin: 8px 0;
-    padding: 0;
+    /*background: none repeat scroll 0 0 #FAFAFA;*/
+    /*margin: 8px 0;*/
+    /*padding: 0;*/
 }
 
 dt {
     display: inline-block;
-    width: 170px;
+    /*width: 170px;*/
 }
 
 dd {
@@ -25,20 +25,20 @@ tr[data-mealExcess="true"] {
 
 header, footer {
     background: none repeat scroll 0 0 #A6C9E2;
-    color: #2E6E9E;
+    /*color: #2E6E9E;*/
     font-size: 20px;
     padding: 5px 20px;
     margin: 6px 0;
 }
 
 BODY {
-    background: url(/Where_to_eat_war_exploded/resources/images/photo.jpg)
-    no-repeat center center fixed;
+    background: url(/Where_to_eat_war_exploded/resources/images/photo.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
+
 DIV {
     margin: auto; /* Отступы вокруг блока */
     width: 90%; /* Ширина блока */
@@ -49,10 +49,11 @@ DIV {
 
 }
 
-table{
+table {
     align-content: center;
     background-color: #A6C9E2;
     text-align: center;
+    margin-bottom: 2px;
 }
 
 
@@ -62,32 +63,40 @@ table{
     padding: 5px 15px; /* Поля */
     text-decoration: none; /* Убираем подчёркивание */
     color: #000; /* Цвет текста */
-    background-color: #A6C9E2;
-}
-.c:hover {
-    box-shadow: 0 0 5px rgba(0,0,0,0.3); /* Тень */
-    background: linear-gradient(to bottom, #fcfff4, #e9e9ce); /* Градиент */
-    color: #a00;
+    background-color: #496dff;
+    border-radius: 10px;
 }
 
-.main{
+.c:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Тень */
+    background: linear-gradient(to bottom, #fcfff4, #e9e9ce); /* Градиент */
+
+}
+
+.main {
     width: 80%; /* Ширина блока */
     height: 60%; /* Высота блока */
     margin: auto;
 }
 
-.restaurant{
+.op {
+    opacity: 0.95;
+    background-color: #35faff;
+}
+
+.restaurant {
     background-color: #2E6E9E;
     opacity: 0.9;
     border-radius: 20px;
     border-color: black;
     padding: 1%;
     width: auto;
-    border: 3px solid #fff; /* Белая рамка */
-    outline: 2px gold #000; /* Чёрная рамка */
+    /* Белая рамка */
+    /*outline: 2px gold #000; !* Чёрная рамка *!*/
 }
 
-p{
+p {
     padding-bottom: 5px;
     text-align: center;
 }
+

@@ -55,7 +55,7 @@ public class MealServlet extends HttpServlet {
             mealRestController.update(meal);
         }
 
-        response.sendRedirect("meals");
+        response.sendRedirect("restaurants");
     }
 
     @Override
@@ -72,22 +72,22 @@ public class MealServlet extends HttpServlet {
                 final Meal meal = "create".equals(action) ?
                         new Meal("", 0f) :
                         mealRestController.get(getMealId(request));
-                if (action.equals("create")) {
-                    request.setAttribute("restaurantId", getRestaurantId(request));
-                }
+
+                request.setAttribute("restaurantId", getRestaurantId(request));
+
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("WEB-INF/jsp/mealForm.jsp").forward(request, response);
             }
             default -> {
-                Collection<Meal> meals = mealRestController.getAll();
-                request.setAttribute("meals", meals);
-                request.getRequestDispatcher("WEB-INF/jsp/meals.jsp").forward(request, response);
+                Collection<Restaurant> restaurants = restaurantService.getAll();
+                request.setAttribute("restaurants", restaurants);
+                request.getRequestDispatcher("WEB-INF/jsp/restaurants.jsp").forward(request, response);
             }
         }
     }
 
     private int getMealId(HttpServletRequest request) {
-        String paramId = Objects.requireNonNull(request.getParameter("mealId"));
+        String paramId = Objects.requireNonNull(request.getParameter("mealId").trim());
         return Integer.parseInt(paramId);
     }
 

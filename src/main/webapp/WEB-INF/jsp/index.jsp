@@ -1,14 +1,15 @@
+<%@ page import="ru.whereToEat.web.SecurityUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
 <fmt:setBundle basename="messages.app"/>
-<html>
-
 <jsp:include page="fragments/headTag.jsp"/>
+<html>
 <body class="main">
-<div class="restaurant" >
+<div class="main op">
     <jsp:include page="fragments/bodyHeader.jsp"/>
+<p class="restaurant">Имя пользователя : <%=SecurityUtil.getUserName() %></p>
     <br>
     <div class="restaurant">
         <section>
@@ -22,10 +23,9 @@
             </form>
         </section>
     </div>
+    <br>
 
-
+    <jsp:include page="fragments/footer.jsp"/>
 </div>
-
-<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

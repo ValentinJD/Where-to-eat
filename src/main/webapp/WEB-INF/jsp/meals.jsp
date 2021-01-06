@@ -1,3 +1,4 @@
+<%@ page import="ru.whereToEat.web.SecurityUtil" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -8,7 +9,7 @@
 <body class="main">
 
 <jsp:include page="fragments/bodyHeader.jsp"/>
-
+<p class="restaurant">Имя пользователя : <%=SecurityUtil.getUserName() %></p>
 <h2>Meals List</h2>
 <table align="center" border="1">
 
@@ -33,6 +34,7 @@
         </tr>
     </c:forEach>
 </table>
-<a href="meals?action=create" >Создать</a>
+<a href="meals?action=create" class="c">Создать</a>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

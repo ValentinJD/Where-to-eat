@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.whereToEat.model.Role;
+import ru.whereToEat.model.User;
 import ru.whereToEat.service.UserService;
 
 @Component
@@ -28,6 +29,10 @@ public class SecurityUtil {
     public static void setUserId(int userId) {
         currentUser = userId;
         log.info("Login user {}", userId);
+    }
+
+    public static String getUserName() {
+        return userService.get(currentUser).getName();
     }
 
     public static boolean isAdmin(int userId) {
