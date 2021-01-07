@@ -7,6 +7,5 @@
 
     <import resource="spring-cache.xml"/>
     <context:component-scan base-package="ru.whereToEat.**.service"/>
-    <context:component-scan base-package="ru.whereToEat.**.web"/>
 
 </beans>
