@@ -9,7 +9,6 @@
 <body class="main">
 <div class="restaurant">
 
-
     <h2>${param.action == 'create' ? 'Create vote' : 'Edit vote'}</h2>
 
     <jsp:useBean id="vote" class="ru.whereToEat.model.Vote" scope="request"/>
@@ -19,25 +18,24 @@
         <input value="<c:out value="${vote.id}"/>" type="hidden" name="voteId">
 
         <dl>
-            <dt> userId:</dt>
+            <dt><fmt:message key="user.id"/>:</dt>
             <dd><input value="<c:out value="${vote.userId}"/>" type="text" name="userId"></dd>
         </dl>
         <dl>
-            <dt>dateVote</dt>
+            <dt><fmt:message key="voter.date"/></dt>
             <dd><input type="datetime-local" value="${vote.date_vote}" name="registered">
 
         </dl>
         <dl>
-            <dt>restaurantId</dt>
-            <dd> <input type="number" value="<c:out value="${vote.restaurantId}"/>" name="restaurantId"></dd>
+            <dt><fmt:message key="restaurants.id"/></dt>
+            <dd><input type="number" value="<c:out value="${vote.restaurantId}"/>" name="restaurantId"></dd>
         </dl>
         <dl>
-            <dt>vote</dt>
+            <dt><fmt:message key="voter.count"/></dt>
             <dd><input type="number" value="<c:out value="${vote.vote}"/>" name="vote"></dd>
         </dl>
 
-
-        <input type="submit" value="OK">
+        <input type="submit" value=<fmt:message key="common.save"/>>
     </form>
 </div>
 </body>

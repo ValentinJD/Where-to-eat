@@ -18,17 +18,17 @@
             <input type="hidden" value="${param.restaurantId}" name="restaurantId" required>
 
             <dl>
-                <dt> Description:</dt>
+                <dt><fmt:message key="app.description"/>:</dt>
                 <dd><input type="text" value="${meal.description}" size=50 name="description" required></dd>
             </dl>
             <dl>
-                <dt> Price:</dt>
+                <dt><fmt:message key="app.price"/>:</dt>
                 <dd><input type="number" value="${meal.price}" name="price" required></dd>
             </dl>
 
 
-            <button type="submit">Save</button>
-            <button onclick="window.history.back()" type="button">Cancel</button>
+            <button type="submit"><fmt:message key="common.save"/></button>
+            <button onclick="window.history.back()" type="button"><fmt:message key="common.cancel"/></button>
         </form>
     </section>
 </div>

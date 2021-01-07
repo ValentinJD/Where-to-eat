@@ -10,7 +10,7 @@
 
 <div class="main op">
     <jsp:include page="fragments/bodyHeader.jsp"/>
-    <p class="restaurant">Имя пользователя : <%=SecurityUtil.getUserName() %>
+    <p class="restaurant"><fmt:message key="user.name"/>: <%=SecurityUtil.getUserName() %>
     </p>
     <br>
     <div class="restaurant">

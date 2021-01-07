@@ -8,15 +8,15 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <body class="main">
 <div class="restaurant">
-    <h2>Votes List2</h2>
+    <h2><fmt:message key="voter.list"/></h2>
     <table align="center" border="1">
 
         <tr>
-            <th>voteId</th>
-            <th>userId</th>
-            <th>date_vote</th>
-            <th>restaurantId</th>
-            <th>vote</th>
+            <th><fmt:message key="voter.id"/></th>
+            <th><fmt:message key="user.id"/></th>
+            <th><fmt:message key="voter.date"/></th>
+            <th><fmt:message key="restaurants.id"/></th>
+            <th><fmt:message key="voter.count"/></th>
 
         </tr>
 
@@ -31,14 +31,14 @@
                 <td><%=vote.getDate_vote().format(TimeUtil.format)%>
                 <td>${vote.restaurantId}</td>
                 <td>${vote.vote}</td>
-                <td><a href="votes?action=edit&voteId=<c:out value="${vote.id}"/>">Update</a></td>
-                <td><a href="votes?action=delete&voteId=<c:out value="${vote.id}"/>">Delete</a></td>
+                <td><a href="votes?action=edit&voteId=<c:out value="${vote.id}"/>" class="c"><fmt:message key="common.update"/></a></td>
+                <td><a href="votes?action=delete&voteId=<c:out value="${vote.id}"/>" class="c"><fmt:message key="common.delete"/></a></td>
 
             </tr>
 
         </c:forEach>
     </table>
-    <a href="votes?action=create" class="c">Создать</a>
+    <a href="votes?action=create" class="c"><fmt:message key="common.create"/></a>
 </div>
 </body>
 </html>

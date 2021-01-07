@@ -12,14 +12,16 @@
 
 <div class="op">
     <jsp:include page="fragments/bodyHeader.jsp"/>
-    <p class="restaurant">Имя пользователя : <%=SecurityUtil.getUserName() %></p>
+    <p class="restaurant"><fmt:message key="user.name"/> : <%=SecurityUtil.getUserName() %>
+    </p>
     <div>
-        <p>Фильтровать по имени ресторана</p>
+        <p><fmt:message key="app.filter"/></p>
         <form method="get" action="restaurants">
             <input type="hidden" name="action" value="filter">
             <dl>
-                <dd><input name="nameRestaurant" value="" placeholder="Введите наименование ресторана" size="80%"></dd>
-                <button type="submit">Filter</button>
+                <dd><input name="nameRestaurant" value="" placeholder=
+                <fmt:message key="restaurant.title"/> size="80%"></dd>
+                <button type="submit"><fmt:message key="common.filter"/></button>
             </dl>
         </form>
     </div>
@@ -28,13 +30,12 @@
 
         <div class="restaurant">
             <div>
-                <p>Ресторан ${restaurant.name}</p>
+                <p><fmt:message key="restaurant.title"/> : ${restaurant.name}</p>
                 <table align="center" border="1px">
                     <tr>
-
-                        <td>Голоса</td>
-                        <td>За</td>
-                        <td>Против</td>
+                        <td><fmt:message key="voter.count"/></td>
+                        <td><fmt:message key="voter.for"/></td>
+                        <td><fmt:message key="voter.against"/></td>
                     </tr>
                     <tr>
 
@@ -48,41 +49,43 @@
                 <br>
 
 
-                <a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.id}"/>" class="c">Update</a>
-                <a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.id}"/>" class="c">Delete</a>
+                <a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.id}"/>"
+                   class="c"><fmt:message key="common.update"/></a>
+                <a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.id}"/>"
+                   class="c"><fmt:message key="common.delete"/></a>
 
 
-                <p>Меню</p>
+                <p><fmt:message key="restaurants.menu"/></p>
                 <table align="center" border="1px">
                     <tr>
-                        <td>Наименование</td>
-                        <td>Цена, руб</td>
-                        <td>Обновить</td>
-                        <td>Удалить</td>
+                        <td><fmt:message key="app.description"/></td>
+                        <td><fmt:message key="app.price"/></td>
+                        <td><fmt:message key="common.update"/></td>
+                        <td><fmt:message key="common.delete"/></td>
                     </tr>
                     <c:forEach var="meal1" items="${restaurant.menu}">
 
                         <tr>
                             <jsp:useBean id="meal1" type="ru.whereToEat.model.Meal"/>
-                                <%--                        <td>${meal1.id}</td>--%>
                             <td>${meal1.description}</td>
                             <td>${meal1.price}</td>
                             <td><a href="meals?action=update&mealId=<c:out value="${meal1.id}
-                        &restaurantId=${restaurant.id}"/>" class="c">Update</a></td>
+                        &restaurantId=${restaurant.id}"/>" class="c"><fmt:message key="common.update"/></a></td>
                             <td><a href="meals?action=delete&mealId=<c:out value="${meal1.id}
-                        &restaurantId=${restaurant.id}"/>" class="c">Delete</a></td>
+                        &restaurantId=${restaurant.id}"/>" class="c"><fmt:message key="common.delete"/></a></td>
                         </tr>
 
                     </c:forEach>
                 </table>
                 <br>
-                <a href="meals?action=create&restaurantId=${restaurant.id}" class="c">Добавить меню</a>
+                <a href="meals?action=create&restaurantId=${restaurant.id}" class="c"><fmt:message
+                        key="restaurants.additemmenu"/></a>
             </div>
         </div>
         <br>
     </c:forEach>
     <div>
-        <a href="restaurants?action=create" class="c">Создать новый ресторан</a>
+        <a href="restaurants?action=create" class="c"><fmt:message key="restaurants.create"/></a>
     </div>
     <jsp:include page="fragments/footer.jsp"/>
 </div>

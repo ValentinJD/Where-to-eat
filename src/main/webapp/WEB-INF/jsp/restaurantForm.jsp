@@ -17,15 +17,15 @@
         <form method="post" action="restaurants">
             <input type="hidden" name="restaurantId" value="${restaurant.id}">
             <dl>
-                <dt>Name:</dt>
+                <dt><fmt:message key="restaurant.title"/>:</dt>
                 <dd><input type="text" value="${restaurant.name}" size=50 name="name" required></dd>
             </dl>
 
 
             <input type="hidden" value="${restaurant.vote_count}" name="count" required>
 
-            <button type="submit">Save</button>
-            <button onclick="window.history.back()" type="button">Cancel</button>
+            <button type="submit"><fmt:message key="common.save"/></button>
+            <button onclick="window.history.back()" type="button"><fmt:message key="common.cancel"/></button>
         </form>
     </section>
 </div>

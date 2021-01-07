@@ -17,37 +17,37 @@
         <form method="post" action="users">
             <input type="hidden" name="userId" value="${user.id}">
             <dl>
-                <dt>Name:</dt>
+                <dt><fmt:message key="user.name"/>:</dt>
                 <dd><input type="text" value="${user.name}" size=40 name="name" required></dd>
             </dl>
             <dl>
-                <dt>Email:</dt>
+                <dt><fmt:message key="user.email"/>:</dt>
                 <dd><input type="text" value="${user.email}" size=40 name="email" required></dd>
             </dl>
             <dl>
-                <dt>Password:</dt>
+                <dt><fmt:message key="user.password"/>:</dt>
                 <dd><input type="text" value="${user.password}" size=40 name="password" required></dd>
             </dl>
             <dl>
-                <dt>Enabled:</dt>
+                <dt><fmt:message key="user.active"/>:</dt>
                 <dd><input type="checkbox" value="${user.enabled}" name="enabled" checked></dd>
             </dl>
             <dl>
-                <dt>Registered:</dt>
+                <dt><fmt:message key="user.registered"/>:</dt>
                 <dd><input type="datetime-local" value="${user.registered}" name="registered"></dd>
             </dl>
             <dl>
-                <dt>Role:</dt>
+                <dt><fmt:message key="user.roles"/>:</dt>
                 <dd>
                     <select name="role" size="2" multiple required>
-                        <option selected value="ADMIN">ADMIN</option>
-                        <option value="USER">USER</option>
+                        <option selected value="ADMIN"><fmt:message key="user.admin"/></option>
+                        <option value="USER"><fmt:message key="user.user"/></option>
                     </select>
                 </dd>
             </dl>
 
-            <button type="submit">Save</button>
-            <button onclick="window.history.back()" type="button">Cancel</button>
+            <button type="submit"><fmt:message key="common.save"/></button>
+            <button onclick="window.history.back()" type="button"><fmt:message key="common.cancel"/></button>
         </form>
     </section>
 </div>
