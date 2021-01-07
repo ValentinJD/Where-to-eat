@@ -1,9 +1,9 @@
 <%@ page import="ru.whereToEat.util.TimeUtil" %>
 <%@ page import="ru.whereToEat.web.SecurityUtil" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setBundle basename="messages.app"/>
+
 <jsp:include page="fragments/headTag.jsp"/>
 
 <html>
@@ -12,16 +12,16 @@
 
 <div class="op">
     <jsp:include page="fragments/bodyHeader.jsp"/>
-    <p class="restaurant"><fmt:message key="user.name"/> : <%=SecurityUtil.getUserName() %>
+    <p class="restaurant"><spring:message code="user.name"/> : <%=SecurityUtil.getUserName() %>
     </p>
     <div>
-        <p><fmt:message key="app.filter"/></p>
+        <p><spring:message code="app.filter"/></p>
         <form method="get" action="restaurants">
             <input type="hidden" name="action" value="filter">
             <dl>
                 <dd><input name="nameRestaurant" value="" placeholder=
-                <fmt:message key="restaurant.title"/> size="80%"></dd>
-                <button type="submit"><fmt:message key="common.filter"/></button>
+                <spring:message code="restaurant.title"/> size="80%"></dd>
+                <button type="submit"><spring:message code="common.filter"/></button>
             </dl>
         </form>
     </div>
@@ -30,12 +30,12 @@
 
         <div class="restaurant">
             <div>
-                <p><fmt:message key="restaurant.title"/> : ${restaurant.name}</p>
+                <p><spring:message code="restaurant.title"/> : ${restaurant.name}</p>
                 <table align="center" border="1px">
                     <tr>
-                        <td><fmt:message key="voter.count"/></td>
-                        <td><fmt:message key="voter.for"/></td>
-                        <td><fmt:message key="voter.against"/></td>
+                        <td><spring:message code="voter.count"/></td>
+                        <td><spring:message code="voter.for"/></td>
+                        <td><spring:message code="voter.against"/></td>
                     </tr>
                     <tr>
 
@@ -50,18 +50,18 @@
 
 
                 <a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.id}"/>"
-                   class="c"><fmt:message key="common.update"/></a>
+                   class="c"><spring:message code="common.update"/></a>
                 <a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.id}"/>"
-                   class="c"><fmt:message key="common.delete"/></a>
+                   class="c"><spring:message code="common.delete"/></a>
 
 
-                <p><fmt:message key="restaurants.menu"/></p>
+                <p><spring:message code="restaurants.menu"/></p>
                 <table align="center" border="1px">
                     <tr>
-                        <td><fmt:message key="app.description"/></td>
-                        <td><fmt:message key="app.price"/></td>
-                        <td><fmt:message key="common.update"/></td>
-                        <td><fmt:message key="common.delete"/></td>
+                        <td><spring:message code="app.description"/></td>
+                        <td><spring:message code="app.price"/></td>
+                        <td><spring:message code="common.update"/></td>
+                        <td><spring:message code="common.delete"/></td>
                     </tr>
                     <c:forEach var="meal1" items="${restaurant.menu}">
 
@@ -70,22 +70,22 @@
                             <td>${meal1.description}</td>
                             <td>${meal1.price}</td>
                             <td><a href="meals?action=update&mealId=<c:out value="${meal1.id}
-                        &restaurantId=${restaurant.id}"/>" class="c"><fmt:message key="common.update"/></a></td>
+                        &restaurantId=${restaurant.id}"/>" class="c"><spring:message code="common.update"/></a></td>
                             <td><a href="meals?action=delete&mealId=<c:out value="${meal1.id}
-                        &restaurantId=${restaurant.id}"/>" class="c"><fmt:message key="common.delete"/></a></td>
+                        &restaurantId=${restaurant.id}"/>" class="c"><spring:message code="common.delete"/></a></td>
                         </tr>
 
                     </c:forEach>
                 </table>
                 <br>
-                <a href="meals?action=create&restaurantId=${restaurant.id}" class="c"><fmt:message
-                        key="restaurants.additemmenu"/></a>
+                <a href="meals?action=create&restaurantId=${restaurant.id}" class="c"><spring:message
+                        code="restaurants.additemmenu"/></a>
             </div>
         </div>
         <br>
     </c:forEach>
     <div>
-        <a href="restaurants?action=create" class="c"><fmt:message key="restaurants.create"/></a>
+        <a href="restaurants?action=create" class="c"><spring:message code="restaurants.create"/></a>
     </div>
     <jsp:include page="fragments/footer.jsp"/>
 </div>

@@ -1,8 +1,8 @@
 <%--<%@ page import="ru.javawebinar.topjava.model.Meal" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setBundle basename="messages.app"/>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <jsp:include page="fragments/headTag.jsp"/>
 <html lang="ru">
 <jsp:include page="fragments/bodyHeader.jsp"/>
@@ -18,24 +18,24 @@
         <input value="<c:out value="${vote.id}"/>" type="hidden" name="voteId">
 
         <dl>
-            <dt><fmt:message key="user.id"/>:</dt>
+            <dt><spring:message code="user.id"/>:</dt>
             <dd><input value="<c:out value="${vote.userId}"/>" type="text" name="userId"></dd>
         </dl>
         <dl>
-            <dt><fmt:message key="voter.date"/></dt>
+            <dt><spring:message code="voter.date"/></dt>
             <dd><input type="datetime-local" value="${vote.date_vote}" name="registered">
 
         </dl>
         <dl>
-            <dt><fmt:message key="restaurants.id"/></dt>
+            <dt><spring:message code="restaurants.id"/></dt>
             <dd><input type="number" value="<c:out value="${vote.restaurantId}"/>" name="restaurantId"></dd>
         </dl>
         <dl>
-            <dt><fmt:message key="voter.count"/></dt>
+            <dt><spring:message code="voter.count"/></dt>
             <dd><input type="number" value="<c:out value="${vote.vote}"/>" name="vote"></dd>
         </dl>
 
-        <input type="submit" value=<fmt:message key="common.save"/>>
+        <input type="submit" value=<spring:message code="common.save"/>>
     </form>
 </div>
 </body>
