@@ -32,7 +32,7 @@ header, footer {
 }
 
 BODY {
-    background: url(/Where_to_eat_war_exploded/resources/images/photo.jpg) no-repeat center center fixed;
+    background: url(../images/photo.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
