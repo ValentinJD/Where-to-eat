@@ -14,67 +14,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Controller
-public class RestaurantRestController {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+public class RestaurantRestController extends AbstractRestaurantController {
 
-    final RestaurantService restaurantService;
-
-    public RestaurantRestController(RestaurantService restaurantService) {
-        this.restaurantService = restaurantService;
-    }
-
-    public Restaurant get(int restaurantId) {
-        return restaurantService.get(restaurantId);
-    }
-
-    public void delete(int restaurantId) {
-        int id = SecurityUtil.authUserId();
-        if (SecurityUtil.isAdmin(id)) {
-            restaurantService.delete(restaurantId);
-            log.info("Удален ресторан() {}", restaurantId);
-        } else {
-            throw new NotEnoughRightsException("Только для администраторов");
-        }
-
-    }
-
-    public List<Restaurant> getAll() {
-        log.info("getAll()");
-        return restaurantService.getAll();
-    }
-
-    public Restaurant create(Restaurant restaurant) {
-        int id = SecurityUtil.authUserId();
-        if (SecurityUtil.isAdmin(id)) {
-            log.info("create() Restaurant {}", restaurant);
-            return restaurantService.create(restaurant);
-        } else {
-            throw new NotEnoughRightsException("Только для администраторов");
-        }
-    }
-
-    public void update(Restaurant restaurant) {
-        int id = SecurityUtil.authUserId();
-        if (SecurityUtil.isAdmin(id)) {
-            restaurantService.update(restaurant);
-            log.info("update() Restaurant {}", restaurant);
-        } else {
-            throw new NotEnoughRightsException("Только для администраторов");
-        }
-    }
-
-    public List<Restaurant> getFilteredByName(String name) {
-        log.info("getFilteredByName() {}", name);
-        Predicate<Restaurant> filter = restaurant -> {
-            if (!name.equals("")){
-                return restaurant.getName().toLowerCase().contains(name.toLowerCase());
-            }
-            return true;
-        };
-        return getAll().stream()
-                .filter(filter)
-                .sorted(Comparator.comparing(Restaurant::getId))
-                .collect(Collectors.toList());
-
-    }
 }
