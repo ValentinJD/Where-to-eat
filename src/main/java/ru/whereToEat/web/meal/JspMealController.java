@@ -72,4 +72,84 @@ public class JspMealController extends AbstractMealController{
         String paramId = Objects.requireNonNull(request.getParameter("restaurantId"));
         return Integer.parseInt(paramId);
     }
+
+
+    /*
+    *
+    private RestaurantService restaurantService;
+
+    private MealRestController mealRestController;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+        restaurantService = springContext.getBean(RestaurantService.class);
+        mealRestController = springContext.getBean(MealRestController.class);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        String id = request.getParameter("mealId");
+
+        Restaurant restaurant = restaurantService.get(getRestaurantId(request));
+
+        if (id == null || id.equals("")) {
+            Meal meal = new Meal(request.getParameter("description"),
+                    Float.parseFloat(request.getParameter("price")));
+            meal.setRestaurant(restaurant);
+            mealRestController.create(meal);
+        } else {
+            int mealId = getMealId(request);
+            Meal meal = mealRestController.get(mealId);
+            meal.setDescription(request.getParameter("description"));
+            meal.setPrice(Float.parseFloat(request.getParameter("price")));
+
+            mealRestController.update(meal);
+        }
+
+        response.sendRedirect("restaurants");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        switch (action == null ? "all" : action) {
+            case "delete" -> {
+                int id = getMealId(request);
+                mealRestController.delete(id);
+                response.sendRedirect("meals");
+            }
+            case "create", "update" -> {
+                final Meal meal = "create".equals(action) ?
+                        new Meal("", 0f) :
+                        mealRestController.get(getMealId(request));
+
+                request.setAttribute("restaurantId", getRestaurantId(request));
+
+                request.setAttribute("meal", meal);
+                request.getRequestDispatcher("WEB-INF/jsp/mealForm.jsp").forward(request, response);
+            }
+            default -> {
+                Collection<Restaurant> restaurants = restaurantService.getAll();
+                request.setAttribute("restaurants", restaurants);
+                request.getRequestDispatcher("WEB-INF/jsp/restaurants.jsp").forward(request, response);
+            }
+        }
+    }
+
+    private int getMealId(HttpServletRequest request) {
+        String paramId = Objects.requireNonNull(request.getParameter("mealId").trim());
+        return Integer.parseInt(paramId);
+    }
+
+    private int getRestaurantId(HttpServletRequest request) {
+        String paramId = Objects.requireNonNull(request.getParameter("restaurantId"));
+        return Integer.parseInt(paramId);
+    }
+
+
+    * */
 }
