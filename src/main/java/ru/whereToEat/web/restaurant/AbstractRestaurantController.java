@@ -4,8 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.whereToEat.exceptions.NotEnoughRightsException;
+import ru.whereToEat.exceptions.NotVoteException;
 import ru.whereToEat.model.Restaurant;
+import ru.whereToEat.model.Vote;
 import ru.whereToEat.service.RestaurantService;
+import ru.whereToEat.service.VoteService;
 import ru.whereToEat.web.SecurityUtil;
 
 import java.util.Comparator;
@@ -19,6 +22,8 @@ public abstract class AbstractRestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
+    @Autowired
+    private VoteService voteService;
 
     public Restaurant get(int restaurantId) {
         return restaurantService.get(restaurantId);
@@ -73,5 +78,9 @@ public abstract class AbstractRestaurantController {
                 .sorted(Comparator.comparing(Restaurant::getId))
                 .collect(Collectors.toList());
 
+    }
+
+    public void voter(Vote vote) throws NotVoteException {
+        voteService.voter(vote);
     }
 }

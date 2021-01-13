@@ -42,15 +42,15 @@
                         </td>
                         <td><%=user.getRegistered().format(TimeUtil.format)%>
                         </td>
-                        <td><a href="users?action=update&userId=${user.id}" class="c"><spring:message code="user.edit"/></a>
+                        <td><a href="users/update?userId=${user.id}" class="c"><spring:message code="user.edit"/></a>
                         </td>
-                        <td><a href="users?action=delete&userId=${user.id}" class="c"><spring:message
+                        <td><a href="users/delete?userId=${user.id}" class="c"><spring:message
                                 code="user.delete"/></a>
                         </td>
                     </tr>
                 </c:forEach>
             </table>
-            <br><a href="users?action=create" class="c"><spring:message code="user.create"/></a>
+            <br><a href="users/create=" class="c"><spring:message code="user.create"/></a>
         </section>
     </div>
     <jsp:include page="fragments/footer.jsp"/>

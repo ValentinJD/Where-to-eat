@@ -31,14 +31,14 @@
                 <td><%=vote.getDate_vote().format(TimeUtil.format)%>
                 <td>${vote.restaurantId}</td>
                 <td>${vote.vote}</td>
-                <td><a href="votes?action=edit&voteId=<c:out value="${vote.id}"/>" class="c"><spring:message code="common.update"/></a></td>
-                <td><a href="votes?action=delete&voteId=<c:out value="${vote.id}"/>" class="c"><spring:message code="common.delete"/></a></td>
-
+                <td><a href="votes/edit?voteId=<c:out value="${vote.id}"/>" class="c"><spring:message
+                        code="common.update"/></a></td>
+                <td><a href="votes/delete?voteId=<c:out value="${vote.id}"/>" class="c"><spring:message
+                        code="common.delete"/></a></td>
             </tr>
-
         </c:forEach>
     </table>
-    <a href="votes?action=create" class="c"><spring:message code="common.create"/></a>
+    <a href="votes/create" class="c"><spring:message code="common.create"/></a>
 </div>
 </body>
 </html>

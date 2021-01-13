@@ -9,11 +9,11 @@
 <body class="main">
 <div class="restaurant">
 
-    <h2>${param.action == 'create' ? 'Create vote' : 'Edit vote'}</h2>
+<%--    <h2>${param.action == 'create' ? 'Create vote' : 'Edit vote'}</h2>--%>
 
     <jsp:useBean id="vote" class="ru.whereToEat.model.Vote" scope="request"/>
-
-    <form name="vote" action="votes?action=listVotes" method="post" accept-charset="utf-8">
+    <h3><spring:message code="${vote.isNew() ? 'common.create' : 'common.update'}"/></h3>
+    <form name="vote" action="votes/listVotes" method="post" accept-charset="utf-8">
 
         <input value="<c:out value="${vote.id}"/>" type="hidden" name="voteId">
 

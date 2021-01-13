@@ -106,4 +106,8 @@ public class Restaurant implements Serializable {
                 ", menu=" + "menu lazy Test" +
                 '}';
     }
+
+    public boolean getIsNew() {
+        return isNew();
+    }
 }

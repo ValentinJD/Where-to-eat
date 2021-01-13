@@ -118,4 +118,8 @@ public class Vote {
                 ", vote=" + vote +
                 '}';
     }
+
+    public boolean getIsNew() {
+        return id == null;
+    }
 }

@@ -3,11 +3,60 @@ package ru.whereToEat.web.restaurant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.whereToEat.exceptions.NotFoundException;
+import ru.whereToEat.exceptions.NotSaveOrUpdateException;
+import ru.whereToEat.exceptions.NotVoteException;
+import ru.whereToEat.model.Restaurant;
+import ru.whereToEat.model.Vote;
+import ru.whereToEat.web.SecurityUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/restaurants")
-public class JspRestaurantController extends AbstractRestaurantController{
+public class JspRestaurantController extends AbstractRestaurantController {
+
+    @GetMapping("/delete")
+    public String delete(HttpServletRequest request) {
+        int id = getRestaurantId(request);
+        super.delete(id);
+        return "redirect:/restaurants";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        final Restaurant restaurant = new Restaurant();
+        model.addAttribute("restaurant", restaurant);
+        return "restaurantForm";
+    }
+
+    @GetMapping("/update")
+    public String update(HttpServletRequest request, Model model) {
+        final Restaurant restaurant = super.get(getRestaurantId(request));
+        model.addAttribute("restaurant", restaurant);
+        return "restaurantForm";
+    }
+
+    @GetMapping("/vote")
+    public String voter(HttpServletRequest request, Model model) {
+
+        int restaurantId = getRestaurantId(request);
+        int countVote = getRestaurantCount(request);
+        int userId = SecurityUtil.authUserId();
+        try {
+            Vote vote = new Vote(null, userId, LocalDateTime.now(), restaurantId, countVote);
+            super.voter(vote);
+        } catch (NotFoundException | NotSaveOrUpdateException | NotVoteException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/restaurants";
+    }
+
 
     @GetMapping
     public String getAll(Model model) {
@@ -15,92 +64,28 @@ public class JspRestaurantController extends AbstractRestaurantController{
         return "restaurants";
     }
 
-    /*
-    *
-    *     private RestaurantRestController controller;
-    private VoteRestController voteRestController;
+    @PostMapping
+    public String createOrUpdate(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
 
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-        controller = springContext.getBean(RestaurantRestController.class);
-        voteRestController = springContext.getBean(VoteRestController.class);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("restaurantId");
 
-        // чему соответствует id
-        // если "" то ресторан новый
-        // если не "" то проверить есть ли в базе
-        Restaurant restaurantIsNew = (id==null) ? new Restaurant() :controller.get(getRestaurantId(request));
-
+        Restaurant restaurantIsNew = (id == null)|| id.isEmpty() ? new Restaurant() : super.get(getRestaurantId(request));
 
         if (restaurantIsNew.isNew()) {
             Restaurant restaurant = new Restaurant();
             restaurant.setName(request.getParameter("name"));
             restaurant.setVote_count(0);
-            controller.create(restaurant);
+            super.create(restaurant);
         } else {
             int restaurantId = getRestaurantId(request);
-            Restaurant restaurant = controller.get(restaurantId);
+            Restaurant restaurant = super.get(restaurantId);
             restaurant.setName(request.getParameter("name"));
             restaurant.setVote_count(getRestaurantCount(request));
-            controller.update(restaurant);
+            super.update(restaurant);
         }
 
-        response.sendRedirect("restaurants");
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String action = request.getParameter("action");
-
-        switch (action == null ? "all" : action) {
-            case "vote":
-                int restaurantId = getRestaurantId(request);
-                int countVote = getRestaurantCount(request);
-                int userId = SecurityUtil.authUserId();
-                try {
-                    Vote vote = new Vote(null, userId, LocalDateTime.now(), restaurantId, countVote);
-                    voteRestController.voter(vote);
-                    //voteRestController.voter(restaurantId, userId, countVote);
-                } catch (NotFoundException | NotSaveOrUpdateException | NotVoteException e) {
-                    e.printStackTrace();
-                }
-                response.sendRedirect("restaurants");
-                break;
-            case "delete":
-                int id = getRestaurantId(request);
-                controller.delete(id);
-                response.sendRedirect("restaurants");
-                break;
-            case "create":
-            case "update":
-                final Restaurant restaurant = "create".equals(action) ?
-                        new Restaurant() :
-                        controller.get(getRestaurantId(request));
-                request.setAttribute("restaurant", restaurant);
-                request.getRequestDispatcher("WEB-INF/jsp/restaurantForm.jsp").forward(request, response);
-                break;
-            case "filter":
-                String nameRestaurant = request.getParameter("nameRestaurant");
-                Collection<Restaurant> filteredRestaurants = controller.getFilteredByName(nameRestaurant);
-                request.setAttribute("restaurants", filteredRestaurants);
-                request.getRequestDispatcher("WEB-INF/jsp/restaurants.jsp").forward(request, response);
-            case "all":
-            default:
-                Collection<Restaurant> restaurants = controller.getAll();
-                request.setAttribute("restaurants", restaurants);
-                request.getRequestDispatcher("WEB-INF/jsp/restaurants.jsp").forward(request, response);
-                break;
-        }
-
+        return "redirect:/restaurants";
     }
 
     private int getRestaurantId(HttpServletRequest request) {
@@ -112,5 +97,5 @@ public class JspRestaurantController extends AbstractRestaurantController{
     private int getRestaurantCount(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("count"));
         return Integer.parseInt(paramId);
-    }*/
+    }
 }

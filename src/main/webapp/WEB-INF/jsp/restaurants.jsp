@@ -40,18 +40,18 @@
                     <tr>
 
                         <td>${restaurant.vote_count}</td>
-                        <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}"/>&count=1"
+                        <td><a href="restaurants/vote?restaurantId=<c:out value="${restaurant.id}"/>&count=1"
                                class="c">+</a></td>
-                        <td><a href="restaurants?action=vote&restaurantId=<c:out value="${restaurant.id}&count=-1"/>"
+                        <td><a href="restaurants/vote?restaurantId=<c:out value="${restaurant.id}&count=-1"/>"
                                class="c">-</a></td>
                     </tr>
                 </table>
                 <br>
 
 
-                <a href="restaurants?action=update&restaurantId=<c:out value="${restaurant.id}"/>"
+                <a href="restaurants/update?restaurantId=<c:out value="${restaurant.id}"/>"
                    class="c"><spring:message code="common.update"/></a>
-                <a href="restaurants?action=delete&restaurantId=<c:out value="${restaurant.id}"/>"
+                <a href="restaurants/delete?restaurantId=<c:out value="${restaurant.id}"/>"
                    class="c"><spring:message code="common.delete"/></a>
 
 
@@ -69,23 +69,27 @@
                             <jsp:useBean id="meal1" type="ru.whereToEat.model.Meal"/>
                             <td>${meal1.description}</td>
                             <td>${meal1.price}</td>
-                            <td><a href="meals?action=update&mealId=<c:out value="${meal1.id}
-                        &restaurantId=${restaurant.id}"/>" class="c"><spring:message code="common.update"/></a></td>
-                            <td><a href="meals?action=delete&mealId=<c:out value="${meal1.id}
-                        &restaurantId=${restaurant.id}"/>" class="c"><spring:message code="common.delete"/></a></td>
+                            <td>
+                                <a href="meals/update?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
+                                   class="c"><spring:message code="common.update"/></a>
+                            </td>
+                            <td><a href=
+                                           "meals/delete?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
+                                   class="c"><spring:message code="common.delete"/></a>
+                            </td>
                         </tr>
 
                     </c:forEach>
                 </table>
                 <br>
-                <a href="meals?action=create&restaurantId=${restaurant.id}" class="c"><spring:message
-                        code="restaurants.additemmenu"/></a>
+                <a href="meals/create?restaurantId=${restaurant.id}" class="c">
+                    <spring:message code="restaurants.additemmenu"/></a>
             </div>
         </div>
         <br>
     </c:forEach>
     <div>
-        <a href="restaurants?action=create" class="c"><spring:message code="restaurants.create"/></a>
+        <a href="restaurants/create" class="c"><spring:message code="restaurants.create"/></a>
     </div>
     <jsp:include page="fragments/footer.jsp"/>
 </div>

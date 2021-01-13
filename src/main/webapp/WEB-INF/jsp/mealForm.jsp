@@ -10,7 +10,8 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <div class="restaurant">
     <section>
-        <h2>${param.action == 'create' ? '<spring:message code="user.create"/>' : '<spring:message code="user.edit"/>'}</h2>
+        <%--        <h2>${param.action == 'create' ? '<spring:message code="user.create"/>' : '<spring:message code="user.edit"/>'}</h2>--%>
+        <h3><spring:message code="${meal.isNew() ? 'common.create' : 'common.update'}"/></h3>
         <jsp:useBean id="meal" type="ru.whereToEat.model.Meal" scope="request"/>
         <form method="post" action="meals">
             <input type="hidden" name="mealId" value="${meal.id}">

@@ -29,13 +29,13 @@
             <td>${meal.description}</td>
             <td>${meal.price}</td>
             <td>${meal.restaurant.id}</td>
-            <td><a href="meals?action=update&mealId=<c:out value="${meal.id}"/>"><spring:message code="common.update"/></a></td>
-            <td><a href="meals?action=delete&mealId=<c:out value="${meal.id}"/>"><spring:message code="common.delete"/></a></td>
+            <td><a href="meals/update?mealId=<c:out value="${meal.id}"/>"><spring:message code="common.update"/></a></td>
+            <td><a href="meals/delete?mealId=<c:out value="${meal.id}"/>"><spring:message code="common.delete"/></a></td>
 
         </tr>
     </c:forEach>
 </table>
-<a href="meals?action=create" class="c"><spring:message code="common.create"/></a>
+<a href="meals/create" class="c"><spring:message code="common.create"/></a>
 <jsp:include page="fragments/footer.jsp"/>
 </div>
 </body>

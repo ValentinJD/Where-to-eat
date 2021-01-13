@@ -12,8 +12,11 @@
 
 <div class="restaurant">
     <section>
-        <h2>${param.action == 'create' ? 'Create user' : 'Edit user'}</h2>
+        <%--        <h2>${param.action == 'create' ? 'Create user' : 'Edit user'}</h2>--%>
+
         <jsp:useBean id="user" type="ru.whereToEat.model.User" scope="request"/>
+
+        <h3><spring:message code="${user.isNew() ? 'common.create' : 'common.update'}"/></h3>
         <form method="post" action="users">
             <input type="hidden" name="userId" value="${user.id}">
             <dl>
