@@ -16,11 +16,11 @@
     </p>
     <div>
         <p><spring:message code="app.filter"/></p>
-        <form method="get" action="restaurants">
+        <form method="get" action="restaurants/filter">
             <input type="hidden" name="action" value="filter">
             <dl>
-                <dd><input name="nameRestaurant" value="" placeholder=
-                <spring:message code="restaurant.title"/> size="80%"></dd>
+                <dd><input name="nameRestaurant" value=""
+                           placeholder=<spring:message code="restaurant.title"/> size="80%"></dd>
                 <button type="submit"><spring:message code="common.filter"/></button>
             </dl>
         </form>
@@ -73,8 +73,7 @@
                                 <a href="meals/update?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
                                    class="c"><spring:message code="common.update"/></a>
                             </td>
-                            <td><a href=
-                                           "meals/delete?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
+                            <td><a href="meals/delete?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
                                    class="c"><spring:message code="common.delete"/></a>
                             </td>
                         </tr>

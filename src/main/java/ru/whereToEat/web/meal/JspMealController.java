@@ -10,10 +10,6 @@ import ru.whereToEat.model.Restaurant;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 @Controller
@@ -22,13 +18,13 @@ public class JspMealController extends AbstractMealController{
 
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
-        super.delete(getId(request));
-        return "redirect:/meals";
+        super.delete(getMealId(request));
+        return "redirect:/restaurants";
     }
 
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
-        model.addAttribute("meal", super.get(getId(request)));
+        model.addAttribute("meal", super.get(getMealId(request)));
         return "mealForm";
     }
 

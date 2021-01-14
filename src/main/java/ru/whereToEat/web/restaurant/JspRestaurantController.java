@@ -21,6 +21,13 @@ import java.util.Objects;
 @RequestMapping(value = "/restaurants")
 public class JspRestaurantController extends AbstractRestaurantController {
 
+    @GetMapping("/filter")
+    public String filter(HttpServletRequest request, Model model) {
+        String filter = request.getParameter("nameRestaurant");
+        model.addAttribute("restaurants", super.getFilteredByName(filter));
+        return "restaurants";
+    }
+
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
         int id = getRestaurantId(request);
