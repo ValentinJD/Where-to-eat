@@ -49,6 +49,7 @@ public class JspMealController extends AbstractMealController{
 
             super.create(meal);
         } else {
+            meal.setId(getMealId(request));
             super.update(meal);
         }
         return "redirect:/restaurants";
