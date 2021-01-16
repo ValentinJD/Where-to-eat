@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.repository.MealRepository;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Repository
+@Transactional(readOnly = true)
 public class SpringJdbcMealRepository implements MealRepository {
 
     private static final BeanPropertyRowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
@@ -33,6 +35,7 @@ public class SpringJdbcMealRepository implements MealRepository {
     }
 
     @Override
+    @Transactional
     public Meal save(Meal meal) {
         Objects.nonNull(meal.getRestaurant());
         MapSqlParameterSource map = new MapSqlParameterSource()
@@ -54,6 +57,7 @@ public class SpringJdbcMealRepository implements MealRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int mealId) {
         return jdbcTemplate.update("DELETE FROM meals WHERE id=?", mealId) != 0;
     }

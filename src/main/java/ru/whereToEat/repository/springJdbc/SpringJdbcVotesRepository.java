@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.exceptions.NotSaveOrUpdateException;
 import ru.whereToEat.model.Vote;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Repository
+@Transactional(readOnly = true)
 public class SpringJdbcVotesRepository implements VotesRepository {
 
     private static final BeanPropertyRowMapper<Vote> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Vote.class);
@@ -37,6 +39,7 @@ public class SpringJdbcVotesRepository implements VotesRepository {
     }
 
     @Override
+    @Transactional
     public Vote save(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
         Objects.nonNull(vote);
         MapSqlParameterSource map = new MapSqlParameterSource()
@@ -60,6 +63,7 @@ public class SpringJdbcVotesRepository implements VotesRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int voteId) {
         return jdbcTemplate.update("DELETE FROM history_votes WHERE id=?", voteId) != 0;
     }

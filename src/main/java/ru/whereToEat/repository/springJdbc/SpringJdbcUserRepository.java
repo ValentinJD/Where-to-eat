@@ -8,12 +8,15 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.util.ValidationUtil;
 
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class SpringJdbcUserRepository implements UserRepository {
 
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);
@@ -37,7 +40,11 @@ public class SpringJdbcUserRepository implements UserRepository {
     }
 
     @Override
+    @Transactional
     public User save(User user) {
+
+        ValidationUtil.validate(user);
+
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", user.getId())
                 .addValue("name", user.getName())
@@ -59,6 +66,7 @@ public class SpringJdbcUserRepository implements UserRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(Integer id) {
         return jdbcTemplate.update("DELETE FROM users WHERE id=?", id) != 0;
     }

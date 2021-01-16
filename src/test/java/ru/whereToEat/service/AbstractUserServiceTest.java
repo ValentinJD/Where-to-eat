@@ -100,7 +100,7 @@ abstract public class AbstractUserServiceTest extends AbstractServiceTest {
         assertMatch(all, ADMIN, USER);
     }
 
-    @Ignore
+//    @Ignore
     @Test
     public void createWithException() throws Exception {
         validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)), ConstraintViolationException.class);

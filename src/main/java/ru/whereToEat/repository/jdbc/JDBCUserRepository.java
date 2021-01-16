@@ -9,6 +9,7 @@ import ru.whereToEat.model.Role;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
 import ru.whereToEat.util.TimeUtil;
+import ru.whereToEat.util.ValidationUtil;
 import ru.whereToEat.util.dbUtil;
 
 import java.sql.*;
@@ -27,6 +28,8 @@ public class JDBCUserRepository implements UserRepository {
 
     @Override
     public User save(User user) {
+
+        ValidationUtil.validate(user);
         connection = dbUtil.getConnection();
 
         PreparedStatement preparedStatement = null;
