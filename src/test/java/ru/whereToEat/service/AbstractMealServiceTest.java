@@ -21,20 +21,6 @@ abstract public class AbstractMealServiceTest extends AbstractServiceTest {
     @Autowired
     protected MealService service;
 
-    @Autowired
-    private CacheManager cacheManager;
-
-    @Autowired(required = false)
-    private JpaUtil jpaUtil;
-
-    @Before
-    public void setUp() throws Exception {
-        Objects.requireNonNull(cacheManager.getCache("meals")).clear();
-        if (isJpaBased()) {
-            jpaUtil.clear2ndLevelHibernateCache();
-        }
-    }
-
     @Test
     public void get() {
         Meal expected = service.get(MEDALYONY_IZ_GOVYADINY_ID);

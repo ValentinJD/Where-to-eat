@@ -114,7 +114,7 @@
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
               p:entityManagerFactory-ref="entityManagerFactory"/>
 
-        <bean class="ru.whereToEat.repository.JpaUtil"/>
+<!--        <bean class="ru.whereToEat.repository.JpaUtil"/>-->
 
     </beans>
 

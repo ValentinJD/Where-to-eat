@@ -19,20 +19,6 @@ abstract public class AbstractRestaurantServiceTest extends AbstractServiceTest 
     @Autowired
     protected RestaurantService service;
 
-    @Autowired
-    private CacheManager cacheManager;
-
-    @Autowired(required = false)
-    private JpaUtil jpaUtil;
-
-    @Before
-    public void setUp() throws Exception {
-        Objects.requireNonNull(cacheManager.getCache("restaurants")).clear();
-        if (isJpaBased()) {
-            jpaUtil.clear2ndLevelHibernateCache();
-        }
-    }
-
     @Test
     public void get() {
         Restaurant expected = service.get(RestaurantTestData.PERCHINI_ID);

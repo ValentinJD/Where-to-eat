@@ -29,18 +29,10 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
     @Autowired
     protected VoteService service;
 
-    @Autowired
-    private CacheManager cacheManager;
-
-    @Before
-    public void setUp() throws Exception {
-        Objects.requireNonNull(cacheManager.getCache("votes")).clear();
-    }
-
     @Test
     public void delete() {
         service.delete(VOTE_ADMIN_ID1_ON_PERCHINI);
-        assertThrows(EntityNotFoundException.class, ()-> service.delete(VOTE_ADMIN_ID1_ON_PERCHINI));
+        assertThrows(EntityNotFoundException.class, () -> service.delete(VOTE_ADMIN_ID1_ON_PERCHINI));
     }
 
     @Test
@@ -49,7 +41,6 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
         TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
         testMatcher.assertMatch(VOTE_ADMIN_ON_PERCHINI, expected);
     }
-
 
     @Test
     public void getVoteExceptionVoteAfter11oClock() throws NotVoteException, NotSaveOrUpdateException {
@@ -113,6 +104,4 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
         TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
         testMatcher.assertMatch(actual, expected);
     }
-
-
 }
