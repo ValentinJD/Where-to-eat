@@ -1,7 +1,7 @@
 package ru.whereToEat.service.datajpa;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 import ru.whereToEat.MealTestData;
 import ru.whereToEat.RestaurantTestData;
@@ -13,13 +13,13 @@ import ru.whereToEat.service.AbstractRestaurantServiceTest;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.whereToEat.Profiles.DATAJPA;
 import static ru.whereToEat.RestaurantTestData.PERCHINI;
 import static ru.whereToEat.RestaurantTestData.RESTAURANT_MATCHER;
 
 @ActiveProfiles(DATAJPA)
-public class DataJpaRestaurantServiceTest extends AbstractRestaurantServiceTest {
+class DataJpaRestaurantServiceTest extends AbstractRestaurantServiceTest {
 
     @Override
     public void delete() {
@@ -39,7 +39,7 @@ public class DataJpaRestaurantServiceTest extends AbstractRestaurantServiceTest 
 
     @Test
     public void getWithMealsNotFound() throws Exception {
-        Assert.assertThrows(NotFoundException.class,
+        Assertions.assertThrows(NotFoundException.class,
                 () -> service.getWithMeals(1));
     }
 

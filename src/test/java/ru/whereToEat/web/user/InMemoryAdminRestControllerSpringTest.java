@@ -1,20 +1,18 @@
 package ru.whereToEat.web.user;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.repository.inMemory.InMemoryUserRepository;
 
 import static ru.whereToEat.UserTestData.USER_ID;
 
-@ContextConfiguration("classpath:spring/spring-app-test.xml")
-@RunWith(SpringRunner.class)
-public class InMemoryAdminRestControllerSpringTest {
+
+@SpringJUnitConfig(locations = {"classpath:spring/spring-app-test.xml"})
+class InMemoryAdminRestControllerSpringTest {
 
     @Autowired
     private AdminRestController controller;
@@ -22,7 +20,7 @@ public class InMemoryAdminRestControllerSpringTest {
     @Autowired
     private InMemoryUserRepository repository;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         repository.init();
     }
@@ -30,11 +28,11 @@ public class InMemoryAdminRestControllerSpringTest {
     @Test
     public void delete() throws Exception {
         controller.delete(USER_ID);
-        Assert.assertNull(repository.get(USER_ID));
+        Assertions.assertNull(repository.get(USER_ID));
     }
 
     @Test
     public void deleteNotFound() throws Exception {
-        Assert.assertThrows(NotFoundException.class, () -> controller.delete(10));
+        Assertions.assertThrows(NotFoundException.class, () -> controller.delete(10));
     }
 }

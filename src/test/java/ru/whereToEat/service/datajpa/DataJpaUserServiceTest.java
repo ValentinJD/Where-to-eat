@@ -6,5 +6,5 @@ import ru.whereToEat.service.AbstractUserServiceTest;
 import static ru.whereToEat.Profiles.DATAJPA;
 
 @ActiveProfiles(DATAJPA)
-public class DataJpaUserServiceTest extends AbstractUserServiceTest {
+class DataJpaUserServiceTest extends AbstractUserServiceTest {
 }

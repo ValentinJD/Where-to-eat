@@ -5,13 +5,11 @@ import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.service.AbstractRestaurantServiceTest;
 
-import javax.persistence.EntityNotFoundException;
-
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.whereToEat.Profiles.SPRINGJDBC;
 
 @ActiveProfiles(SPRINGJDBC)
-public class SpringJdbcRestaurantServiceTest extends AbstractRestaurantServiceTest {
+class SpringJdbcRestaurantServiceTest extends AbstractRestaurantServiceTest {
 
     @Override
     public void delete() {

@@ -4,14 +4,12 @@ import org.springframework.test.context.ActiveProfiles;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.service.AbstractMealServiceTest;
 
-import javax.persistence.EntityNotFoundException;
-
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.whereToEat.MealTestData.MEDALYONY_IZ_GOVYADINY_ID;
 import static ru.whereToEat.Profiles.DATAJPA;
 
 @ActiveProfiles(DATAJPA)
-public class DataJpaMealServiceTest extends AbstractMealServiceTest {
+class DataJpaMealServiceTest extends AbstractMealServiceTest {
 
     @Override
     public void delete() {

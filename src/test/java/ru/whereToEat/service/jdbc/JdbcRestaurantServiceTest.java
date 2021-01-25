@@ -3,14 +3,13 @@ package ru.whereToEat.service.jdbc;
 import org.springframework.test.context.ActiveProfiles;
 import ru.whereToEat.RestaurantTestData;
 import ru.whereToEat.exceptions.NotFoundException;
-import ru.whereToEat.service.AbstractMealServiceTest;
 import ru.whereToEat.service.AbstractRestaurantServiceTest;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.whereToEat.Profiles.JDBC;
 
 @ActiveProfiles(JDBC)
-public class JdbcRestaurantServiceTest extends AbstractRestaurantServiceTest {
+class JdbcRestaurantServiceTest extends AbstractRestaurantServiceTest {
 
     @Override
     public void delete() {

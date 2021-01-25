@@ -1,6 +1,6 @@
 package ru.whereToEat.web.user;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,8 +10,8 @@ import ru.whereToEat.repository.inMemory.InMemoryUserRepository;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
-import static ru.whereToEat.UserTestData.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static ru.whereToEat.UserTestData.ADMIN_ID;
 
 public class InMemoryAdminRestControllerTest {
     private static final Logger log = LoggerFactory.getLogger(InMemoryAdminRestControllerTest.class);
@@ -20,7 +20,7 @@ public class InMemoryAdminRestControllerTest {
     private static AdminRestController controller;
     private static InMemoryUserRepository repository;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         appCtx = new ClassPathXmlApplicationContext("spring/spring-app-test.xml");
         log.info("\n{}\n", Arrays.toString(appCtx.getBeanDefinitionNames()));
@@ -28,12 +28,12 @@ public class InMemoryAdminRestControllerTest {
         repository = appCtx.getBean(InMemoryUserRepository.class);
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         appCtx.close();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         // re-initialize
         repository.init();
@@ -47,7 +47,7 @@ public class InMemoryAdminRestControllerTest {
 
     @Test
     public void deleteNotFound() throws Exception {
-        Assert.assertThrows(NotFoundException.class, () -> controller.delete(1));
+        Assertions.assertThrows(NotFoundException.class, () -> controller.delete(1));
     }
 
     /*@Test

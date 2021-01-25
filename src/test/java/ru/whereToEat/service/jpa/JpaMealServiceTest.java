@@ -6,5 +6,5 @@ import ru.whereToEat.service.AbstractMealServiceTest;
 import static ru.whereToEat.Profiles.JPA;
 
 @ActiveProfiles(JPA)
-public class JpaMealServiceTest extends AbstractMealServiceTest {
+class JpaMealServiceTest extends AbstractMealServiceTest {
 }
