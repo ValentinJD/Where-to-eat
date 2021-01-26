@@ -5,9 +5,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.whereToEat.web.AbstractControllerTest;
 
+import static ru.whereToEat.web.json.JsonUtil.*;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.whereToEat.UserTestData.ADMIN;
 import static ru.whereToEat.UserTestData.ADMIN_ID;
 
 public class AdminRestControllerTest extends AbstractControllerTest {
@@ -18,7 +21,7 @@ public class AdminRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
-                // https://jira.spring.io/browse/SPR-14472
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(writeIgnoreProps(ADMIN, "registered")));
     }
 }
