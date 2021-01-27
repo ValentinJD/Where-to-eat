@@ -33,8 +33,7 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
     @Test
     void get() {
         Vote expected = service.get(VOTE_ADMIN_ID1_ON_PERCHINI);
-        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
-        testMatcher.assertMatch(VOTE_ADMIN_ON_PERCHINI, expected);
+        VOTE_TEST_MATCHER.assertMatch(VOTE_ADMIN_ON_PERCHINI, expected);
     }
 
     @Test
@@ -57,8 +56,7 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote vote = service.create(VoteTestData.getNewAfter11oClock());
         int id = vote.getId();
         actual.setId(id);
-        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
-        testMatcher.assertMatch(actual, vote);
+        VOTE_TEST_MATCHER.assertMatch(actual, vote);
         /*testMatcher.assertMatch(actual, service.getByRestaurantIdUserIdAndLOcalDate(
                 vote.getRestaurantId(), vote.getUserId(), vote.getDate_vote().toLocalDate()
         ));*/
@@ -70,8 +68,7 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
         Vote updated = service.update(VoteTestData.getUpdatedAfter11oClock());
         Integer id = updated.getId();
         actual.setId(id);
-        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
-        testMatcher.assertMatch(actual, updated);
+        VOTE_TEST_MATCHER.assertMatch(actual, updated);
         //testMatcher.assertMatch(actual, service.get(id));
     }
 
@@ -79,8 +76,7 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
     void getallbyrestarauntid() {
         List<Vote> expected = service.getallbyrestarauntid(PERCHINI_ID);
         List<Vote> actual = VOTES_ON_PERCHINI;
-        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
-        testMatcher.assertMatch(actual, expected);
+        VOTE_TEST_MATCHER.assertMatch(actual, expected);
     }
 
 
@@ -88,15 +84,13 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
     void getByRestaurantIdUserIdAndLocalDate() {
         Vote expected = service.getByRestaurantIdUserIdAndLOcalDate(PERCHINI_ID, ADMIN_ID, LocalDateTime.now());
         Vote actual = VoteTestData.getVoteAdminOnPerchiniToday();
-        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
-        testMatcher.assertMatch(actual, expected);
+        VOTE_TEST_MATCHER.assertMatch(actual, expected);
     }
 
     @Test
     void getAll() {
         List<Vote> actual = service.getAll();
         List<Vote> expected = ALL_VOTES;
-        TestMatcher<Vote> testMatcher = TestMatcher.usingFieldsComparator("date_vote");
-        testMatcher.assertMatch(actual, expected);
+        VOTE_TEST_MATCHER.assertMatch(actual, expected);
     }
 }

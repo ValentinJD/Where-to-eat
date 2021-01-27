@@ -19,8 +19,7 @@ abstract public class AbstractMealServiceTest extends AbstractServiceTest {
     @Test
     void get() {
         Meal expected = service.get(MEDALYONY_IZ_GOVYADINY_ID);
-        TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
-        testMatcher.assertMatch(MEAL_FOR_GET, expected);
+        RESTAURANT_MEAL_MATCHER.assertMatch(MEAL_FOR_GET, expected);
     }
 
     @Test
@@ -37,23 +36,20 @@ abstract public class AbstractMealServiceTest extends AbstractServiceTest {
         Meal updated = service.update(getUpdated());
         Integer id = updated.getId();
         actual.setId(id);
-        TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
-        testMatcher.assertMatch(actual, updated);
-        testMatcher.assertMatch(actual, service.get(id));
+        RESTAURANT_MEAL_MATCHER.assertMatch(actual, updated);
+        RESTAURANT_MEAL_MATCHER.assertMatch(actual, service.get(id));
     }
 
     @Test
     void getAll() {
         List<Meal> expected = service.getAll();
-        TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
-        testMatcher.assertMatch(MEALS, expected);
+        RESTAURANT_MEAL_MATCHER.assertMatch(MEALS, expected);
     }
 
     @Test
     void getAllByRestaurant() {
         List<Meal> expected = service.getAll(PERCHINI_ID);
-        TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
-        testMatcher.assertMatch(MEALS_PERCHINI, expected);
+        RESTAURANT_MEAL_MATCHER.assertMatch(MEALS_PERCHINI, expected);
     }
 
     @Test
@@ -62,8 +58,7 @@ abstract public class AbstractMealServiceTest extends AbstractServiceTest {
         Meal updated = service.create(getUpdated());
         int id = updated.id();
         actual.setId(id);
-        TestMatcher<Meal> testMatcher = TestMatcher.usingFieldsComparator("restaurant");
-        testMatcher.assertMatch(actual, updated);
-        testMatcher.assertMatch(actual, service.get(id));
+        RESTAURANT_MEAL_MATCHER.assertMatch(actual, updated);
+        RESTAURANT_MEAL_MATCHER.assertMatch(actual, service.get(id));
     }
 }

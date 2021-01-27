@@ -10,6 +10,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static ru.whereToEat.RestaurantTestData.RESTAURANT_MATCHER;
 
 abstract public class AbstractRestaurantServiceTest extends AbstractServiceTest {
     @Autowired
@@ -18,8 +19,7 @@ abstract public class AbstractRestaurantServiceTest extends AbstractServiceTest 
     @Test
     public void get() {
         Restaurant expected = service.get(RestaurantTestData.PERCHINI_ID);
-        TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("menu");
-        testMatcher.assertMatch(RestaurantTestData.PERCHINI, expected);
+        RESTAURANT_MATCHER.assertMatch(RestaurantTestData.PERCHINI, expected);
     }
 
     @Test
@@ -35,16 +35,14 @@ abstract public class AbstractRestaurantServiceTest extends AbstractServiceTest 
         Restaurant updated = service.update(RestaurantTestData.getUpdated());
         Integer id = updated.getId();
         actual.setId(id);
-        TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("menu");
-        testMatcher.assertMatch(actual, updated);
-        testMatcher.assertMatch(actual, service.get(id));
+        RESTAURANT_MATCHER.assertMatch(actual, updated);
+        RESTAURANT_MATCHER.assertMatch(actual, service.get(id));
     }
 
     @Test
     public void getAll() {
         List<Restaurant> expected = service.getAll();
-        TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("menu");
-        testMatcher.assertMatch(RestaurantTestData.RESTAURANTS, expected);
+        RESTAURANT_MATCHER.assertMatch(RestaurantTestData.RESTAURANTS, expected);
     }
 
     @Test
@@ -53,8 +51,7 @@ abstract public class AbstractRestaurantServiceTest extends AbstractServiceTest 
         Restaurant newRestaurant = service.create(RestaurantTestData.getNew());
         int id = newRestaurant.id();
         actual.setId(id);
-        TestMatcher<Restaurant> testMatcher = TestMatcher.usingFieldsComparator("menu");
-        testMatcher.assertMatch(actual, newRestaurant);
-        testMatcher.assertMatch(actual, service.get(id));
+        RESTAURANT_MATCHER.assertMatch(actual, newRestaurant);
+        RESTAURANT_MATCHER.assertMatch(actual, service.get(id));
     }
 }
