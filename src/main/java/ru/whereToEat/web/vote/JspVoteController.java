@@ -7,7 +7,8 @@ public class JspVoteController extends AbstractVoteController {
 
     /*
     *
-    *     protected final Logger log = LoggerFactory.getLogger(getClass());
+    *
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private List<Vote> votes;
 
