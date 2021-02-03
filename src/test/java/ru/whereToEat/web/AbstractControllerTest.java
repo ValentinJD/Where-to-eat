@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
         "classpath:spring/spring-db.xml"
 })
 
-@Transactional
+//@Transactional
 @ActiveProfiles(resolver = AllActiveProfileResolver.class)
 public abstract class AbstractControllerTest {
 

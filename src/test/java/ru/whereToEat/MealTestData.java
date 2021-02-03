@@ -15,6 +15,8 @@ public class MealTestData {
     public static final int TRI_OLENYA_ID = 100004;
     public static final int MEDALYONY_IZ_GOVYADINY_ID = 100005;
 
+    public static final int MEAL1_ID = 100005;
+
 
     public static final Restaurant PERCHINI = new Restaurant();
     public static final Restaurant BAR_AND_GRIL = new Restaurant();
@@ -48,6 +50,6 @@ public class MealTestData {
     }
 
     public static Meal getUpdated() {
-        return new Meal(100005,"Обновленная еда", 200f, PERCHINI);
+        return new Meal(MEDALYONY_IZ_GOVYADINY_ID,"Обновленная еда", 200f, PERCHINI);
     }
 }
