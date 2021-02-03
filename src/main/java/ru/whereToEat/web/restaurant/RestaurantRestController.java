@@ -42,6 +42,7 @@ public class RestaurantRestController extends AbstractRestaurantController {
     }
 
     @PostMapping(value = "/restaurant", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public Restaurant create(@RequestBody Restaurant restaurant) {
         return super.create(restaurant);
     }
@@ -52,17 +53,10 @@ public class RestaurantRestController extends AbstractRestaurantController {
         super.update(restaurant);
     }
 
-    @DeleteMapping(value = "/restaurant/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/restaurant/{restaurantId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int restaurantId) {
         super.delete(restaurantId);
     }
-
-    @PutMapping(value = "/restaurant/{restaurantId}/vote/{count}")
-    public void vote(@PathVariable int restaurantId, @PathVariable int count) throws NotVoteException {
-        Vote vote = new Vote(null, SecurityUtil.authUserId(), LocalDateTime.now(), restaurantId, count);
-        super.voter(vote);
-    }
-
 
 }

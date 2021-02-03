@@ -31,7 +31,9 @@ public class MealService {
 
     @Cacheable("meals")
     public Meal get(int mealId) {
-        return repository.get(mealId);
+        Meal meal = repository.get(mealId);
+        checkNotFoundWithId(meal, mealId);
+        return meal;
     }
 
     @CacheEvict(value = {"meals" ,"restaurants"}, allEntries = true)

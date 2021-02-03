@@ -27,7 +27,9 @@ public class RestaurantService {
     }
 
     public Restaurant get(int restaurantId) {
-        return restaurantRepository.get(restaurantId);
+        Restaurant restaurant = restaurantRepository.get(restaurantId);
+        checkNotFoundWithId(restaurant, restaurantId);
+        return restaurant;
     }
 
     public Restaurant getWithMeals(int restaurantId) {

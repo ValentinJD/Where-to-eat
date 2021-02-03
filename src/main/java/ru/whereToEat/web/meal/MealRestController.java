@@ -30,6 +30,7 @@ public class MealRestController extends AbstractMealController {
     }
 
     @PostMapping(value = "/meal/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public Meal create(@RequestBody Meal meal, @PathVariable int restaurantId) {
         Restaurant restaurant = new Restaurant();
         restaurant.setId(restaurantId);
@@ -46,5 +47,10 @@ public class MealRestController extends AbstractMealController {
         super.update(meal);
     }
 
-
+    @Override
+    @DeleteMapping("/meal/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        super.delete(id);
+    }
 }
