@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import ru.whereToEat.UserTestData;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.User;
@@ -43,6 +44,7 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Transactional
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID))
                 .andDo(print())
@@ -51,6 +53,7 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Transactional
     void update() throws Exception {
         User updated = UserTestData.getUpdated();
         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
@@ -62,6 +65,7 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Transactional
     void createWithLocation() throws Exception {
         User newUser = UserTestData.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)

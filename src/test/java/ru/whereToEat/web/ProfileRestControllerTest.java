@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import ru.whereToEat.UserTestData;
 import ru.whereToEat.model.User;
 import ru.whereToEat.service.UserService;
@@ -30,6 +31,7 @@ public class ProfileRestControllerTest extends AbstractControllerTest{
     }
 
     @Test
+    @Transactional
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
@@ -37,6 +39,7 @@ public class ProfileRestControllerTest extends AbstractControllerTest{
     }
 
     @Test
+    @Transactional
     void update() throws Exception {
         User updated = UserTestData.getUpdated();
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
