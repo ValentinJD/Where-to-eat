@@ -78,6 +78,12 @@ public class VoteTestData {
         return updated;
     }
 
+    public static Vote getUpdatedBefore11oClockCount1() {
+        Vote updated = new Vote(VOTE_ADMIN_ID1_ON_PERCHINI, ADMIN_ID, LocalDateTime.of(LocalDate.now(), LocalTime.of(01, 00)), PERCHINI_ID, 1);
+        updated.setVote(1);
+        return updated;
+    }
+
     public static void assertMatch(Vote actual, Vote expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "date_vote");
     }
