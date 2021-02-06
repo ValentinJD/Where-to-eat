@@ -37,7 +37,7 @@ public class RestaurantRestController extends AbstractRestaurantController {
     }
 
     @GetMapping(value = "/restaurants/filter/{nameRestaurant}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAll(@PathVariable String nameRestaurant) {
+    public List<Restaurant> getFilteredByName(@PathVariable String nameRestaurant) {
         return super.getFilteredByName(nameRestaurant);
     }
 
