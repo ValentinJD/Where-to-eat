@@ -1,13 +1,11 @@
 package ru.whereToEat.web.vote;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.util.NestedServletException;
 import ru.whereToEat.VoteTestData;
 import ru.whereToEat.model.Vote;
-import ru.whereToEat.service.UserService;
 import ru.whereToEat.web.AbstractControllerTest;
 import ru.whereToEat.web.json.JsonUtil;
 

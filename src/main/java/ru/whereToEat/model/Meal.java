@@ -1,5 +1,6 @@
 package ru.whereToEat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
@@ -41,6 +42,7 @@ public class Meal {
     @Range(min = 0)
     private Float price;
 
+    @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
