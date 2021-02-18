@@ -7,16 +7,16 @@
 <jsp:include page="fragments/headTag.jsp"/>
 <html>
 
-<body class="main">
+<body >
 <div>
     <jsp:include page="fragments/bodyHeader.jsp"/>
-    <p class="restaurant"><spring:message code="user.name"/> : <%=SecurityUtil.getUserName() %>
+    <p ><spring:message code="user.name"/> : <%=SecurityUtil.getUserName() %>
     </p>
-    <div class="restaurant  op">
+    <div class="container bg-light">
         <h3><spring:message code="user.title"/></h3>
 
         <section>
-            <table border="1" cellpadding="8" cellspacing="0" align="center">
+            <table class="table table-striped">
                 <thead>
                 <tr>
                     <th><spring:message code="user.id"/></th>
@@ -42,15 +42,15 @@
                         </td>
                         <td><%=user.getRegistered().format(TimeUtil.format)%>
                         </td>
-                        <td><a href="users/update?userId=${user.id}" class="c"><spring:message code="user.edit"/></a>
+                        <td><a class="btn btn-primary" href="users/update?userId=${user.id}" class="c"><spring:message code="user.edit"/></a>
                         </td>
-                        <td><a href="users/delete?userId=${user.id}" class="c"><spring:message
+                        <td><a class="btn btn-danger" href="users/delete?userId=${user.id}" class="c"><spring:message
                                 code="user.delete"/></a>
                         </td>
                     </tr>
                 </c:forEach>
             </table>
-            <br><a href="users/create=" class="c"><spring:message code="user.create"/></a>
+            <br><a class="btn btn-primary" href="users/create=" class="c"><spring:message code="user.create"/></a>
         </section>
     </div>
     <jsp:include page="fragments/footer.jsp"/>

@@ -3,17 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
 <jsp:include page="fragments/headTag.jsp"/>
-<html>
-<body class="main">
 
-<div class="main op">
-    <jsp:include page="fragments/bodyHeader.jsp"/>
-    <p class="restaurant"><spring:message code="user.name"/>: <%=SecurityUtil.getUserName() %>
+<html>
+<body>
+
+<jsp:include page="fragments/bodyHeader.jsp"/>
+
+<div>
+    <p><spring:message code="user.name"/>: <%=SecurityUtil.getUserName() %>
     </p>
     <br>
-    <div class="restaurant">
+    <div>
         <section>
             <form method="post" action="users?login=yes">
                 <spring:message code="app.login"/>:
@@ -25,10 +26,9 @@
             </form>
         </section>
     </div>
-
-
-    <jsp:include page="fragments/footer.jsp"/>
 </div>
+
+<jsp:include page="fragments/footer.jsp"/>
 
 </body>
 </html>
