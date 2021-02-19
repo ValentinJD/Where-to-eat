@@ -38,46 +38,36 @@
                     <div class="col">
                         <h2 class="bg-info text-center"><spring:message code="restaurant.title"/>
                             : ${restaurant.name}
+                            <table class="container table table-striped bg-light" align="center" border="1px">
+                                <tr>
+                                    <td><spring:message code="voter.count"/></td>
+                                    <td><spring:message code="voter.for"/></td>
+                                    <td><spring:message code="voter.against"/></td>
+                                </tr>
+                                <tr>
+                                    <td>${restaurant.vote_count}</td>
+                                    <td><a class="btn btn-primary"
+                                           href="restaurants/vote?restaurantId=<c:out value="${restaurant.id}"/>&count=1"
+                                           class="c">+</a></td>
+                                    <td><a class="btn btn-primary"
+                                           href="restaurants/vote?restaurantId=<c:out value="${restaurant.id}&count=-1"/>"
+                                           class="c">-</a></td>
+                                </tr>
+                            </table>
                         </h2>
                     </div>
-                    <div class="col">
-                        <table class="container table table-striped bg-light" align="center" border="1px">
-                            <tr>
-                                <td><spring:message code="voter.count"/></td>
-                                <td><spring:message code="voter.for"/></td>
-                                <td><spring:message code="voter.against"/></td>
-                            </tr>
-                            <tr>
-
-                                <td>${restaurant.vote_count}</td>
-                                <td><a class="btn btn-primary"
-                                       href="restaurants/vote?restaurantId=<c:out value="${restaurant.id}"/>&count=1"
-                                       class="c">+</a></td>
-                                <td><a class="btn btn-primary"
-                                       href="restaurants/vote?restaurantId=<c:out value="${restaurant.id}&count=-1"/>"
-                                       class="c">-</a></td>
-                            </tr>
-                        </table>
-                    </div>
-
                 </div>
-
-
-                    <p>
-                        <a class="btn btn-primary"
-                           href="restaurants/update?restaurantId=<c:out value="${restaurant.id}"/>"
-                           class="c"><spring:message code="common.update"/></a>
-                        <a class="btn btn-danger"
-                           href="restaurants/delete?restaurantId=<c:out value="${restaurant.id}"/>"
-                           class="c"><spring:message code="common.delete"/></a></p>
-
-
+                <p>
+                    <a class="btn btn-primary"
+                       href="restaurants/update?restaurantId=<c:out value="${restaurant.id}"/>"
+                       class="c"><spring:message code="common.update"/></a>
+                    <a class="btn btn-danger"
+                       href="restaurants/delete?restaurantId=<c:out value="${restaurant.id}"/>"
+                       class="c"><spring:message code="common.delete"/></a></p>
                 <br>
-
                 <div class="text-center p-3">
                     <p class="btn-info"><spring:message code="restaurants.menu"/></p>
                 </div>
-
                 <table class="container table table-striped" align="center" border="1px">
                     <tr>
                         <td><spring:message code="app.description"/></td>
@@ -86,7 +76,6 @@
                         <td><spring:message code="common.delete"/></td>
                     </tr>
                     <c:forEach var="meal1" items="${restaurant.menu}">
-
                         <tr>
                             <jsp:useBean id="meal1" type="ru.whereToEat.model.Meal"/>
                             <td>${meal1.description}</td>
@@ -101,16 +90,13 @@
                                    class="c"><spring:message code="common.delete"/></a>
                             </td>
                         </tr>
-
                     </c:forEach>
                 </table>
                 <br>
                 <a class="btn btn-info" href="meals/create?restaurantId=${restaurant.id}" class="c">
                     <spring:message code="restaurants.additemmenu"/></a>
             </div>
-
         </div>
-
         <br>
     </c:forEach>
     <div class="card">

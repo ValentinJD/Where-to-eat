@@ -7,16 +7,20 @@
 <jsp:include page="fragments/headTag.jsp"/>
 <html>
 
-<body >
+<body>
 <div>
     <jsp:include page="fragments/bodyHeader.jsp"/>
-    <p ><spring:message code="user.name"/> : <%=SecurityUtil.getUserName() %>
+    <p><spring:message code="user.name"/> : <%=SecurityUtil.getUserName() %>
     </p>
     <div class="container bg-light">
         <h3><spring:message code="user.title"/></h3>
 
         <section>
-            <table class="table table-striped">
+            <button class="btn btn-primary">
+                <span class="fa fa-plus"></span>
+                <spring:message code="user.create"/>
+            </button>
+            <table class="table table-striped mt-3">
                 <thead>
                 <tr>
                     <th><spring:message code="user.id"/></th>
@@ -34,23 +38,18 @@
                     <jsp:useBean id="user" scope="page" type="ru.whereToEat.model.User"/>
 
                     <tr>
-                        <td>${user.id}</td>
+                        <td><c:out value="${user.id}"/></td>
                         <td><c:out value="${user.name}"/></td>
                         <td><a href="mailto:${user.email}">${user.email}</a></td>
                         <td>${user.role}</td>
-                        <td><%=user.isEnabled()%>
-                        </td>
+                        <td><input type="checkbox" <c:if test="${user.enabled}">checked</c:if>/></td>
                         <td><%=user.getRegistered().format(TimeUtil.format)%>
                         </td>
-                        <td><a class="btn btn-primary" href="users/update?userId=${user.id}" class="c"><spring:message code="user.edit"/></a>
-                        </td>
-                        <td><a class="btn btn-danger" href="users/delete?userId=${user.id}" class="c"><spring:message
-                                code="user.delete"/></a>
-                        </td>
+                        <td><a><span class="fa fa-pencil"></span></a></td>
+                        <td><a><span class="fa fa-remove"></span></a></td>
                     </tr>
                 </c:forEach>
             </table>
-            <br><a class="btn btn-primary" href="users/create=" class="c"><spring:message code="user.create"/></a>
         </section>
     </div>
     <jsp:include page="fragments/footer.jsp"/>
