@@ -40,7 +40,7 @@ public class User extends AbstractNamedEntity {
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
-    private LocalDateTime registered;
+    private LocalDateTime registered = LocalDateTime.now();
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(value = EnumType.STRING)
