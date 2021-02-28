@@ -16,7 +16,7 @@ import static ru.whereToEat.UserTestData.USER_ID;
 import static ru.whereToEat.model.AbstractBaseEntity.START_SEQ;
 
 public class VoteTestData {
-    public static final TestMatcher<Vote> VOTE_TEST_MATCHER = TestMatcher.usingFieldsComparator(Vote.class,"date_vote");
+    public static final TestMatcher<Vote> VOTE_TEST_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(Vote.class,"date_vote");
 
     public static final int NOT_FOUND = 10;
     public static final int VOTE_ADMIN_ID1_ON_PERCHINI = START_SEQ + 14;

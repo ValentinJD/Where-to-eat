@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RestaurantTestData {
 
-    public static final TestMatcher<Restaurant> RESTAURANT_MATCHER = TestMatcher.usingFieldsComparator(Restaurant.class, "menu");
+    public static final TestMatcher<Restaurant> RESTAURANT_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(Restaurant.class, "menu");
 
     public static final int NOT_FOUND = 10;
     public static final int PERCHINI_ID = 100002;

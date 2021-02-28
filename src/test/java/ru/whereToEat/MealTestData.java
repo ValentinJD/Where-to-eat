@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class MealTestData {
-    public static TestMatcher<Meal> RESTAURANT_MEAL_MATCHER = TestMatcher.usingFieldsComparator(Meal.class,"restaurant");
+    public static TestMatcher<Meal> RESTAURANT_MEAL_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions (Meal.class,"restaurant");
 
     public static final int NOT_FOUND = 10;
     public static final int PERCHINI_ID = 100002;
