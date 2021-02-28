@@ -24,6 +24,7 @@
     <logger name="org.postgresql" level="debug"/>
     <logger name="org.springframework.jdbc" level="info"/>
     <logger name="org.springframework.web.servlet" level="debug"/>
+    <logger name="org.springframework.security" level="debug"/>
 
     <root level="debug">
         <appender-ref ref="file"/>
