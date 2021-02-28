@@ -35,7 +35,7 @@
             <c:forEach items="${users}" var="user">
                 <jsp:useBean id="user" type="ru.whereToEat.model.User"/>
                 <tr>
-<%--                    <td><c:out value="${user.id}"/></td>--%>
+                        <%--                    <td><c:out value="${user.id}"/></td>--%>
                     <td><c:out value="${user.name}"/></td>
                     <td><a href="mailto:${user.email}">${user.email}</a></td>
                     <td>${user.role}</td>
@@ -44,7 +44,7 @@
                     <td><%=user.getRegistered().format(TimeUtil.format)%>
                     </td>
                     <td><a class="update" id="${user.id}"><span class="fa fa-pencil"></span></a></td>
-                    <td><a class="delete" id="${user.id}"><span class="fa fa-remove"></span></a></td>
+                    <td><a onclick="deleteRow(${user.id})"  class="delete" id="${user.id}"><span class="fa fa-remove"></span></a></td>
                 </tr>
             </c:forEach>
         </table>

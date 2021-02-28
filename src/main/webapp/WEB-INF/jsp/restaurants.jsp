@@ -9,6 +9,8 @@
 <html>
 
 <body>
+<script type="text/javascript" src="resources/js/vote.common.js" defer></script>
+<script type="text/javascript" src="resources/js/vote.meals.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <p class="restaurant"><spring:message code="user.name"/> : <%=SecurityUtil.getUserName() %>
 </p>
@@ -68,13 +70,15 @@
                 <div class="text-center p-3">
                     <p class="btn-info"><spring:message code="restaurants.menu"/></p>
                 </div>
-                <table class="container table table-striped" align="center" border="1px">
+                <table class="display container table table-striped" align="center" id="${restaurant.id}">
+                    <thead>
                     <tr>
                         <td><spring:message code="app.description"/></td>
                         <td><spring:message code="app.price"/></td>
                         <td><spring:message code="common.update"/></td>
                         <td><spring:message code="common.delete"/></td>
                     </tr>
+                    </thead>
                     <c:forEach var="meal1" items="${restaurant.menu}">
                         <tr>
                             <jsp:useBean id="meal1" type="ru.whereToEat.model.Meal"/>
@@ -85,15 +89,15 @@
                                    href="meals/update?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
                                    class="c"><spring:message code="common.update"/></a>
                             </td>
-                            <td><a class="btn btn-danger"
-                                   href="meals/delete?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
+                            <td><a onclick="deleteRowMeal(${meal1.id}, ${restaurant.id})" class="btn btn-danger"
+
                                    class="c"><spring:message code="common.delete"/></a>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
                 <br>
-                <a class="btn btn-info" href="meals/create?restaurantId=${restaurant.id}" class="c">
+                <a onclick="addMeal(${restaurant.id})" class="btn btn-info" class="c">
                     <spring:message code="restaurants.additemmenu"/></a>
             </div>
         </div>
@@ -105,6 +109,59 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" tabindex="-1" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><spring:message code="common.create"/></h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="detailsForm">
+                    <%--                    <input type="hidden" id="mealId" name="mealId">--%>
+<%--                    <input type="hidden" id="restaurantId" name="restaurantId">--%>
+
+                    <div class="form-group">
+                        <label for="mealId" class="col-form-label"></label>
+                        <input type="text" class="form-control" id="mealId" name="mealId"
+                               placeholder="mealId">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="restaurantId" class="col-form-label"></label>
+                        <input type="text" class="form-control" id="restaurantId" name="restaurantId"
+                               placeholder="restaurantId">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="col-form-label"><spring:message code="app.description"/></label>
+                        <input type="text" class="form-control" id="description" name="description"
+                               placeholder="<spring:message code="app.description"/>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price" class="col-form-label"><spring:message code="app.price"/></label>
+                        <input type="number" class="form-control" id="price" name="price"
+                               placeholder="<spring:message code="app.price"/>">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                    <span class="fa fa-close"></span>
+                    <spring:message code="common.cancel"/>
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveMeal()">
+                    <span class="fa fa-check"></span>
+                    <spring:message code="common.save"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
