@@ -13,7 +13,7 @@ $(function () {
                         "data": "email"
                     },
                     {
-                        "data": "roles"
+                        "data": "role"
                     },
                     {
                         "data": "enabled"
