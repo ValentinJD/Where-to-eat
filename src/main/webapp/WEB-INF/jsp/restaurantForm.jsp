@@ -12,7 +12,7 @@
     <section>
 
 <%--        <h2>${param.action == 'create' ? 'Create restaurant' : 'Edit restaurant'}</h2>--%>
-
+<%--<h3><spring:message code="${user.isNew() ? 'common.create' : 'common.update'}"/></h3>--%>
         <jsp:useBean id="restaurant" type="ru.whereToEat.model.Restaurant" scope="request"/>
     <h3><spring:message code="${restaurant.isNew() ? 'common.create' : 'common.update'}"/></h3>
         <form method="post" action="restaurants">
