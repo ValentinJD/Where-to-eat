@@ -71,13 +71,13 @@ function saveMeal() {
         data: form.serialize()
     }).done(function () {
         $("#editRow").modal("hide");
-        updateTableMeals();
+        updateTableMeals(100002);
         successNoty("Saved");
     });
 }
 
 function addMeal(restaurantId) {
-    form.find('#restaurantId').val(restaurantId);
+    // form.find('#restaurantId').val(restaurantId);
     form.find(":input").val("");
     $("#editRow").modal();
 }

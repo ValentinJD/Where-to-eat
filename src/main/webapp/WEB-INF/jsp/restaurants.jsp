@@ -120,14 +120,14 @@
             </div>
             <div class="modal-body">
                 <form id="detailsForm">
-                    <%--                    <input type="hidden" id="mealId" name="mealId">--%>
-<%--                    <input type="hidden" id="restaurantId" name="restaurantId">--%>
+                    <input type="hidden" id="mealId" name="mealId" value="">
+<%--                    <input type="hidden" id="restaurantId" name="restaurantId" value="${restaurant.id}">--%>
 
-                    <div class="form-group">
+   <%--                 <div class="form-group">
                         <label for="mealId" class="col-form-label"></label>
                         <input type="text" class="form-control" id="mealId" name="mealId"
                                placeholder="mealId">
-                    </div>
+                    </div>--%>
 
                     <div class="form-group">
                         <label for="restaurantId" class="col-form-label"></label>
