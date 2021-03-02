@@ -3,6 +3,7 @@ package ru.whereToEat.service;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.User;
@@ -51,4 +52,13 @@ public class UserService {
         Assert.notNull(email, "user must not be null");
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void enable(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
+        repository.save(user);  // !! need only for JDBC implementation
+    }
+
 }

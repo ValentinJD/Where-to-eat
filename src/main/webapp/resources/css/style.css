@@ -5,3 +5,7 @@ BODY {
 .CONTAINER{
     opacity: 0.90;
 }
+
+tr[data-userEnabled="false"] {
+    opacity: 0.3;
+}

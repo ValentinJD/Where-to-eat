@@ -12,7 +12,7 @@ import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.whereToEat.UserTestData.*;
 
 abstract public class AbstractUserServiceTest extends AbstractServiceTest {
@@ -89,5 +89,11 @@ abstract public class AbstractUserServiceTest extends AbstractServiceTest {
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", true, null, Role.USER)), ConstraintViolationException.class);
     }
 
-
+    @Test
+    void enable() {
+        service.enable(USER_ID, false);
+        assertFalse(service.get(USER_ID).isEnabled());
+        service.enable(USER_ID, true);
+        assertTrue(service.get(USER_ID).isEnabled());
+    }
 }

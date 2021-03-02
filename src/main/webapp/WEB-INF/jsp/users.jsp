@@ -34,12 +34,12 @@
             </thead>
             <c:forEach items="${users}" var="user">
                 <jsp:useBean id="user" type="ru.whereToEat.model.User"/>
-                <tr>
+                <tr data-userEnabled="${user.enabled}">
                         <%--                    <td><c:out value="${user.id}"/></td>--%>
                     <td><c:out value="${user.name}"/></td>
                     <td><a href="mailto:${user.email}">${user.email}</a></td>
                     <td>${user.role}</td>
-                    <td><input type="checkbox"
+                    <td><input type="checkbox" onclick="enable($(this), ${user.id})"
                                <c:if test="${user.enabled}">checked</c:if> id="${user.id}"/></td>
                     <td><%=user.getRegistered().format(TimeUtil.format)%>
                     </td>
