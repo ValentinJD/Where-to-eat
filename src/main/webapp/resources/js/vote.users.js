@@ -38,7 +38,7 @@ $(function () {
                 ]
             }),
             updateTable: function () {
-                $.get("admin/users", updateTableByData);
+                $.get(userAjaxUrl, updateTableByData);
             }
         }
     );
