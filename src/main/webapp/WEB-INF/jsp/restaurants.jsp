@@ -121,7 +121,7 @@
             <div class="modal-body">
                 <form id="detailsForm">
                     <input type="hidden" id="mealId" name="mealId" value="">
-<%--                    <input type="hidden" id="restaurantId" name="restaurantId" value="${restaurant.id}">--%>
+                    <input type="hidden" id="restaurantId" name="restaurantId" >
 
    <%--                 <div class="form-group">
                         <label for="mealId" class="col-form-label"></label>
@@ -129,11 +129,11 @@
                                placeholder="mealId">
                     </div>--%>
 
-                    <div class="form-group">
+<%--                    <div class="form-group">
                         <label for="restaurantId" class="col-form-label"></label>
                         <input type="text" class="form-control" id="restaurantId" name="restaurantId"
-                               placeholder="restaurantId">
-                    </div>
+                               placeholder="">
+                    </div>--%>
 
                     <div class="form-group">
                         <label for="description" class="col-form-label"><spring:message code="app.description"/></label>
