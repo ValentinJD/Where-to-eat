@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.User;
 import ru.whereToEat.service.UserService;
+import ru.whereToEat.to.UserTo;
+import ru.whereToEat.util.UserUtil;
 
 import java.util.List;
 
@@ -32,6 +34,12 @@ public abstract class AbstractUserController {
         checkNew(user);
         return service.create(user);
     }
+
+    public User create(UserTo userTo) {
+        log.info("create from to {}", userTo);
+        return create(UserUtil.createNewFromTo(userTo));
+    }
+
 
     public void delete(int id) {
         log.info("delete {}", id);
