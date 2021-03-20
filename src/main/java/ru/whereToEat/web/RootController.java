@@ -21,8 +21,7 @@ public class RootController {
     }
 
     @GetMapping("/users")
-    public String getUsers(Model model) {
-        model.addAttribute("users", service.getAll());
+    public String getUsers() {
         return "users";
     }
 

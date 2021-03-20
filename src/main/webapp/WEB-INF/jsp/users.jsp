@@ -32,21 +32,6 @@
                 <th></th>
             </tr>
             </thead>
-            <c:forEach items="${users}" var="user">
-                <jsp:useBean id="user" type="ru.whereToEat.model.User"/>
-                <tr data-userEnabled="${user.enabled}">
-                        <%--                    <td><c:out value="${user.id}"/></td>--%>
-                    <td><c:out value="${user.name}"/></td>
-                    <td><a href="mailto:${user.email}">${user.email}</a></td>
-                    <td>${user.role}</td>
-                    <td><input type="checkbox" onclick="enable($(this), ${user.id})"
-                               <c:if test="${user.enabled}">checked</c:if> id="${user.id}"/></td>
-                    <td><%=user.getRegistered().format(TimeUtil.format)%>
-                    </td>
-                    <td><a onclick=updateRow(${user.id}) class="update" id="${user.id}"><span class="fa fa-pencil"></span></a></td>
-                    <td><a onclick="deleteRow(${user.id})"  class="delete" id="${user.id}"><span class="fa fa-remove"></span></a></td>
-                </tr>
-            </c:forEach>
         </table>
     </div>
 </div>
