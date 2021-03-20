@@ -26,13 +26,13 @@ public abstract class AbstractMealController {
     }
 
     public void delete(int mealId) {
-        int id = SecurityUtil.authUserId();
-        if (SecurityUtil.isAdmin(id)) {
+//        int id = SecurityUtil.authUserId();
+//        if (SecurityUtil.isAdmin(id)) {
             mealService.delete(mealId);
             log.info("delete() {}", mealId);
-        } else {
-            throw new NotEnoughRightsException("Только для администраторов");
-        }
+//        } else {
+//            throw new NotEnoughRightsException("Только для администраторов");
+//        }
     }
 
     public List<Meal> getAll(int restaurantId) {
