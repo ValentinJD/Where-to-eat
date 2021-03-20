@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/profile/meals")
-public class MealUIController extends AbstractMealController{
+public class MealUIController extends AbstractMealController {
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,13 +33,10 @@ public class MealUIController extends AbstractMealController{
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@RequestParam(required = false) Integer mealId,
-                               @RequestParam String description,
-                               @RequestParam Float price,
-                               @RequestParam int restaurantId) {
+    public void createOrUpdate(Meal meal, @RequestParam Integer restaurantId) {
         Restaurant restaurant = new Restaurant();
         restaurant.setId(restaurantId);
-        Meal meal = new Meal(mealId, description, price, restaurant);
+        meal.setRestaurant(restaurant);
         if (meal.isNew()) {
             super.create(meal);
         }
