@@ -43,7 +43,7 @@
                                <c:if test="${user.enabled}">checked</c:if> id="${user.id}"/></td>
                     <td><%=user.getRegistered().format(TimeUtil.format)%>
                     </td>
-                    <td><a class="update" id="${user.id}"><span class="fa fa-pencil"></span></a></td>
+                    <td><a onclick=updateRow(${user.id}) class="update" id="${user.id}"><span class="fa fa-pencil"></span></a></td>
                     <td><a onclick="deleteRow(${user.id})"  class="delete" id="${user.id}"><span class="fa fa-remove"></span></a></td>
                 </tr>
             </c:forEach>

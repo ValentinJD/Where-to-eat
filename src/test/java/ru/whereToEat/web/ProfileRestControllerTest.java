@@ -5,17 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import ru.whereToEat.UserTestData;
 import ru.whereToEat.model.User;
 import ru.whereToEat.service.UserService;
+import ru.whereToEat.to.UserTo;
+import ru.whereToEat.util.UserUtil;
 import ru.whereToEat.web.json.JsonUtil;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-
 import static ru.whereToEat.UserTestData.*;
 import static ru.whereToEat.web.user.ProfileRestController.REST_URL;
 
@@ -42,12 +40,12 @@ public class ProfileRestControllerTest extends AbstractControllerTest{
     @Test
     @Transactional
     void update() throws Exception {
-        User updated = UserTestData.getUpdated();
+        UserTo updatedTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+                .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        USER_MATCHER.assertMatch(userService.get(USER_ID), updated);
+        USER_MATCHER.assertMatch(userService.get(USER_ID), UserUtil.updateFromTo(new User(USER), updatedTo));
     }
 }

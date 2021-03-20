@@ -8,6 +8,8 @@ import org.springframework.util.Assert;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
+import ru.whereToEat.to.UserTo;
+import ru.whereToEat.util.UserUtil;
 
 import java.util.List;
 
@@ -46,6 +48,14 @@ public class UserService {
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         repository.save(user);
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void update(UserTo userTo) {
+        User user = get(userTo.id());
+        User updatedUser = UserUtil.updateFromTo(user, userTo);
+        repository.save(updatedUser);   // !! need only for JDBC implementation
     }
 
     public User getByEmail(String email) throws NotFoundException {

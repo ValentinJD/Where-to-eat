@@ -71,3 +71,12 @@ function failNoty(jqXHR) {
         layout: "bottomRight"
     }).show();
 }
+
+function updateRow(id) {
+    $.get(context.ajaxUrl + id, function (data) {
+        $.each(data, function (key, value) {
+            form.find("input[name='" + key + "']").val(value);
+        });
+        $('#editRow').modal();
+    });
+}

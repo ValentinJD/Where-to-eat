@@ -11,6 +11,7 @@ import ru.whereToEat.util.UserUtil;
 
 import java.util.List;
 
+import static ru.whereToEat.util.ValidationUtil.assureIdConsistent;
 import static ru.whereToEat.util.ValidationUtil.checkNew;
 
 public abstract class AbstractUserController {
@@ -38,6 +39,12 @@ public abstract class AbstractUserController {
     public User create(UserTo userTo) {
         log.info("create from to {}", userTo);
         return create(UserUtil.createNewFromTo(userTo));
+    }
+
+    public void update(UserTo userTo, int id) {
+        log.info("update {} with id={}", userTo, id);
+        assureIdConsistent(userTo, id);
+        service.update(userTo);
     }
 
 

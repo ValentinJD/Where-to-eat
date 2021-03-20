@@ -2,13 +2,14 @@ package ru.whereToEat.model;
 
 import org.hibernate.Hibernate;
 import org.springframework.util.Assert;
+import ru.whereToEat.to.BaseTo;
 
 import javax.persistence.*;
 
 @MappedSuperclass
 // http://stackoverflow.com/questions/594597/hibernate-annotations-which-is-better-field-or-property-access
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity extends BaseTo {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -29,6 +30,7 @@ public abstract class AbstractBaseEntity {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
