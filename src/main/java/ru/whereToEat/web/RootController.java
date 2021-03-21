@@ -17,7 +17,7 @@ public class RootController {
 
     @GetMapping("/")
     public String root() {
-        return "index";
+        return "redirect:restaurants";
     }
 
     @GetMapping("/users")
@@ -25,12 +25,12 @@ public class RootController {
         return "users";
     }
 
-    @PostMapping("/users")
-    public String setUser(HttpServletRequest request) {
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        SecurityUtil.setUserId(userId);
-        return "redirect:restaurants";
+    @GetMapping(value = "/login")
+    public String login() {
+        return "login";
     }
+
+
 
 /*
 *     protected final Logger log = LoggerFactory.getLogger(getClass());
