@@ -13,10 +13,10 @@
             <a href="restaurants"><H5 CLASS="text-primary"><spring:message code="app.title"/></H5></a>
         </div>
         <div class="col-3 p-3">
-                <a class="btn btn-info mr-1" href="users"><spring:message code="user.title"/></a>
-                <a class="btn btn-primary" href="${pageContext.request.contextPath}">
-                    <span class="fa fa-sign-in"></span>
-                </a>
+            <a class="btn btn-info mr-1" href="users"><spring:message code="user.title"/></a>
+            <a class="btn btn-primary" href="logout">
+                <span class="fa fa-sign-out"></span>
+            </a>
         </div>
 
 
