@@ -17,6 +17,12 @@ import java.util.stream.Collectors;
 public class MealUIController extends AbstractMealController {
 
     @Override
+    @GetMapping(value = "/one/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Meal get(@PathVariable int id) {
+        return super.get(id);
+    }
+
+    @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Meal> getAll() {
         return super.getAll();
@@ -24,7 +30,7 @@ public class MealUIController extends AbstractMealController {
 
     @Override
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Meal> getAll(@PathVariable int id) {
+    public List<Meal> getAll(@PathVariable() int id) {
         return super.getAll(id);
     }
 
@@ -37,7 +43,7 @@ public class MealUIController extends AbstractMealController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> createOrUpdate(@Valid Meal meal, BindingResult result, @RequestParam Integer restaurantId) {
+    public ResponseEntity<String> createOrUpdate(@RequestParam("restaurantId") Integer restaurantId, @Valid Meal meal, BindingResult result) {
         if (result.hasErrors()) {
             String errorFieldsMsg = result.getFieldErrors().stream()
                     .map(fe -> String.format("[%s] %s", fe.getField(), fe.getDefaultMessage()))
@@ -51,6 +57,8 @@ public class MealUIController extends AbstractMealController {
         meal.setRestaurant(restaurant);
         if (meal.isNew()) {
             super.create(meal);
+        } else {
+            super.update(meal);
         }
 
         return ResponseEntity.ok().build();

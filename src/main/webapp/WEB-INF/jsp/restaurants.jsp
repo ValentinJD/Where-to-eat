@@ -85,8 +85,7 @@
                             <td>${meal1.description}</td>
                             <td>${meal1.price}</td>
                             <td>
-                                <a class="btn btn-primary"
-                                   href="meals/update?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
+                                <a onclick="updateRowMeal(${meal1.id}, ${restaurant.id})" class="btn btn-primary"
                                    class="c"><spring:message code="common.update"/></a>
                             </td>
                             <td><a onclick="deleteRowMeal(${meal1.id}, ${restaurant.id})" class="btn btn-danger"
@@ -120,20 +119,20 @@
             </div>
             <div class="modal-body">
                 <form id="detailsForm">
-                    <input type="hidden" id="mealId" name="mealId" value="">
-                    <input type="hidden" id="restaurantId" name="restaurantId" >
+                    <input  id="mealId" name="id" value="">
+                    <input  id="restaurantId" name="restaurantId">
 
-   <%--                 <div class="form-group">
-                        <label for="mealId" class="col-form-label"></label>
-                        <input type="text" class="form-control" id="mealId" name="mealId"
-                               placeholder="mealId">
-                    </div>--%>
+                    <%--                 <div class="form-group">
+                                         <label for="mealId" class="col-form-label"></label>
+                                         <input type="text" class="form-control" id="mealId" name="mealId"
+                                                placeholder="mealId">
+                                     </div>--%>
 
-<%--                    <div class="form-group">
-                        <label for="restaurantId" class="col-form-label"></label>
-                        <input type="text" class="form-control" id="restaurantId" name="restaurantId"
-                               placeholder="">
-                    </div>--%>
+                    <%--                    <div class="form-group">
+                                            <label for="restaurantId" class="col-form-label"></label>
+                                            <input type="text" class="form-control" id="restaurantId" name="restaurantId"
+                                                   placeholder="">
+                                        </div>--%>
 
                     <div class="form-group">
                         <label for="description" class="col-form-label"><spring:message code="app.description"/></label>

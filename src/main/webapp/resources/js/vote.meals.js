@@ -65,6 +65,7 @@ function updateTableMealsByData(data) {
 }
 
 function saveMeal() {
+
     $.ajax({
         type: "POST",
         url: "profile/meals",
@@ -83,4 +84,15 @@ function addMeal(restaurantId) {
     $("#restaurantId").val(restaurantId);
     restID = restaurantId;
     $("#editRow").modal();
+}
+
+function updateRowMeal(id, restaurantId) {
+    restID = restaurantId;
+    $.get("profile/meals/one/" + id , function (data) {
+        $.each(data, function (key, value) {
+            form.find("input[name='" + key + "']").val(value);
+        });
+        form.find("input[name='" + "restaurantId" + "']").val(restaurantId);
+        $('#editRow').modal();
+    });
 }
