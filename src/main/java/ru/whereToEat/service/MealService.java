@@ -5,7 +5,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.whereToEat.model.Meal;
+import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.MealRepository;
+import ru.whereToEat.to.MealTo;
+import ru.whereToEat.util.MealsUtil;
 
 import java.util.List;
 
@@ -27,6 +30,10 @@ public class MealService {
     @Cacheable("meals")
     public List<Meal> getAll() {
         return repository.getAll();
+    }
+
+    public List<MealTo> getAllTo(List<Meal> list, Integer restaurantId) {
+        return MealsUtil.createListTo(list, restaurantId);
     }
 
     @Cacheable("meals")

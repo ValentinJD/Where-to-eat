@@ -29,6 +29,11 @@ public abstract class AbstractRestaurantController {
         return restaurantService.get(restaurantId);
     }
 
+    public List<Integer> getAllId() {
+        log.info("getAll()");
+        return restaurantService.getAllRestaurantId();
+    }
+
     public void delete(int restaurantId) {
         int id = SecurityUtil.authUserId();
         if (SecurityUtil.isAdmin(id)) {

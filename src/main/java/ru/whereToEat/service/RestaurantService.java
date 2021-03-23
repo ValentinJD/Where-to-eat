@@ -8,6 +8,7 @@ import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.repository.RestaurantRepository;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -31,6 +32,18 @@ public class RestaurantService {
         checkNotFoundWithId(restaurant, restaurantId);
         return restaurant;
     }
+
+    public List<Integer> getAllRestaurantId() {
+        List<Restaurant> list = restaurantRepository.getAll();
+        List<Integer> listId = new ArrayList<>();
+        list.forEach((restaurant) -> {
+            listId.add(restaurant.getId());
+        });
+
+        list.sort(Comparator.comparing(Restaurant::getId));
+        return listId;
+    }
+
 
     public Restaurant getWithMeals(int restaurantId) {
         checkNotFoundWithId(get(restaurantId), restaurantId);

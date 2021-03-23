@@ -20,6 +20,9 @@ function deleteRowMeal(id, restaurantId) {
     }
 }
 
+var arrRestId;
+var i = -1;
+
 $(function () {
         makeEditable({
             ajaxUrl: "profile/meals/",
@@ -35,7 +38,8 @@ $(function () {
                     },
                     {
                         "defaultContent": "Edit",
-                        "orderable": false
+                        "orderable": false,
+                        "render": renderMealEditBtn
                     },
                     {
                         "defaultContent": "Delete",
@@ -88,11 +92,44 @@ function addMeal(restaurantId) {
 
 function updateRowMeal(id, restaurantId) {
     restID = restaurantId;
-    $.get("profile/meals/one/" + id , function (data) {
+    $.get("profile/meals/one/" + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
         });
         form.find("input[name='" + "restaurantId" + "']").val(restaurantId);
         $('#editRow').modal();
     });
+}
+
+function initarrRestId() {
+    $.get("profile/restaurants/", function (d) {
+        arrRestId = d;
+    });
+}
+
+function renderMealEditBtn(data, type, row) {
+    initarrRestId();
+
+    if (type === "display") {
+      let s = i + 1;
+      let id = arrRestId[s];
+        return "<a onclick='updateRow(" + row.id + ',' + id + ");'><span class='btn btn-primary'></span></a>";
+
+        /*
+        * <a class="btn btn-primary"
+                                   href="meals/update?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
+                                   class="c"><spring:message code="common.update"/></a>
+        * */
+    }
+}
+
+function renderMealDeleteBtn(data, type, row) {
+    if (type === "display") {
+        return "<a onclick='deleteRowMeal(" + row.id + ");'><span class='fa fa-remove'></span></a>";
+
+        /*
+        * <a onclick="deleteRowMeal(${meal1.id}, ${restaurant.id})" class="btn btn-danger"
+
+                                   class="c"><spring:message code="common.delete"/></a>*/
+    }
 }

@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.whereToEat.exceptions.NotEnoughRightsException;
 import ru.whereToEat.model.Meal;
+import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.MealService;
 import ru.whereToEat.service.RestaurantService;
+import ru.whereToEat.to.MealTo;
+import ru.whereToEat.util.MealsUtil;
 import ru.whereToEat.web.SecurityUtil;
 
 import java.util.List;
@@ -35,7 +38,7 @@ public abstract class AbstractMealController {
 //        }
     }
 
-    public List<Meal> getAll(int restaurantId) {
+    public List<Meal> getAll(Integer restaurantId) {
         log.info("getAll() {}", restaurantId);
         return mealService.getAll(restaurantId);
     }
@@ -43,6 +46,11 @@ public abstract class AbstractMealController {
     public List<Meal> getAll() {
         log.info("getAll() ");
         return mealService.getAll();
+    }
+
+    public List<MealTo> getAllTo(Integer restaurantId) {
+        log.info("getAll() ");
+        return mealService.getAllTo(getAll(restaurantId), restaurantId) ;
     }
 
     public Meal create(Meal meal) {

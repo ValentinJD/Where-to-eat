@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.whereToEat.model.Meal;
 import ru.whereToEat.model.Restaurant;
+import ru.whereToEat.to.MealTo;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,9 +30,9 @@ public class MealUIController extends AbstractMealController {
     }
 
     @Override
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Meal> getAll(@PathVariable() int id) {
-        return super.getAll(id);
+    @GetMapping(value = "/{restaurantId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MealTo> getAllTo(@PathVariable() Integer restaurantId) {
+        return super.getAllTo(restaurantId);
     }
 
     @Override
