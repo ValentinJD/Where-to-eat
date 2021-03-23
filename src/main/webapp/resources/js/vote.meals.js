@@ -106,7 +106,7 @@ function updateRowMeal(id, restaurantId) {
 
 function renderMealEditBtn(data, type, row) {
     if (type === "display") {
-        return "<a onclick='updateRowMeal(" + row.id + ',' + row.restaurantId + ");'><span class='btn btn-primary'></span></a>";
+        return "<a onclick='updateRowMeal(" + row.id + ',' + row.restaurantId + ");'><span class='fa fa-pencil'></span></a>";
     }
 }
 
