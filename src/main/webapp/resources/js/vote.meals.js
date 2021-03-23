@@ -20,12 +20,9 @@ function deleteRowMeal(id, restaurantId) {
     }
 }
 
-var arrRestId;
-var i = -1;
-
 $(function () {
         makeEditable({
-            ajaxUrl: "profile/meals/",
+            ajaxUrl: urlMeals,
             datatableApi: $("table.display").DataTable({
                 "paging": false,
                 "info": true,
@@ -64,7 +61,7 @@ var restaurantId;
 
 function updateTableMeals(restaurantId) {
     this.restaurantId = restaurantId;
-    $.get("profile/meals/" + restaurantId, updateTableMealsByData);
+    $.get(urlMeals + restaurantId, updateTableMealsByData);
 }
 
 function updateTableMealsByData(data) {
@@ -79,23 +76,23 @@ function saveMeal() {
         data: form.serialize()
     }).done(function () {
         $("#editRow").modal("hide");
-        updateTableMeals(restID);
+        updateTableMeals(restaurantId);
         successNoty("Saved");
     });
 }
 
-var restID;
+
 
 function addMeal(restaurantId) {
     form.find(":input").val("");
     $("#restaurantId").val(restaurantId);
-    restID = restaurantId;
+    this.restaurantId = restaurantId;
     $("#editRow").modal();
 }
 
 function updateRowMeal(id, restaurantId) {
-    restID = restaurantId;
-    $.get("profile/meals/one/" + id, function (data) {
+    this.restaurantId = restaurantId;
+    $.get(urlMeals + "one/" + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
         });
