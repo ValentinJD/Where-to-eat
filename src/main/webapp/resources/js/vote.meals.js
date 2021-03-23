@@ -37,13 +37,16 @@ $(function () {
                         "data": "price"
                     },
                     {
+                        "data": "id",
                         "defaultContent": "Edit",
                         "orderable": false,
                         "render": renderMealEditBtn
                     },
                     {
+                        "data": "restaurantId",
                         "defaultContent": "Delete",
-                        "orderable": false
+                        "orderable": false,
+                        "render": renderMealDeleteBtn
                     }
                 ],
                 "order": [
@@ -101,35 +104,14 @@ function updateRowMeal(id, restaurantId) {
     });
 }
 
-function initarrRestId() {
-    $.get("profile/restaurants/", function (d) {
-        arrRestId = d;
-    });
-}
-
 function renderMealEditBtn(data, type, row) {
-    initarrRestId();
-
     if (type === "display") {
-      let s = i + 1;
-      let id = arrRestId[s];
-        return "<a onclick='updateRow(" + row.id + ',' + id + ");'><span class='btn btn-primary'></span></a>";
-
-        /*
-        * <a class="btn btn-primary"
-                                   href="meals/update?mealId=<c:out value="${meal1.id}&restaurantId=${restaurant.id}"/>"
-                                   class="c"><spring:message code="common.update"/></a>
-        * */
+        return "<a onclick='updateRowMeal(" + row.id + ',' + row.restaurantId + ");'><span class='btn btn-primary'></span></a>";
     }
 }
 
 function renderMealDeleteBtn(data, type, row) {
     if (type === "display") {
-        return "<a onclick='deleteRowMeal(" + row.id + ");'><span class='fa fa-remove'></span></a>";
-
-        /*
-        * <a onclick="deleteRowMeal(${meal1.id}, ${restaurant.id})" class="btn btn-danger"
-
-                                   class="c"><spring:message code="common.delete"/></a>*/
+        return "<a onclick='deleteRowMeal(" + row.id + ',' + row.restaurantId + ");'><span class='fa fa-remove'></span></a>";
     }
 }

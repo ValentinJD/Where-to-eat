@@ -85,12 +85,10 @@
                             <td>${meal1.description}</td>
                             <td>${meal1.price}</td>
                             <td>
-                                <a onclick="updateRowMeal(${meal1.id}, ${restaurant.id})" class="btn btn-primary"
-                                   class="c"><spring:message code="common.update"/></a>
+                                    ${meal1.id}
                             </td>
-                            <td><a onclick="deleteRowMeal(${meal1.id}, ${restaurant.id})" class="btn btn-danger"
-
-                                   class="c"><spring:message code="common.delete"/></a>
+                            <td>
+                                    ${restaurant.id}
                             </td>
                         </tr>
                     </c:forEach>
@@ -119,20 +117,8 @@
             </div>
             <div class="modal-body">
                 <form id="detailsForm">
-                    <input  id="mealId" name="id" value="">
-                    <input  id="restaurantId" name="restaurantId">
-
-                    <%--                 <div class="form-group">
-                                         <label for="mealId" class="col-form-label"></label>
-                                         <input type="text" class="form-control" id="mealId" name="mealId"
-                                                placeholder="mealId">
-                                     </div>--%>
-
-                    <%--                    <div class="form-group">
-                                            <label for="restaurantId" class="col-form-label"></label>
-                                            <input type="text" class="form-control" id="restaurantId" name="restaurantId"
-                                                   placeholder="">
-                                        </div>--%>
+                    <input type="hidden" id="mealId" name="id" value="">
+                    <input type="hidden" id="restaurantId" name="restaurantId">
 
                     <div class="form-group">
                         <label for="description" class="col-form-label"><spring:message code="app.description"/></label>
