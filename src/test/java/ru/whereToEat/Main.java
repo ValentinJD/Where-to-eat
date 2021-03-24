@@ -20,8 +20,12 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static ru.whereToEat.TestUtil.mockAuthorize;
+import static ru.whereToEat.UserTestData.USER;
+
 public class Main {
     public static void main(String[] args) throws NotFoundException, NotSaveOrUpdateException {
+        mockAuthorize(USER);
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
         context.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.JPA);
         context.refresh();
