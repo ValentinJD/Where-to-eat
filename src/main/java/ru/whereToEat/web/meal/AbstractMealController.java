@@ -5,11 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.whereToEat.exceptions.NotEnoughRightsException;
 import ru.whereToEat.model.Meal;
-import ru.whereToEat.model.Restaurant;
 import ru.whereToEat.service.MealService;
 import ru.whereToEat.service.RestaurantService;
 import ru.whereToEat.to.MealTo;
-import ru.whereToEat.util.MealsUtil;
 import ru.whereToEat.web.SecurityUtil;
 
 import java.util.List;
@@ -54,23 +52,23 @@ public abstract class AbstractMealController {
     }
 
     public Meal create(Meal meal) {
-        int id = SecurityUtil.authUserId();
-        if (SecurityUtil.isAdmin(id)) {
+//        int id = SecurityUtil.authUserId();
+//        if (SecurityUtil.isAdmin(id)) {
             log.info("create() {}", meal);
             return mealService.create(meal);
-        } else {
-            throw new NotEnoughRightsException("Только для администраторов");
-        }
+//        } else {
+//            throw new NotEnoughRightsException("Только для администраторов");
+//        }
     }
 
     public void update(Meal meal) {
-        int id = SecurityUtil.authUserId();
-        if (SecurityUtil.isAdmin(id)) {
+//        int id = SecurityUtil.authUserId();
+//        if (SecurityUtil.isAdmin(id)) {
             mealService.update(meal);
             log.info("update() {}", meal);
-        } else {
-            throw new NotEnoughRightsException("Только для администраторов");
-        }
+//        } else {
+//            throw new NotEnoughRightsException("Только для администраторов");
+//        }
     }
 
 

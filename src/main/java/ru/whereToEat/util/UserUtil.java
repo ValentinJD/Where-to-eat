@@ -15,4 +15,8 @@ public class UserUtil {
         user.setPassword(userTo.getPassword());
         return user;
     }
+
+    public static UserTo asTo(User user) {
+        return new UserTo(user.id(), user.getName(), user.getEmail(), user.getPassword());
+    }
 }

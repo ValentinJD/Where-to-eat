@@ -31,7 +31,7 @@
             <button type="submit" class="btn btn-lg btn-primary" onclick="login('user@yandex.ru', 'password')">
                 <spring:message code="app.login"/> User
             </button>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'admin')">
+            <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'password')">
                 <spring:message code="app.login"/> Admin
             </button>
         </p>

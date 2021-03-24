@@ -2,9 +2,15 @@ package ru.whereToEat.service;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.whereToEat.AuthorizedUser;
 import ru.whereToEat.exceptions.NotFoundException;
 import ru.whereToEat.model.User;
 import ru.whereToEat.repository.UserRepository;
@@ -16,8 +22,9 @@ import java.util.List;
 import static ru.whereToEat.util.ValidationUtil.checkNotFound;
 import static ru.whereToEat.util.ValidationUtil.checkNotFoundWithId;
 
-@Service
-public class UserService {
+@Service("userService")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class UserService implements UserDetailsService {
     private final UserRepository repository;
 
     public UserService(UserRepository repository) {
@@ -71,4 +78,13 @@ public class UserService {
         repository.save(user);  // !! need only for JDBC implementation
     }
 
+    @Override
+    public AuthorizedUser  loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.getByEmail(email.toLowerCase());
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
+    }
 }

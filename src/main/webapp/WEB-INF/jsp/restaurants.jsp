@@ -12,8 +12,12 @@
 <script type="text/javascript" src="resources/js/vote.common.js" defer></script>
 <script type="text/javascript" src="resources/js/vote.meals.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
-<p class="restaurant"><spring:message code="user.name"/> : <%=SecurityUtil.getUserName() %>
-</p>
+<div class="container">
+    <p>
+    <h3>Приветствуем тебя <b><c:out value="${pageContext.request.remoteUser}"/></b></h3>
+    </p>
+</div>
+
 
 <div class="container">
     <div class="card">
