@@ -17,13 +17,13 @@ function add() {
 }
 
 function deleteRow(id) {
-    if (confirm('Are you sure?')) {
+    if (confirm(i18n["common.confirm"])) {
         $.ajax({
             url: context.ajaxUrl + id,
             type: "DELETE"
         }).done(function () {
             context.updateTable();
-            successNoty("Deleted");
+            successNoty("common.deleted");
         });
     }
 }
@@ -40,7 +40,7 @@ function save() {
     }).done(function () {
         $("#editRow").modal("hide");
         context.updateTable();
-        successNoty("Saved");
+        successNoty("common.saved");
     });
 }
 
@@ -56,7 +56,7 @@ function closeNoty() {
 function successNoty(text) {
     closeNoty();
     new Noty({
-        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + text,
+        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + i18n[text],
         type: 'success',
         layout: "bottomRight",
         timeout: 1000

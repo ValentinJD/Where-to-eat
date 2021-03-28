@@ -9,13 +9,13 @@ function updateFilteredTable(id) {
 }
 
 function deleteRowMeal(id, restaurantId) {
-    if (confirm('Are you sure?')) {
+    if (confirm(i18n["common.confirm"])) {
         $.ajax({
             url: context.ajaxUrl + id,
             type: "DELETE"
         }).done(function () {
             updateTableMeals(restaurantId);
-            successNoty("Deleted");
+            successNoty("common.deleted");
         });
     }
 }
@@ -69,7 +69,6 @@ function updateTableMealsByData(data) {
 }
 
 function saveMeal() {
-
     $.ajax({
         type: "POST",
         url: "profile/meals",
@@ -77,7 +76,7 @@ function saveMeal() {
     }).done(function () {
         $("#editRow").modal("hide");
         updateTableMeals(restaurantId);
-        successNoty("Saved");
+        successNoty("common.saved");
     });
 }
 

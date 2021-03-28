@@ -10,8 +10,6 @@
 <script type="text/javascript" src="resources/js/vote.users.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
-<div><p><spring:message code="user.name"/> : <%=SecurityUtil.getUserName() %>
-</p>
     <div class="container bg-light">
         <h3><spring:message code="user.title"/></h3>
         <button class="btn btn-primary" onclick="add()">
@@ -81,13 +79,7 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
-<script type="text/javascript">
-    const i18n = [];
-    i18n["addTitle"] = '<spring:message code="user.create"/>';
-    i18n["editTitle"] = '<spring:message code="user.edit"/>';
-
-    <c:forEach var="key" items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.errorStatus","common.confirm"}%>'>
-    i18n["${key}"] = "<spring:message code="${key}"/>";
-    </c:forEach>
-</script>
+<jsp:include page="fragments/i18n.jsp">
+    <jsp:param name="page" value="user"/>
+</jsp:include>
 </html>
