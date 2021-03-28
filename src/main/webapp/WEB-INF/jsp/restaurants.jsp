@@ -19,7 +19,7 @@
         <p>
         <h3>
             <security:authorize access="isAuthenticated()">
-                Приветствуем тебя <security:authentication property="principal.username"/>
+                <spring:message code="common.hello"/> <security:authentication property="principal.username"/>
             </security:authorize>
         </h3>
 
