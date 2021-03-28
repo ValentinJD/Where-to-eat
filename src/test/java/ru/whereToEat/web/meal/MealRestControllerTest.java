@@ -19,6 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.whereToEat.MealTestData.*;
 import static ru.whereToEat.TestUtil.readFromJson;
+import static ru.whereToEat.TestUtil.userHttpBasic;
+import static ru.whereToEat.UserTestData.ADMIN;
 
 public class MealRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL_MEAL = MealRestController.REST_URL_MEAL + "/meal/";
@@ -29,7 +31,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL_MEAL + MEAL1_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL_MEAL + MEAL1_ID).with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -39,7 +41,8 @@ public class MealRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL_MEAL + MEDALYONY_IZ_GOVYADINY_ID))
+        perform(MockMvcRequestBuilders.delete(REST_URL_MEAL + MEDALYONY_IZ_GOVYADINY_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> mealService.get(MEDALYONY_IZ_GOVYADINY_ID));
     }
@@ -48,7 +51,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
     @Transactional
     void update() throws Exception {
         Meal updated = MealTestData.getUpdated();
-        perform(MockMvcRequestBuilders.put(REST_URL_MEAL + MEDALYONY_IZ_GOVYADINY_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL_MEAL + MEDALYONY_IZ_GOVYADINY_ID).with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
@@ -61,6 +64,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
     void createWithLocation() throws Exception {
         Meal meal = MealTestData.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL_MEAL + '/' + PERCHINI_ID)
+                .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(meal)))
                 .andExpect(status().isCreated());
@@ -74,7 +78,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL_MEALS + PERCHINI_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL_MEALS + PERCHINI_ID).with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MEAL_MATCHER.contentJson(MEAL3, MEAL2, MEAL1));

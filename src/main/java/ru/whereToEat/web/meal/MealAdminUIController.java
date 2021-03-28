@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/profile/meals")
-public class MealUIController extends AbstractMealController {
+public class MealAdminUIController extends AbstractMealController {
 
     @Override
     @GetMapping(value = "/one/{id}",produces = MediaType.APPLICATION_JSON_VALUE)

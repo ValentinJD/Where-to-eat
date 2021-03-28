@@ -36,6 +36,8 @@ import static ru.whereToEat.RestaurantTestData.PERCHINI;
 import static ru.whereToEat.RestaurantTestData.PERCHINI_ID;
 import static ru.whereToEat.RestaurantTestData.TRI_OLENYA;
 import static ru.whereToEat.TestUtil.readFromJson;
+import static ru.whereToEat.TestUtil.userHttpBasic;
+import static ru.whereToEat.UserTestData.ADMIN;
 
 public class RestaurantRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL_RESTAURANT = RestaurantRestController.REST_URL_RESTAURANT + "/restaurant/";
@@ -46,7 +48,8 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANT + PERCHINI_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANT + PERCHINI_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -57,7 +60,8 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void getAll() throws Exception {
         List<Restaurant> list = List.of(PERCHINI, BAR_AND_GRIL, TRI_OLENYA);
-        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANTS))
+        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANTS)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                .andExpect(RESTAURANT_MATCHER.contentJson(list));
@@ -67,7 +71,8 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     void getAllFilteredByName() throws Exception {
         JsonUtil.writeValue(PERCHINI);
         List<Restaurant> list = List.of(PERCHINI);
-        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANTS + "/filter/Перчини"))
+        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANTS + "/filter/Перчини")
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
         .andExpect(RESTAURANT_MATCHER.contentJson(list));
@@ -78,6 +83,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     void createWithLocation() throws Exception {
         Restaurant restaurant = RestaurantTestData.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL_RESTAURANT)
+                .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(restaurant)))
                 .andExpect(status().isCreated());
@@ -95,6 +101,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         Restaurant updated = RestaurantTestData.getUpdated();
         perform(MockMvcRequestBuilders.put(REST_URL_RESTAURANT)
+                .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
@@ -105,7 +112,8 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional()
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL_RESTAURANT + PERCHINI_ID))
+        perform(MockMvcRequestBuilders.delete(REST_URL_RESTAURANT + PERCHINI_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> service.get(PERCHINI_ID));
     }

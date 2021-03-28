@@ -11,6 +11,8 @@ import ru.whereToEat.web.json.JsonUtil;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.whereToEat.TestUtil.userHttpBasic;
+import static ru.whereToEat.UserTestData.ADMIN;
 import static ru.whereToEat.web.vote.VoteRestController.REST_URL_VOTE;
 
 public class VoteRestControllerTest extends AbstractControllerTest {
@@ -22,6 +24,7 @@ public class VoteRestControllerTest extends AbstractControllerTest {
 
         assertThrows(NestedServletException.class, () ->
                 perform(MockMvcRequestBuilders.post(REST_URL_VOTE)
+                        .with(userHttpBasic(ADMIN))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtil.writeValue(vote)))
                         .andExpect(status().isNoContent())
@@ -34,6 +37,7 @@ public class VoteRestControllerTest extends AbstractControllerTest {
         Vote vote = VoteTestData.getUpdatedBefore11oClockCount1();
 
         perform(MockMvcRequestBuilders.post(REST_URL_VOTE)
+                .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(vote)))
                 .andExpect(status().isCreated());
