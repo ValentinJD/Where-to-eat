@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="navbar navbar-light bg-light navbar-fixed-bottom p-0">
     <div class="container-fluid p-0">
@@ -13,7 +14,9 @@
             <a href="restaurants"><H5 CLASS="text-primary"><spring:message code="app.title"/></H5></a>
         </div>
         <div class="col-3 p-3">
-            <a class="btn btn-info mr-1" href="users"><spring:message code="user.title"/></a>
+            <sec:authorize access="hasRole('ADMIN')">
+                <a class="btn btn-info mr-1" href="users"><spring:message code="user.title"/></a>
+            </sec:authorize>
             <a class="btn btn-primary" href="logout">
                 <span class="fa fa-sign-out"></span>
             </a>

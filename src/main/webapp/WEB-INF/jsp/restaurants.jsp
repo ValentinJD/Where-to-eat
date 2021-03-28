@@ -3,6 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="fragments/headTag.jsp"/>
 
@@ -13,9 +15,16 @@
 <script type="text/javascript" src="resources/js/vote.meals.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <div class="container">
-    <p>
-    <h3>Приветствуем тебя <b><c:out value="${pageContext.request.remoteUser}"/></b></h3>
-    </p>
+    <div class="card text-center" >
+        <p>
+        <h3>
+            <security:authorize access="isAuthenticated()">
+                Приветствуем тебя <security:authentication property="principal.username"/>
+            </security:authorize>
+        </h3>
+
+        </p>
+    </div>
 </div>
 
 
@@ -63,13 +72,15 @@
                         </h2>
                     </div>
                 </div>
-                <p>
-                    <a class="btn btn-primary"
-                       href="restaurants/update?restaurantId=<c:out value="${restaurant.id}"/>"
-                       class="c"><spring:message code="common.update"/></a>
-                    <a class="btn btn-danger"
-                       href="restaurants/delete?restaurantId=<c:out value="${restaurant.id}"/>"
-                       class="c"><spring:message code="common.delete"/></a></p>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <p>
+                        <a class="btn btn-primary"
+                           href="restaurants/update?restaurantId=<c:out value="${restaurant.id}"/>"
+                           class="c"><spring:message code="common.update"/></a>
+                        <a class="btn btn-danger"
+                           href="restaurants/delete?restaurantId=<c:out value="${restaurant.id}"/>"
+                           class="c"><spring:message code="common.delete"/></a></p>
+                </sec:authorize>
                 <br>
                 <div class="text-center p-3">
                     <p class="btn-info"><spring:message code="restaurants.menu"/></p>
@@ -79,36 +90,43 @@
                     <tr>
                         <td><spring:message code="app.description"/></td>
                         <td><spring:message code="app.price"/></td>
-                        <td><spring:message code="common.update"/></td>
-                        <td><spring:message code="common.delete"/></td>
+                        <sec:authorize access="hasRole('ADMIN')">
+                            <td><spring:message code="common.update"/></td>
+                            <td><spring:message code="common.delete"/></td>
+                        </sec:authorize>
                     </tr>
                     </thead>
+
                     <c:forEach var="meal1" items="${restaurant.menu}">
                         <tr>
                             <jsp:useBean id="meal1" type="ru.whereToEat.model.Meal"/>
                             <td>${meal1.description}</td>
                             <td>${meal1.price}</td>
-                            <td>
-                                    ${meal1.id}
-                            </td>
-                            <td>
-                                    ${restaurant.id}
-                            </td>
+                            <sec:authorize access="hasRole('ADMIN')">
+                                <td> ${meal1.id} </td>
+                                <td> ${restaurant.id} </td>
+                            </sec:authorize>
                         </tr>
                     </c:forEach>
                 </table>
                 <br>
-                <a onclick="addMeal(${restaurant.id})" class="btn btn-info" class="c">
-                    <spring:message code="restaurants.additemmenu"/></a>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <a onclick="addMeal(${restaurant.id})" class="btn btn-info" class="c">
+                        <spring:message code="restaurants.additemmenu"/></a>
+                </sec:authorize>
+
             </div>
         </div>
         <br>
     </c:forEach>
-    <div class="card">
-        <div class="card-body">
-            <a href="restaurants/create" class="btn btn-info"><spring:message code="restaurants.create"/></a>
+    <sec:authorize access="hasRole('ADMIN')">
+        <div class="card">
+            <div class="card-body">
+                <a href="restaurants/create" class="btn btn-info"><spring:message code="restaurants.create"/></a>
+            </div>
         </div>
-    </div>
+    </sec:authorize>
+
 </div>
 
 
