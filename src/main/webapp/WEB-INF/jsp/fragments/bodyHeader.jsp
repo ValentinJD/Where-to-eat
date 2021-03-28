@@ -3,14 +3,14 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="navbar navbar-light bg-light navbar-fixed-bottom p-0">
-    <div class="container-fluid p-0">
+    <div class="container">
 
 
-        <div class="col-3">
+        <div class="col-4">
             <a href="restaurants" class="navbar-brand pull-left"><img class="img-fluid" width="70"
                                                                       src="resources/images/logon.png"></a>
         </div>
-        <div class="col-6">
+        <div class="col-5">
             <a href="restaurants"><H5 CLASS="text-primary"><spring:message code="app.title"/></H5></a>
         </div>
         <div class="col-3 p-3">
