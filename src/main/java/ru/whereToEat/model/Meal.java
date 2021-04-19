@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.util.Assert;
+import ru.whereToEat.View;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -46,6 +47,7 @@ public class Meal {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @NotNull(groups = View.Persist.class)
     private Restaurant restaurant;
 
     public Meal() {
