@@ -8,15 +8,16 @@
             <a href="restaurants" class="navbar-brand pull-left"><img class="img-fluid" width="70"
                                                                       src="resources/images/logon.png"></a>
         </div>
-        <div class="col-5">
+        <div class="col-4">
             <a href="restaurants"><H5 CLASS="text-primary"><spring:message code="app.title"/></H5></a>
         </div>
-        <div class="col-3 p-3">
+        <div class="col-4 p-3">
             <sec:authorize access="isAuthenticated()">
-                <form class="form-inline my-2">
+                <form class="form-inline my-1">
                     <sec:authorize access="hasRole('ADMIN')">
                         <a class="btn btn-info mr-1" href="users"><spring:message code="user.title"/></a>
                     </sec:authorize>
+                    <a class="btn btn-info mr-1" href="profile">${userTo.name} <spring:message code="app.profile"/></a>
                     <a class="btn btn-primary my-1" href="logout">
                         <span class="fa fa-sign-out"></span>
                     </a>
