@@ -3,6 +3,7 @@ package ru.wheretoeat.util;
 
 import ru.wheretoeat.HasId;
 import ru.wheretoeat.exceptions.NotFoundException;
+import ru.wheretoeat.exceptions.validation.IllegalRequestDataException;
 
 import javax.validation.*;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class ValidationUtil {
 
     public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
-            throw new IllegalArgumentException(bean + " must be new (id=null)");
+            throw new IllegalRequestDataException(bean + " must be new (id=null)");
         }
     }
 
@@ -43,7 +44,7 @@ public class ValidationUtil {
         if (bean.isNew()) {
             bean.setId(id);
         } else if (bean.getId() != id) {
-            throw new IllegalArgumentException(bean + " must be with id=" + id);
+            throw new IllegalRequestDataException(bean + " must be new (id=null)");
         }
     }
 

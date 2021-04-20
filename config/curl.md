@@ -36,3 +36,6 @@ curl -s -X POST -d '{"userId":"100000", "date_vote":"2020-02-01T09:00","restaura
 
 #### update Meals
 curl -s -X PUT -d '{"id":"100005", "description":"updated meal","price":300}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/Where_to_eat/rest/meal/100002  --user admin@gmail.com:admin
+
+#### validate with Error
+curl -s -X POST -d '{}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin
