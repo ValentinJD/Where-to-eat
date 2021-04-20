@@ -104,7 +104,7 @@
                     </configuration>
                     <deployables>
                         <deployable>
-                            <groupId>ru.whereToEat</groupId>
+                            <groupId>ru.wheretoeat</groupId>
                             <artifactId>Where-to-eat</artifactId>
                             <type>war</type>
                             <properties>

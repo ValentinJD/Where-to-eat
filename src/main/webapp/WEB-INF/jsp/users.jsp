@@ -1,5 +1,5 @@
-<%@ page import="ru.whereToEat.util.TimeUtil" %>
-<%@ page import="ru.whereToEat.web.SecurityUtil" %><%--<%@ page import="ru.whereToEat.util.TimeUtil" %>--%>
+<%@ page import="ru.wheretoeat.util.TimeUtil" %>
+<%@ page import="ru.wheretoeat.web.SecurityUtil" %><%--<%@ page import="ru.wheretoeat.util.TimeUtil" %>--%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

@@ -1,5 +1,5 @@
-<%@ page import="ru.whereToEat.util.TimeUtil" %>
-<%@ page import="ru.whereToEat.web.SecurityUtil" %>
+<%@ page import="ru.wheretoeat.util.TimeUtil" %>
+<%@ page import="ru.wheretoeat.web.SecurityUtil" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -99,7 +99,7 @@
 
                     <c:forEach var="meal1" items="${restaurant.menu}">
                         <tr>
-                            <jsp:useBean id="meal1" type="ru.whereToEat.model.Meal"/>
+                            <jsp:useBean id="meal1" type="ru.wheretoeat.model.Meal"/>
                             <td>${meal1.description}</td>
                             <td>${meal1.price}</td>
                             <sec:authorize access="hasRole('ADMIN')">
