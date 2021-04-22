@@ -2,6 +2,7 @@ package ru.wheretoeat;
 
 import ru.wheretoeat.model.Role;
 import ru.wheretoeat.model.User;
+import ru.wheretoeat.web.json.JsonUtil;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -42,6 +43,10 @@ public class UserTestData {
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("registered", "role").isEqualTo(expected);
+    }
+
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 
 }
