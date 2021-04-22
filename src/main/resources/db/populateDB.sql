@@ -14,8 +14,8 @@ where id != 0;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password, role)
-VALUES ('Admin', 'admin@gmail.com', 'password', 'ADMIN'),
-       ('User', 'user@yandex.ru', 'password', 'USER');
+VALUES ('Admin', 'admin@gmail.com', '{noop}password', 'ADMIN'),
+       ('User', 'user@yandex.ru', '{noop}password', 'USER');
 
 INSERT INTO restaurants (name)
 VALUES ('Перчини Пицца & Паста'), --100002
