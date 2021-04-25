@@ -82,6 +82,7 @@ function failNoty(jqXHR) {
 }
 
 function updateRow(id) {
+    form.find(":input").val("");
     $.get(context.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
