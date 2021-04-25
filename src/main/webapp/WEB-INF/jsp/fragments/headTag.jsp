@@ -1,7 +1,6 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
 <head>
     <!-- Required meta tags -->
@@ -9,6 +8,11 @@
     <title><spring:message code="app.title"/></title>
     <base href="${pageContext.request.contextPath}/"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+    <link rel="icon" type="image/png" href="resources/images/favicon.ico" />
 
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="webjars/bootstrap/4.5.0/css/bootstrap.min.css">
