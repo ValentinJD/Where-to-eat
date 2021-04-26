@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.wheretoeat.model.Meal;
 import ru.wheretoeat.model.Restaurant;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class MealRestController extends AbstractMealController {
 
     @PostMapping(value = "/meal/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Meal create(@RequestBody Meal meal, @PathVariable int restaurantId) {
+    public Meal create(@Valid @RequestBody Meal meal, @PathVariable int restaurantId) {
         Restaurant restaurant = new Restaurant();
         restaurant.setId(restaurantId);
         meal.setRestaurant(restaurant);
@@ -36,7 +37,7 @@ public class MealRestController extends AbstractMealController {
 
     @PutMapping(value = "/meal/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Meal meal, @PathVariable int restaurantId) {
+    public void update(@Valid @RequestBody Meal meal, @PathVariable int restaurantId) {
         Restaurant restaurant = new Restaurant();
         restaurant.setId(restaurantId);
         meal.setRestaurant(restaurant);

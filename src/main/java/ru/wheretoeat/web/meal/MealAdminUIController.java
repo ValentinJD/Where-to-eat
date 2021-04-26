@@ -45,12 +45,12 @@ public class MealAdminUIController extends AbstractMealController {
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public ResponseEntity<String> createOrUpdate(@RequestParam("restaurantId") Integer restaurantId, @Valid Meal meal, BindingResult result) {
-        if (result.hasErrors()) {
+/*        if (result.hasErrors()) {
             String errorFieldsMsg = result.getFieldErrors().stream()
                     .map(fe -> String.format("[%s] %s", fe.getField(), fe.getDefaultMessage()))
                     .collect(Collectors.joining("<br>"));
             return ResponseEntity.unprocessableEntity().body(errorFieldsMsg);
-        }
+        }*/
 
 
         Restaurant restaurant = new Restaurant();
