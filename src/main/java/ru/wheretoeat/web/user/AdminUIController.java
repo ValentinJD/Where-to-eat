@@ -17,6 +17,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.wheretoeat.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
+
 @RestController
 @RequestMapping("/admin/users")
 public class AdminUIController extends AbstractUserController{

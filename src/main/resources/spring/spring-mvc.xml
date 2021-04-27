@@ -50,6 +50,10 @@
         <property name="fallbackToSystemLocale" value="false"/>
     </bean>
 
+    <bean class="org.springframework.context.support.MessageSourceAccessor">
+        <constructor-arg ref="messageSource"/>
+    </bean>
+
 
     <mvc:interceptors>
         <bean class="ru.wheretoeat.web.interceptor.ModelInterceptor"/>

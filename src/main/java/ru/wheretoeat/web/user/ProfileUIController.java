@@ -11,11 +11,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import ru.wheretoeat.to.UserTo;
 import ru.wheretoeat.web.SecurityUtil;
 
+
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/profile")
 public class ProfileUIController extends AbstractUserController {
+    public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.user.duplicateEmail";
 
     @GetMapping
     public String profile() {
