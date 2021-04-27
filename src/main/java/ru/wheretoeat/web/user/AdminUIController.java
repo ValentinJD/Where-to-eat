@@ -1,30 +1,18 @@
 package ru.wheretoeat.web.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.wheretoeat.exceptions.validation.IllegalRequestDataException;
 import ru.wheretoeat.model.User;
 import ru.wheretoeat.to.UserTo;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static ru.wheretoeat.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 
 @RestController
 @RequestMapping("/admin/users")
 public class AdminUIController extends AbstractUserController{
-
-    @Autowired
-    private MessageSource messageSource;
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,14 +38,10 @@ public class AdminUIController extends AbstractUserController{
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void createOrUpdate(@Valid UserTo userTo, BindingResult result) {
 
-        try {
-            if (userTo.isNew()) {
-                super.create(userTo);
-            } else {
-                super.update(userTo, userTo.id());
-            }
-        } catch (DataIntegrityViolationException e) {
-            throw new IllegalRequestDataException(messageSource.getMessage(EXCEPTION_DUPLICATE_EMAIL, null, LocaleContextHolder.getLocale()));
+        if (userTo.isNew()) {
+            super.create(userTo);
+        } else {
+            super.update(userTo, userTo.id());
         }
     }
 
