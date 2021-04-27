@@ -1,10 +1,13 @@
 package ru.wheretoeat.to;
 
+import ru.wheretoeat.web.HasIdAndEmail;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-public class UserTo extends BaseTo {
+public class UserTo extends BaseTo implements HasIdAndEmail, Serializable {
     @NotBlank
     @Size(min = 2, max = 100)
     private String name;

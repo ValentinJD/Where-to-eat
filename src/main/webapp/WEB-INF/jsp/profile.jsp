@@ -20,6 +20,7 @@
                 <form:form class="form-group" modelAttribute="userTo" method="post" action="${register ? 'profile/register' : 'profile'}"
                            charset="utf-8" accept-charset="UTF-8">
 
+                    <input name="id" value="${userTo.id}" type="hidden">
                     <validinput:inputField labelCode="user.name" name="name"/>
                     <validinput:inputField labelCode="user.email" name="email"/>
                     <validinput:inputField labelCode="user.password" name="password" inputType="password"/>

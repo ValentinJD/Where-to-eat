@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import org.hibernate.annotations.Cache;
+import ru.wheretoeat.web.HasIdAndEmail;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -19,7 +21,7 @@ import java.time.LocalDateTime;
 })
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
-public class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity implements HasIdAndEmail {
 
     public static final String DELETE = "User.delete";
     public static final String BY_EMAIL = "User.getByEmail";
@@ -90,6 +92,7 @@ public class User extends AbstractNamedEntity {
         this.role = user;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }
