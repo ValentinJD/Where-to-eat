@@ -8,6 +8,27 @@ function updateFilteredTable(id) {
     }).done(updateTableByData);
 }
 
+function vote(restaurantId, urlParam) {
+    $.ajax({
+        url: "ui/vote/" + restaurantId + '/' + urlParam,
+        type: "POST"
+    }).done(function () {
+        updateTableVote(restaurantId);
+        successNoty("common.vote");
+    });
+}
+
+function updateTableVote(restaurantId) {
+
+    $.ajax({
+        url: "ui/vote/" + restaurantId,
+        type: "GET"
+    }).done(function (data) {
+        $('.' + restaurantId).text(data);
+    });
+}
+
+
 function deleteRowMeal(id, restaurantId) {
     if (confirm(i18n["common.confirm"])) {
         $.ajax({
@@ -79,7 +100,6 @@ function saveMeal() {
         successNoty("common.saved");
     });
 }
-
 
 
 function addMeal(restaurantId) {

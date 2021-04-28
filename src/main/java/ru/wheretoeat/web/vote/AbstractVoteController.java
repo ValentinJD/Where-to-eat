@@ -8,6 +8,7 @@ import ru.wheretoeat.exceptions.NotFoundException;
 import ru.wheretoeat.exceptions.NotSaveOrUpdateException;
 import ru.wheretoeat.exceptions.NotVoteException;
 import ru.wheretoeat.model.Vote;
+import ru.wheretoeat.service.RestaurantService;
 import ru.wheretoeat.service.VoteService;
 import ru.wheretoeat.web.SecurityUtil;
 

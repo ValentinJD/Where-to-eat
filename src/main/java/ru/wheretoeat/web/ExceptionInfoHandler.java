@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.wheretoeat.exceptions.NotFoundException;
+import ru.wheretoeat.exceptions.NotVoteException;
 import ru.wheretoeat.exceptions.validation.ErrorInfo;
 import ru.wheretoeat.exceptions.validation.ErrorType;
 import ru.wheretoeat.exceptions.validation.IllegalRequestDataException;
@@ -58,6 +59,13 @@ public class ExceptionInfoHandler {
                 .toArray(String[]::new);
 
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, details);
+    }
+
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(NotVoteException.class)
+    public ErrorInfo voteError(HttpServletRequest req, NotVoteException e) {
+        return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR);
     }
 
 

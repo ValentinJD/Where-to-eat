@@ -47,13 +47,17 @@
                                     <td><spring:message code="voter.against"/></td>
                                 </tr>
                                 <tr>
-                                    <td>${restaurant.vote_count}</td>
-                                    <td><a class="btn btn-primary"
-                                           href="restaurants/vote?restaurantId=<c:out value="${restaurant.id}"/>&count=1"
-                                           class="c">+</a></td>
-                                    <td><a class="btn btn-primary"
-                                           href="restaurants/vote?restaurantId=<c:out value="${restaurant.id}&count=-1"/>"
-                                           class="c">-</a></td>
+                                    <td class="${restaurant.id}">${restaurant.vote_count}</td>
+                                    <td>
+                                        <a class="btn btn-primary"
+                                           onclick="vote(<c:out value="${restaurant.id}"/>, '1' )"
+                                           class="c">+</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary"
+                                           onclick="vote(<c:out value="${restaurant.id}"/>, '-1' )"
+                                           class="c">-</a>
+                                    </td>
                                 </tr>
                             </table>
                         </h2>
@@ -161,7 +165,7 @@
     <%--i18n["addTitle"] = '<spring:message code="${param.page}.create"/>';--%>
     <%--i18n["editTitle"] = '<spring:message code="${param.page}.edit"/>';--%>
 
-    <c:forEach var='key' items='<%=new String[]{"common.deleted", "common.saved", "common.errorStatus", "common.confirm"}%>'>
+    <c:forEach var='key' items='<%=new String[]{"common.deleted", "common.saved", "common.errorStatus", "common.confirm", "common.vote"}%>'>
     i18n['${key}'] = '<spring:message code="${key}"/>';
     </c:forEach>
 </script>
