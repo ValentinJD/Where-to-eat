@@ -14,19 +14,6 @@
 <script type="text/javascript" src="resources/js/vote.common.js" defer></script>
 <script type="text/javascript" src="resources/js/vote.meals.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
-<div class="container">
-    <div class="card text-center" >
-        <p>
-        <h3>
-            <security:authorize access="isAuthenticated()">
-                <spring:message code="common.hello"/> <security:authentication property="principal.username"/>
-            </security:authorize>
-        </h3>
-
-        </p>
-    </div>
-</div>
-
 
 <div class="container">
     <div class="card">
