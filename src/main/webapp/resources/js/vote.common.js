@@ -12,9 +12,13 @@ function makeEditable(ctx) {
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    $(document).ajaxSend(function (e, xhr, options) {
-        xhr.setRequestHeader(header, token);
-    });
+
+    if (!(token === "")) {
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+    }
+
 }
 
 function add() {
@@ -74,9 +78,7 @@ function failNoty(jqXHR) {
     let errorInfo = JSON.parse(jqXHR.responseText);
 
     failedNote = new Noty({
-        // text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + errorInfo.typeMessage + "<br>" + errorInfo.details.join("<br>"),
         text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + i18n["common.errorStatus"] + ": " + jqXHR.status + "<br>" + errorInfo.type + "<br>" + errorInfo.details.join("<br>"),
-        // text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;Error status: " + jqXHR.status + (responseJSON ? "<br>" + responseText : ""),
         type: "error",
         layout: "bottomRight"
     }).show();

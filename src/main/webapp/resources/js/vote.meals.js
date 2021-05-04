@@ -15,7 +15,13 @@ function vote(restaurantId, urlParam) {
     }).done(function () {
         updateTableVote(restaurantId);
         successNoty("common.vote");
-    });
+    })
+        .fail(function () {
+        $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+            failNoty(jqXHR);
+        });
+    })
+    ;
 }
 
 function updateTableVote(restaurantId) {
