@@ -9,9 +9,14 @@ function updateFilteredTable(id) {
 }
 
 function vote(restaurantId, urlParam) {
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
+
+
     $.ajax({
         url: "ui/vote/" + restaurantId + '/' + urlParam,
-        type: "POST"
+        type: "POST",
+        headers: { "X-CSRF-TOKEN" : token }
     }).done(function () {
         updateTableVote(restaurantId);
         successNoty("common.vote");
