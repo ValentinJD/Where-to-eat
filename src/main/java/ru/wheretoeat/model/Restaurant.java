@@ -3,7 +3,10 @@ package ru.wheretoeat.model;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.util.Assert;
+import ru.wheretoeat.View;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +14,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
+import static org.hibernate.validator.constraints.SafeHtml.WhiteListType.NONE;
 import static ru.wheretoeat.model.AbstractBaseEntity.START_SEQ;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -31,9 +35,11 @@ public class Restaurant implements Serializable {
     @Column(name = "name", nullable = false)
     @NotBlank
     @Size(min = 2, max = 1000)
+    @SafeHtml(whitelistType = NONE)
     private String name;
 
     @Column(name = "vote_count", nullable = false)
+    @Range(min = -1, max = 1)
     private int vote_count;
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

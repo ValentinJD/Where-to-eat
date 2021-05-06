@@ -38,13 +38,13 @@ public class Meal {
     @Column(name = "description", nullable = false)
     @NotBlank
     @Size(min = 5, max = 1000)
-    @SafeHtml(groups = {View.Web.class}, whitelistType = NONE)
+//    @SafeHtml(groups = {View.Web.class}, whitelistType = NONE)
+    @SafeHtml(whitelistType = NONE)
     private String description;
 
     @Column(name = "price", nullable = false)
     @NotNull
     @Range(min = 0)
-    @SafeHtml(groups = {View.Web.class}, whitelistType = NONE)
     private Float price;
 
     @JsonIgnore

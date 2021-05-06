@@ -13,6 +13,7 @@ import ru.wheretoeat.model.Vote;
 import ru.wheretoeat.web.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -72,10 +73,22 @@ public class JspRestaurantController extends AbstractRestaurantController {
     }
 
     @PostMapping
-    public String createOrUpdate(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
+    public String createOrUpdate(HttpServletRequest request, @Valid Restaurant restaurant) throws UnsupportedEncodingException {
 
         request.setCharacterEncoding("UTF-8");
-        String id = request.getParameter("restaurantId");
+
+        if (restaurant.isNew()) {
+            restaurant.setVote_count(0);
+            super.create(restaurant);
+        } else {
+            Restaurant restaurant1 = super.get(restaurant.id());
+            restaurant1.setName(restaurant.getName());
+            restaurant1.setVote_count(getRestaurantCount(request));
+            super.update(restaurant1);
+        }
+
+
+/*        String id = request.getParameter("restaurantId");
 
         Restaurant restaurantIsNew = (id == null)|| id.isEmpty() ? new Restaurant() : super.get(getRestaurantId(request));
 
@@ -90,7 +103,9 @@ public class JspRestaurantController extends AbstractRestaurantController {
             restaurant.setName(request.getParameter("name"));
             restaurant.setVote_count(getRestaurantCount(request));
             super.update(restaurant);
-        }
+        }*/
+
+
 
         return "redirect:/restaurants";
     }

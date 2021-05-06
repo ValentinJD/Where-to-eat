@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 import static ru.wheretoeat.exceptions.validation.ErrorType.*;
-
+//annotations = RestController.class
 @RestControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
 public class ExceptionInfoHandler {

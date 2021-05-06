@@ -30,7 +30,7 @@ public class MealRestController extends AbstractMealController {
 
     @PostMapping(value = "/meal/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Meal create(@Valid @RequestBody Meal meal, @PathVariable int restaurantId) {
+    public Meal create(@Validated(View.Web.class) @RequestBody Meal meal, @PathVariable int restaurantId) {
         Restaurant restaurant = new Restaurant();
         restaurant.setId(restaurantId);
         meal.setRestaurant(restaurant);
