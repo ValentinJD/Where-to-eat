@@ -39,7 +39,7 @@ public class Restaurant implements Serializable {
     private String name;
 
     @Column(name = "vote_count", nullable = false)
-    @Range(min = -1, max = 1)
+
     private int vote_count;
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
