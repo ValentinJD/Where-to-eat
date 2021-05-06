@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.util.Assert;
 import ru.wheretoeat.View;
 
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import static org.hibernate.validator.constraints.SafeHtml.WhiteListType.NONE;
 import static ru.wheretoeat.model.AbstractBaseEntity.START_SEQ;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -36,11 +38,13 @@ public class Meal {
     @Column(name = "description", nullable = false)
     @NotBlank
     @Size(min = 5, max = 1000)
+    @SafeHtml(groups = {View.Web.class}, whitelistType = NONE)
     private String description;
 
     @Column(name = "price", nullable = false)
     @NotNull
     @Range(min = 0)
+    @SafeHtml(groups = {View.Web.class}, whitelistType = NONE)
     private Float price;
 
     @JsonIgnore

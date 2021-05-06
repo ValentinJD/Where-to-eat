@@ -2,7 +2,9 @@ package ru.wheretoeat.web.meal;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.wheretoeat.View;
 import ru.wheretoeat.model.Meal;
 import ru.wheretoeat.model.Restaurant;
 
@@ -37,7 +39,7 @@ public class MealRestController extends AbstractMealController {
 
     @PutMapping(value = "/meal/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Meal meal, @PathVariable int restaurantId) {
+    public void update(@Validated(View.Web.class) @RequestBody Meal meal, @PathVariable int restaurantId) {
         Restaurant restaurant = new Restaurant();
         restaurant.setId(restaurantId);
         meal.setRestaurant(restaurant);
