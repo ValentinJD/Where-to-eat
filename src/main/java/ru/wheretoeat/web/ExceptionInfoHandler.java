@@ -7,6 +7,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import ru.wheretoeat.exceptions.ApplicationException;
 import ru.wheretoeat.exceptions.NotFoundException;
 import ru.wheretoeat.exceptions.NotVoteException;
 import ru.wheretoeat.exceptions.validation.ErrorInfo;
@@ -28,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 import static ru.wheretoeat.exceptions.validation.ErrorType.*;
+
 //annotations = RestController.class
 @RestControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
@@ -55,7 +58,7 @@ public class ExceptionInfoHandler {
                 ((BindException) e).getBindingResult() : ((MethodArgumentNotValidException) e).getBindingResult();
 
         String[] details = result.getFieldErrors().stream()
-                .map((fieldError) -> "[" + fieldError.getField() + "] "  + fieldError.getDefaultMessage())
+                .map((fieldError) -> "[" + fieldError.getField() + "] " + fieldError.getDefaultMessage())
                 .toArray(String[]::new);
 
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, details);
@@ -97,10 +100,11 @@ public class ExceptionInfoHandler {
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR);
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public ErrorInfo handleError(HttpServletRequest req, Exception e) {
-        return logAndGetErrorInfo(req, e, true, APP_ERROR);
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ErrorInfo> applicationError(HttpServletRequest req, ApplicationException appEx) {
+        ErrorInfo errorInfo = logAndGetErrorInfo(req, appEx, false, appEx.getType(),
+                messageSourceAccessor.getMessage(appEx.getMsgCode(), appEx.getArgs()));
+        return ResponseEntity.status(appEx.getType().getStatus()).body(errorInfo);
     }
 
     //    https://stackoverflow.com/questions/538870/should-private-helper-methods-be-static-if-they-can-be-static

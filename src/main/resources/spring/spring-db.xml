@@ -37,7 +37,7 @@
 
     </beans>
 
-    <beans profile="postgres2020">
+    <beans profile="postgres2020, heroku">
 
         <!--
         For postgres driver logging

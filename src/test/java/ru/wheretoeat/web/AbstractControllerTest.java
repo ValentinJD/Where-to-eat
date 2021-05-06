@@ -1,19 +1,25 @@
 package ru.wheretoeat.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import ru.wheretoeat.AllActiveProfileResolver;
+import ru.wheretoeat.exceptions.validation.ErrorType;
 
 import javax.annotation.PostConstruct;
 
+import java.util.Locale;
+
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringJUnitWebConfig(locations = {
         "classpath:spring/spring-app.xml",
@@ -23,9 +29,14 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 //@Transactional
 @ActiveProfiles(resolver = AllActiveProfileResolver.class)
-public abstract class AbstractControllerTest {
+public abstract class AbstractControllerTest  {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
+
+    private static final Locale RU_LOCALE = new Locale("ru");
+
+    @Autowired
+    protected MessageSourceAccessor messageSourceAccessor;
 
     static {
         CHARACTER_ENCODING_FILTER.setEncoding("UTF-8");
@@ -48,5 +59,17 @@ public abstract class AbstractControllerTest {
 
     public ResultActions perform(MockHttpServletRequestBuilder builder) throws Exception {
         return mockMvc.perform(builder);
+    }
+
+    public ResultMatcher errorType(ErrorType type) {
+        return jsonPath("$.type").value(type.name());
+    }
+
+    private String getMessage(String code) {
+        return messageSourceAccessor.getMessage(code, RU_LOCALE);
+    }
+
+    public ResultMatcher detailMessage(String code) {
+        return jsonPath("$.details").value(getMessage(code));
     }
 }
