@@ -30,7 +30,6 @@ public class GlobalExceptionHandler {
         return logAndGetExceptionView(req, e, false, ErrorType.WRONG_REQUEST);
     }
 
-
     @ExceptionHandler(Exception.class)
     public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
         log.error("Exception at request " + req.getRequestURL(), e);
@@ -47,12 +46,6 @@ public class GlobalExceptionHandler {
                         "typeMessage", messageSourceAccessor.getMessage(errorType.getErrorCode()),
                         "status", httpStatus));
         mav.setStatus(httpStatus);
-
-        // Interceptor is not invoked, put userTo
-        AuthorizedUser authorizedUser = SecurityUtil.safeGet();
-        if (authorizedUser != null) {
-            mav.addObject("userTo", authorizedUser.getUserTo());
-        }
 
         return mav;
     }
