@@ -8,7 +8,7 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
-<div class="jumbotron py-0">
+<div class="jumbotron py-0" style="opacity: 0.9">
     <div class="container">
         <c:if test="${param.error}">
             <div class="error">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
@@ -27,8 +27,17 @@
                 <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'password')">
                     <spring:message code="app.login"/> Admin
                 </button>
+                <a class="btn btn-lg btn-success my-4" href="swagger-ui.html" target="_blank">Swagger REST Api Documentation</a>
+            </div>
+            <div class="container">
+                <div class="lead"><h2><spring:message code="app.description2"/></h2></div>
             </div>
         </sec:authorize>
+
+        <div class="container">
+            <div class="lead"><b><spring:message code="app.descriptionapp"/></b</div>
+        </div>
+
         <br/>
         <div class="lead py-4"><spring:message code="app.stackTitle"/> <br>
             <a href="http://projects.spring.io/spring-security/">Spring Security</a>,
@@ -53,13 +62,9 @@
             <a href="http://ned.im/noty/">jQuery notification</a>,
             <a href="http://getbootstrap.com/">Bootstrap</a>.
         </div>
-        <div class="container">
-            <div class="lead"><spring:message code="app.description"/></div>
-            <a class="btn btn-lg btn-success my-4" href="swagger-ui.html" target="_blank">Swagger REST Api Documentation</a>
-        </div>
     </div>
 </div>
-<div class="container lead"><spring:message code="app.description"/>
+
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 <script type="text/javascript">
