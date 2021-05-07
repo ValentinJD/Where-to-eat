@@ -6,10 +6,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wheretoeat.model.User;
 import ru.wheretoeat.to.UserTo;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@ApiIgnore
 @RestController
 @RequestMapping("/admin/users")
 public class AdminUIController extends AbstractUserController{

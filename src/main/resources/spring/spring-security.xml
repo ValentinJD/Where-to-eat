@@ -22,6 +22,10 @@
 <!--        <intercept-url pattern="/**" access="permitAll()"/>-->
         <intercept-url pattern="/login" access="permitAll()"/>
 
+        <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
+        <intercept-url pattern="/swagger-resources/**" access="permitAll()"/>
+        <intercept-url pattern="/v2/api-docs/**" access="permitAll()"/>
+
         <intercept-url pattern="/profile/register" access="isAnonymous()"/>
         <intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>

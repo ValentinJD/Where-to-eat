@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 import ru.wheretoeat.AuthorizedUser;
 import ru.wheretoeat.to.UserTo;
-import ru.wheretoeat.web.SecurityUtil;
-
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -22,13 +21,13 @@ public class ProfileUIController extends AbstractUserController {
     public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.user.duplicateEmail";
 
     @GetMapping
-    public String profile(ModelMap model, @AuthenticationPrincipal AuthorizedUser authUser) {
+    public String profile(ModelMap model, @AuthenticationPrincipal @ApiIgnore AuthorizedUser authUser) {
         model.addAttribute("userTo", authUser.getUserTo());
         return "profile";
     }
 
     @PostMapping
-    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status, @AuthenticationPrincipal AuthorizedUser authUser) {
+    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status, @AuthenticationPrincipal @ApiIgnore AuthorizedUser authUser) {
         if (result.hasErrors()) {
             return "profile";
         }

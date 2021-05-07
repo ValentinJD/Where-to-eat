@@ -53,6 +53,10 @@
             <a href="http://ned.im/noty/">jQuery notification</a>,
             <a href="http://getbootstrap.com/">Bootstrap</a>.
         </div>
+        <div class="container">
+            <div class="lead"><spring:message code="app.description"/></div>
+            <a class="btn btn-lg btn-success my-4" href="swagger-ui.html" target="_blank">Swagger REST Api Documentation</a>
+        </div>
     </div>
 </div>
 <div class="container lead"><spring:message code="app.description"/>

@@ -5,7 +5,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.wheretoeat.service.UserService;
+import springfox.documentation.annotations.ApiIgnore;
 
+@ApiIgnore
 @Controller
 public class RootController {
     @Autowired

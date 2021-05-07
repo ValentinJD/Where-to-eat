@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.wheretoeat.AuthorizedUser;
 import ru.wheretoeat.model.User;
 import ru.wheretoeat.to.UserTo;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -19,7 +20,7 @@ public class ProfileRestController extends AbstractUserController {
     public static final String REST_URL = "/rest/profile";
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get(@AuthenticationPrincipal AuthorizedUser authUser) {
+    public User get(@AuthenticationPrincipal @ApiIgnore AuthorizedUser authUser) {
         return super.get(authUser.getId());
     }
 
@@ -35,13 +36,13 @@ public class ProfileRestController extends AbstractUserController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthenticationPrincipal AuthorizedUser authUser) {
+    public void delete(@AuthenticationPrincipal @ApiIgnore AuthorizedUser authUser) {
         super.delete(authUser.getId());
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody UserTo userTo, @AuthenticationPrincipal AuthorizedUser authUser) {
+    public void update(@Valid @RequestBody UserTo userTo, @AuthenticationPrincipal @ApiIgnore AuthorizedUser authUser) {
         super.update(userTo, authUser.getId());
     }
 
