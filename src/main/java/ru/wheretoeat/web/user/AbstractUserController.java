@@ -8,6 +8,7 @@ import ru.wheretoeat.Profiles;
 import ru.wheretoeat.exceptions.ModificationRestrictionException;
 import ru.wheretoeat.exceptions.NotFoundException;
 import ru.wheretoeat.model.AbstractBaseEntity;
+import ru.wheretoeat.model.Role;
 import ru.wheretoeat.model.User;
 import ru.wheretoeat.service.UserService;
 import ru.wheretoeat.to.UserTo;
@@ -52,6 +53,13 @@ public abstract class AbstractUserController {
     public User create(UserTo userTo) {
         log.info("create from to {}", userTo);
         return create(UserUtil.createNewFromTo(userTo));
+    }
+
+    public User createAdmin(UserTo userTo) {
+        log.info("create from to {}", userTo);
+        User admin = UserUtil.createNewFromTo(userTo);
+        admin.setRole(Role.ADMIN);
+        return create(admin);
     }
 
     public void update(UserTo userTo, int id) {

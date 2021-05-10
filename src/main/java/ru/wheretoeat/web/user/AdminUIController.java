@@ -14,7 +14,7 @@ import java.util.List;
 @ApiIgnore
 @RestController
 @RequestMapping("/admin/users")
-public class AdminUIController extends AbstractUserController{
+public class AdminUIController extends AbstractUserController {
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,6 +45,15 @@ public class AdminUIController extends AbstractUserController{
         } else {
             super.update(userTo, userTo.id());
         }
+    }
+
+    @PostMapping(value = "/admin")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void createAdminOnUI(@Valid UserTo userTo) {
+
+        userTo.setId(null);
+        super.createAdmin(userTo);
+
     }
 
     @Override

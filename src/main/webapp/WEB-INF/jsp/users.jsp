@@ -14,7 +14,11 @@
         <h3><spring:message code="user.title"/></h3>
         <button class="btn btn-primary" onclick="add()">
             <span class="fa fa-plus"></span>
-            <spring:message code="user.create"/>
+            <spring:message code="user.create.user"/>
+        </button>
+        <button class="btn btn-primary" onclick="addAdmin()">
+            <span class="fa fa-plus"></span>
+            <spring:message code="user.create.admin"/>
         </button>
         <table class="table table-striped" id="datatable">
             <thead>

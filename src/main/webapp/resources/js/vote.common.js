@@ -26,6 +26,13 @@ function add() {
     $("#editRow").modal();
 }
 
+var urlAdmin = new String("");
+
+function addAdmin() {
+    urlAdmin = "admin";
+    add();
+}
+
 function deleteRow(id) {
     if (confirm(i18n["common.confirm"])) {
         $.ajax({
@@ -43,15 +50,30 @@ function updateTableByData(data) {
 }
 
 function save() {
-    $.ajax({
-        type: "POST",
-        url: context.ajaxUrl,
-        data: form.serialize()
-    }).done(function () {
-        $("#editRow").modal("hide");
-        context.updateTable();
-        successNoty("common.saved");
-    });
+    if (urlAdmin === "admin") {
+        $.ajax({
+            type: "POST",
+            url: context.ajaxUrl + urlAdmin,
+            data: form.serialize()
+        }).done(function () {
+            urlAdmin = "";
+            $("#editRow").modal("hide");
+            context.updateTable();
+            successNoty("common.saved");
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: context.ajaxUrl,
+            data: form.serialize()
+        }).done(function () {
+            $("#editRow").modal("hide");
+            context.updateTable();
+            successNoty("common.saved");
+        });
+    }
+
+
 }
 
 var failedNote;
