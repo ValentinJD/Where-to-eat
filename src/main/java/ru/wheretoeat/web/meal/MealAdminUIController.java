@@ -18,7 +18,7 @@ import java.util.List;
 public class MealAdminUIController extends AbstractMealController {
 
     @Override
-    @GetMapping(value = "/one/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/one/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Meal get(@PathVariable int id) {
         return super.get(id);
     }
@@ -44,9 +44,7 @@ public class MealAdminUIController extends AbstractMealController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> createOrUpdate(@RequestParam("restaurantId") Integer restaurantId,
-//                                                 @Validated(View.Persist.class) Meal meal) {
-                                                 @Valid Meal meal) {
+    public ResponseEntity<String> createOrUpdate(@RequestParam("restaurantId") Integer restaurantId, @Valid Meal meal) {
 
         Restaurant restaurant = new Restaurant();
         restaurant.setId(restaurantId);

@@ -86,27 +86,6 @@ public class JspRestaurantController extends AbstractRestaurantController {
             restaurant1.setVote_count(getRestaurantCount(request));
             super.update(restaurant1);
         }
-
-
-/*        String id = request.getParameter("restaurantId");
-
-        Restaurant restaurantIsNew = (id == null)|| id.isEmpty() ? new Restaurant() : super.get(getRestaurantId(request));
-
-        if (restaurantIsNew.isNew()) {
-            Restaurant restaurant = new Restaurant();
-            restaurant.setName(request.getParameter("name"));
-            restaurant.setVote_count(0);
-            super.create(restaurant);
-        } else {
-            int restaurantId = getRestaurantId(request);
-            Restaurant restaurant = super.get(restaurantId);
-            restaurant.setName(request.getParameter("name"));
-            restaurant.setVote_count(getRestaurantCount(request));
-            super.update(restaurant);
-        }*/
-
-
-
         return "redirect:/restaurants";
     }
 

@@ -25,13 +25,8 @@ public abstract class AbstractMealController {
     }
 
     public void delete(int mealId) {
-//        int id = SecurityUtil.authUserId();
-//        if (SecurityUtil.isAdmin(id)) {
-            mealService.delete(mealId);
-            log.info("delete() {}", mealId);
-//        } else {
-//            throw new NotEnoughRightsException("Только для администраторов");
-//        }
+        mealService.delete(mealId);
+        log.info("delete() {}", mealId);
     }
 
     public List<Meal> getAll(Integer restaurantId) {
@@ -46,28 +41,16 @@ public abstract class AbstractMealController {
 
     public List<MealTo> getAllTo(Integer restaurantId) {
         log.info("getAll() ");
-        return mealService.getAllTo(getAll(restaurantId), restaurantId) ;
+        return mealService.getAllTo(getAll(restaurantId), restaurantId);
     }
 
     public Meal create(Meal meal) {
-//        int id = SecurityUtil.authUserId();
-//        if (SecurityUtil.isAdmin(id)) {
-            log.info("create() {}", meal);
-            return mealService.create(meal);
-//        } else {
-//            throw new NotEnoughRightsException("Только для администраторов");
-//        }
+        log.info("create() {}", meal);
+        return mealService.create(meal);
     }
 
     public void update(Meal meal) {
-//        int id = SecurityUtil.authUserId();
-//        if (SecurityUtil.isAdmin(id)) {
-            mealService.update(meal);
-            log.info("update() {}", meal);
-//        } else {
-//            throw new NotEnoughRightsException("Только для администраторов");
-//        }
+        mealService.update(meal);
+        log.info("update() {}", meal);
     }
-
-
 }
