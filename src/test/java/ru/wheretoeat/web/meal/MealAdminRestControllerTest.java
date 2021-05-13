@@ -22,15 +22,15 @@ import static ru.wheretoeat.TestUtil.readFromJson;
 import static ru.wheretoeat.TestUtil.userHttpBasic;
 import static ru.wheretoeat.UserTestData.ADMIN;
 
-public class MealRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL_MEAL = MealRestController.REST_URL_MEAL;
+public class MealAdminRestControllerTest extends AbstractControllerTest {
+    private static final String REST_URL_MEAL = MealAdminRestController.REST_URL_MEAL;
 
     @Autowired
     private MealService mealService;
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL_MEAL + "byMealId/" + MEAL1_ID).with(userHttpBasic(ADMIN)))
+        perform(MockMvcRequestBuilders.get(REST_URL_MEAL + MEAL1_ID).with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
