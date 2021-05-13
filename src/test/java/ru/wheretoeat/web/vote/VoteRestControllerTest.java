@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.wheretoeat.VoteTestData;
-import ru.wheretoeat.exceptions.NotVoteException;
 import ru.wheretoeat.model.Vote;
 import ru.wheretoeat.web.AbstractControllerTest;
 import ru.wheretoeat.web.json.JsonUtil;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.wheretoeat.TestUtil.userHttpBasic;
