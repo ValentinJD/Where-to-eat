@@ -53,6 +53,19 @@ public class VoteTestData {
             VOTE_USER_ON_PERCHINI, VOTE_USER_ON_BAR_AND_GRIL, VOTE_USER_ON_TRI_OLENYA
     );
 
+    public final static String notValidVote =
+            "{\n" +
+            "  \"date_vote\": \"2021-05-13T05:41:50.142Z\"\n" +
+            "  \n" +
+            "  \"restaurantId\": 100002,\n" +
+            "  \"userId\": 100000,\n" +
+            "  \"vote\": 1\n" +
+            "}";
+
+    public static String getNotValidVote() {
+        return notValidVote;
+    }
+
     public static Vote getVoteAdminOnPerchiniToday() {
         return new Vote(VOTE_ADMIN_ID1_ON_PERCHINI, ADMIN_ID, LocalDateTime.now(), PERCHINI_ID, 1);
     }
