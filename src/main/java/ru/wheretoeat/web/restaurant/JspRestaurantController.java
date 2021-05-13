@@ -11,6 +11,7 @@ import ru.wheretoeat.exceptions.NotVoteException;
 import ru.wheretoeat.model.Restaurant;
 import ru.wheretoeat.model.Vote;
 import ru.wheretoeat.web.SecurityUtil;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@ApiIgnore
 @Controller
 @RequestMapping(value = "/restaurants")
 public class JspRestaurantController extends AbstractRestaurantController {

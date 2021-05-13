@@ -65,10 +65,10 @@ public class ExceptionInfoHandler {
     }
 
 
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(value = HttpStatus.PRECONDITION_FAILED)
     @ExceptionHandler(NotVoteException.class)
     public ErrorInfo voteError(HttpServletRequest req, NotVoteException e) {
-        return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR);
+        return logAndGetErrorInfo(req, e, false, DATA_ERROR);
     }
 
 

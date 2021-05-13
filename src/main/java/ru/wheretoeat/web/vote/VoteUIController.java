@@ -6,9 +6,11 @@ import ru.wheretoeat.exceptions.NotVoteException;
 import ru.wheretoeat.model.Vote;
 import ru.wheretoeat.service.RestaurantService;
 import ru.wheretoeat.web.SecurityUtil;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDateTime;
 
+@ApiIgnore
 @RestController
 @RequestMapping("/ui/vote")
 public class VoteUIController extends AbstractVoteController {

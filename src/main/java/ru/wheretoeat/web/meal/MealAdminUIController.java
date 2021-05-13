@@ -9,10 +9,12 @@ import ru.wheretoeat.View;
 import ru.wheretoeat.model.Meal;
 import ru.wheretoeat.model.Restaurant;
 import ru.wheretoeat.to.MealTo;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@ApiIgnore
 @RestController
 @RequestMapping("/profile/meals")
 public class MealAdminUIController extends AbstractMealController {
