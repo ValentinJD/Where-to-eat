@@ -23,15 +23,14 @@ import static ru.wheretoeat.TestUtil.userHttpBasic;
 import static ru.wheretoeat.UserTestData.ADMIN;
 
 public class MealRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL_MEAL = MealRestController.REST_URL_MEAL + "/meal/";
-    private static final String REST_URL_MEALS = MealRestController.REST_URL_MEAL + "/meals/";
+    private static final String REST_URL_MEAL = MealRestController.REST_URL_MEAL;
 
     @Autowired
     private MealService mealService;
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL_MEAL + MEAL1_ID).with(userHttpBasic(ADMIN)))
+        perform(MockMvcRequestBuilders.get(REST_URL_MEAL + "byMealId/" + MEAL1_ID).with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -78,7 +77,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL_MEALS + PERCHINI_ID).with(userHttpBasic(ADMIN)))
+        perform(MockMvcRequestBuilders.get(REST_URL_MEAL + "byRestaurantId/" + PERCHINI_ID).with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MEAL_MATCHER.contentJson(MEAL3, MEAL2, MEAL1));

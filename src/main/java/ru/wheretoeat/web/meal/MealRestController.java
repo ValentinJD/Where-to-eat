@@ -14,21 +14,21 @@ import java.util.List;
 @RestController
 @RequestMapping(value = MealRestController.REST_URL_MEAL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealRestController extends AbstractMealController {
-    public static final String REST_URL_MEAL = "/rest";
+    public static final String REST_URL_MEAL = "/rest/meal/";
 
 
-    @GetMapping(value = "/meal/{mealId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "byMealId/{mealId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Meal get(@PathVariable int mealId) {
         return super.get(mealId);
     }
 
 
-    @GetMapping(value = "/meals/{restaurantId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "byRestaurantId/{restaurantId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Meal> getByRestaurantId(@PathVariable int restaurantId) {
         return super.getAll(restaurantId);
     }
 
-    @PostMapping(value = "/meal/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Meal create(@Validated(View.Web.class) @RequestBody Meal meal, @PathVariable int restaurantId) {
         Restaurant restaurant = new Restaurant();
@@ -37,7 +37,7 @@ public class MealRestController extends AbstractMealController {
         return super.create(meal);
     }
 
-    @PutMapping(value = "/meal/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Validated(View.Web.class) @RequestBody Meal meal, @PathVariable int restaurantId) {
         Restaurant restaurant = new Restaurant();
@@ -47,7 +47,7 @@ public class MealRestController extends AbstractMealController {
     }
 
     @Override
-    @DeleteMapping("/meal/{id}")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         super.delete(id);
