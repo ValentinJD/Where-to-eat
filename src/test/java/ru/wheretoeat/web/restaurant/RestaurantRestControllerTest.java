@@ -29,8 +29,8 @@ import static ru.wheretoeat.TestUtil.userHttpBasic;
 import static ru.wheretoeat.UserTestData.ADMIN;
 
 public class RestaurantRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL_RESTAURANT = RestaurantRestController.REST_URL_RESTAURANT + "/restaurant/";
-    private static final String REST_URL_RESTAURANTS = RestaurantRestController.REST_URL_RESTAURANT + "/restaurants";
+    private static final String REST_URL_RESTAURANT = RestaurantRestController.REST_URL_RESTAURANT + "/";
+    private static final String REST_URL_ALL_RESTAURANTS = RestaurantRestController.REST_URL_RESTAURANT + "/all";
 
     @Autowired
     private RestaurantService service;
@@ -49,7 +49,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void getAll() throws Exception {
         List<Restaurant> list = List.of(PERCHINI, BAR_AND_GRIL, TRI_OLENYA);
-        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANTS)
+        perform(MockMvcRequestBuilders.get(REST_URL_ALL_RESTAURANTS)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -60,7 +60,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     void getAllFilteredByName() throws Exception {
         JsonUtil.writeValue(PERCHINI);
         List<Restaurant> list = List.of(PERCHINI);
-        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANTS + "/filter/Перчини")
+        perform(MockMvcRequestBuilders.get(REST_URL_RESTAURANT + "filter/Перчини")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
