@@ -17,7 +17,7 @@ import java.util.List;
 @ApiIgnore
 @RestController
 @RequestMapping("/profile/meals")
-public class MealAdminUIController extends AbstractMealController {
+public class MealUIController extends AbstractMealController {
 
     @Override
     @GetMapping(value = "/one/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -62,13 +62,22 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional
     void update() throws Exception {
-        User updated = UserTestData.getUpdated();
-        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID).with(userHttpBasic(ADMIN))
+        User updated = getUpdated();
+        updated.setId(null);
+        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+                .with(userHttpBasic(ADMIN))
+                .content(UserTestData.jsonWithPassword(updated, "newPass")))
                 .andExpect(status().isNoContent());
 
-        USER_MATCHER.assertMatch(userService.get(USER_ID), updated);
+        USER_MATCHER.assertMatch(userService.get(USER_ID), getUpdated());
+//        User updated = UserTestData.getUpdated();
+//        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID).with(userHttpBasic(ADMIN))
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(JsonUtil.writeValue(updated)))
+//                .andExpect(status().isNoContent());
+
+//        USER_MATCHER.assertMatch(userService.get(USER_ID), updated);
     }
 
     @Test

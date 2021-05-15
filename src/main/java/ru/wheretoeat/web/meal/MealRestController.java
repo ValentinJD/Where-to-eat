@@ -11,8 +11,8 @@ import ru.wheretoeat.model.Restaurant;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = MealAdminRestController.REST_URL_MEAL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class MealAdminRestController extends AbstractMealController {
+@RequestMapping(value = MealRestController.REST_URL_MEAL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class MealRestController extends AbstractMealController {
     public static final String REST_URL_MEAL = "/rest/meal/";
 
 

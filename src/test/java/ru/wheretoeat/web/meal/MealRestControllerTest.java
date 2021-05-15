@@ -22,8 +22,8 @@ import static ru.wheretoeat.TestUtil.readFromJson;
 import static ru.wheretoeat.TestUtil.userHttpBasic;
 import static ru.wheretoeat.UserTestData.ADMIN;
 
-public class MealAdminRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL_MEAL = MealAdminRestController.REST_URL_MEAL;
+public class MealRestControllerTest extends AbstractControllerTest {
+    private static final String REST_URL_MEAL = MealRestController.REST_URL_MEAL;
 
     @Autowired
     private MealService mealService;
