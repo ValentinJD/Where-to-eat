@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.wheretoeat.UserTestData;
 import ru.wheretoeat.exceptions.NotFoundException;
@@ -50,7 +52,6 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @Transactional
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID)
                 .with(userHttpBasic(ADMIN)))
@@ -60,10 +61,8 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @Transactional
     void update() throws Exception {
         User updated = getUpdated();
-        updated.setId(null);
         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
@@ -71,17 +70,10 @@ public class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         USER_MATCHER.assertMatch(userService.get(USER_ID), getUpdated());
-//        User updated = UserTestData.getUpdated();
-//        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID).with(userHttpBasic(ADMIN))
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(JsonUtil.writeValue(updated)))
-//                .andExpect(status().isNoContent());
 
-//        USER_MATCHER.assertMatch(userService.get(USER_ID), updated);
     }
 
     @Test
-    @Transactional
     void createWithLocation() throws Exception {
         User newUser = UserTestData.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL).with(userHttpBasic(ADMIN))
