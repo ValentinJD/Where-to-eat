@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.com/ValentinJD/topjava.svg?branch=master)](https://travis-ci.com/ValentinJD/topjava.svg)
 
 # Where-to-eat (Задание на дипломную работу на стажировке topjava)
-Vote for the restaurant with the best food 
+Голосование за рестораны 
 -
 Разработка и реализация REST API с использованием
 в backend: Hibernate / Spring/ SpringMVC  (или Spring-Boot) 
