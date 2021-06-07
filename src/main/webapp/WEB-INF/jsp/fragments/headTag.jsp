@@ -12,7 +12,7 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
-    <link rel="icon" type="image/png" href="resources/images/favicon.ico" />
+    <link rel="icon" type="image/png" href="resources/images/favicon.ico"/>
 
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="webjars/bootstrap/4.5.0/css/bootstrap.min.css">

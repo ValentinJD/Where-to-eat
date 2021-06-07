@@ -10,32 +10,32 @@
 <script type="text/javascript" src="resources/js/vote.users.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
-    <div class="container bg-light">
-        <h3><spring:message code="user.title"/></h3>
-        <button class="btn btn-primary" onclick="add()">
-            <span class="fa fa-plus"></span>
-            <spring:message code="user.create.user"/>
-        </button>
-        <button class="btn btn-primary" onclick="addAdmin()">
-            <span class="fa fa-plus"></span>
-            <spring:message code="user.create.admin"/>
-        </button>
-        <table class="table table-striped" id="datatable">
-            <thead>
-            <tr>
-                <%--                <th><spring:message code="user.id"/></th>--%>
-                <th><spring:message code="user.name"/></th>
-                <th><spring:message code="user.email"/></th>
-                <th><spring:message code="user.roles"/></th>
-                <th><spring:message code="user.active"/></th>
-                <th><spring:message code="user.registered"/></th>
-                <%--                <th colspan="2"><spring:message code="user.action"/></th>--%>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-        </table>
-    </div>
+<div class="container bg-light">
+    <h3><spring:message code="user.title"/></h3>
+    <button class="btn btn-primary" onclick="add()">
+        <span class="fa fa-plus"></span>
+        <spring:message code="user.create.user"/>
+    </button>
+    <button class="btn btn-primary" onclick="addAdmin()">
+        <span class="fa fa-plus"></span>
+        <spring:message code="user.create.admin"/>
+    </button>
+    <table class="table table-striped" id="datatable">
+        <thead>
+        <tr>
+            <%--                <th><spring:message code="user.id"/></th>--%>
+            <th><spring:message code="user.name"/></th>
+            <th><spring:message code="user.email"/></th>
+            <th><spring:message code="user.roles"/></th>
+            <th><spring:message code="user.active"/></th>
+            <th><spring:message code="user.registered"/></th>
+            <%--                <th colspan="2"><spring:message code="user.action"/></th>--%>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+</div>
 </div>
 
 <div class="modal fade" tabindex="-1" id="editRow">

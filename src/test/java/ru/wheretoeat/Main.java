@@ -26,7 +26,7 @@ public class Main {
 //                new JDBCUserRepository();
 
         //var context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
-        System.out.println("Bean definition names: " );
+        System.out.println("Bean definition names: ");
         Arrays.asList(context.getBeanDefinitionNames()).forEach(
                 name -> System.out.println(name));
 
@@ -35,7 +35,7 @@ public class Main {
         list.forEach(System.out::println);*/
 
         //DataJpaRestaurantRepository repository = context.getBean(DataJpaRestaurantRepository.class);
-       // Restaurant restaurant = repository.getWithMeals(100002);
+        // Restaurant restaurant = repository.getWithMeals(100002);
         //System.out.println(restaurant);
         //User user = userRepository1.save(new User("test", "@bvz", "passTTT", true, LocalDateTime.now(), Role.USER ));
 
@@ -88,7 +88,7 @@ public class Main {
         //Получение голосов конкретного ресторана
         //List<Vote> votes = votesRepository.getAll(100002);
         //votes.forEach(System.out::println);
-        Vote vote = votesRepository.getByRestaurantIdUserIdAndLocalDate(100002,100000,
+        Vote vote = votesRepository.getByRestaurantIdUserIdAndLocalDate(100002, 100000,
                 LocalDateTime.parse("2020-12-21T21:17:18.385646"));
         System.out.println();
         //Сохранение голоса

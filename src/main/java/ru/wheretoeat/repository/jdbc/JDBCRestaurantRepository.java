@@ -139,9 +139,8 @@ public class JDBCRestaurantRepository implements RestaurantRepository {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                id =   rs.getInt("id");
+                id = rs.getInt("id");
             }
-
 
 
         } catch (SQLException throwable) {

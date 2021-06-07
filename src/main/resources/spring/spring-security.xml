@@ -15,11 +15,12 @@
         <csrf disabled="true"/>
     </http>
 
-    <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder" factory-method="createDelegatingPasswordEncoder"/>
+    <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder"
+                factory-method="createDelegatingPasswordEncoder"/>
 
 
     <http>
-<!--        <intercept-url pattern="/**" access="permitAll()"/>-->
+        <!--        <intercept-url pattern="/**" access="permitAll()"/>-->
         <intercept-url pattern="/login" access="permitAll()"/>
 
         <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
@@ -34,7 +35,7 @@
                     authentication-failure-url="/login?error=true"
                     login-processing-url="/spring_security_check"/>
         <logout logout-success-url="/login"/>
-<!--        <csrf disabled="true"/>-->
+        <!--        <csrf disabled="true"/>-->
     </http>
 
 

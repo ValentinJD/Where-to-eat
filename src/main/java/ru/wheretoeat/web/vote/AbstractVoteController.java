@@ -77,7 +77,6 @@ public abstract class AbstractVoteController {
     }
 
 
-
     public void voter(Vote vote) throws NotSaveOrUpdateException, NotVoteException, NotFoundException {
         voteService.voter(vote);
         //voteService.voter(vote.getRestaurantId(), vote.getUserId(),vote.getVote());

@@ -21,7 +21,7 @@ import static ru.wheretoeat.UserTestData.*;
 import static ru.wheretoeat.exceptions.ModificationRestrictionException.EXCEPTION_MODIFICATION_RESTRICTION;
 
 @ActiveProfiles({HEROKU})
-public class HerokuRestControllerTest extends AbstractControllerTest{
+public class HerokuRestControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = AdminRestController.REST_URL + '/';
 

@@ -26,7 +26,7 @@ public class TimeUtil {
 
     public static Predicate<Meal> filterOnStartAndEndLocalDateTime(LocalDateTime cur, LocalDateTime start,
                                                                    LocalDateTime end) {
-        return (meal)-> cur.isEqual(start) || cur.isAfter(start) && cur.isBefore(end);
+        return (meal) -> cur.isEqual(start) || cur.isAfter(start) && cur.isBefore(end);
     }
 
 }

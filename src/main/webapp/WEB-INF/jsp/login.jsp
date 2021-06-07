@@ -27,7 +27,8 @@
                 <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'password')">
                     <spring:message code="app.login"/> Admin
                 </button>
-                <a class="btn btn-lg btn-success my-4" href="swagger-ui.html" target="_blank">Swagger REST Api Documentation</a>
+                <a class="btn btn-lg btn-success my-4" href="swagger-ui.html" target="_blank">Swagger REST Api
+                    Documentation</a>
             </div>
             <div class="container">
                 <div class="lead"><h2><spring:message code="app.description2"/></h2></div>

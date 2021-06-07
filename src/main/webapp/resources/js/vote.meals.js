@@ -16,16 +16,16 @@ function vote(restaurantId, urlParam) {
     $.ajax({
         url: "ui/vote/" + restaurantId + '/' + urlParam,
         type: "POST",
-        headers: { "X-CSRF-TOKEN" : token }
+        headers: {"X-CSRF-TOKEN": token}
     }).done(function () {
         updateTableVote(restaurantId);
         successNoty("common.vote");
     })
         .fail(function () {
-        $(document).ajaxError(function (event, jqXHR, options, jsExc) {
-            failNoty(jqXHR);
-        });
-    })
+            $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+                failNoty(jqXHR);
+            });
+        })
     ;
 }
 

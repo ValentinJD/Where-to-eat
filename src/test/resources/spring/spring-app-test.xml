@@ -11,7 +11,8 @@
     <context:component-scan base-package="ru.wheretoeat.**.service"/>
     <context:component-scan base-package="ru.wheretoeat.**.web"/>
 
-    <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder" factory-method="createDelegatingPasswordEncoder"/>
+    <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder"
+                factory-method="createDelegatingPasswordEncoder"/>
 
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
           p:cacheSeconds="5"

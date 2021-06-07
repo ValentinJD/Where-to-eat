@@ -20,6 +20,7 @@ public interface VotesRepository {
     // empty list if not found
     //ordered by datetime
     List<Vote> getAll(int restaurantId);
+
     //ordered by datetime
     List<Vote> getAllForTest();
 

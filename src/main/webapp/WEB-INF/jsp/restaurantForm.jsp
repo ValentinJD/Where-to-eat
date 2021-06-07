@@ -12,10 +12,10 @@
 
     <section>
 
-<%--        <h2>${param.action == 'create' ? 'Create restaurant' : 'Edit restaurant'}</h2>--%>
-<%--<h3><spring:message code="${user.isNew() ? 'common.create' : 'common.update'}"/></h3>--%>
+        <%--        <h2>${param.action == 'create' ? 'Create restaurant' : 'Edit restaurant'}</h2>--%>
+        <%--<h3><spring:message code="${user.isNew() ? 'common.create' : 'common.update'}"/></h3>--%>
         <jsp:useBean id="restaurant" type="ru.wheretoeat.model.Restaurant" scope="request"/>
-    <h3><spring:message code="${restaurant.isNew() ? 'common.create' : 'common.update'}"/></h3>
+        <h3><spring:message code="${restaurant.isNew() ? 'common.create' : 'common.update'}"/></h3>
         <form:form method="post" action="restaurants">
             <input type="hidden" name="restaurantId" value="${restaurant.id}">
             <dl>

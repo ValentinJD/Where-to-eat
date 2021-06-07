@@ -15,7 +15,7 @@ import static ru.wheretoeat.UserTestData.USER_ID;
 import static ru.wheretoeat.model.AbstractBaseEntity.START_SEQ;
 
 public class VoteTestData {
-    public static final TestMatcher<Vote> VOTE_TEST_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(Vote.class,"date_vote");
+    public static final TestMatcher<Vote> VOTE_TEST_MATCHER = TestMatcher.usingFieldsWithIgnoringAssertions(Vote.class, "date_vote");
 
     public static final int NOT_FOUND = 10;
     public static final int VOTE_ADMIN_ID1_ON_PERCHINI = START_SEQ + 14;
@@ -33,7 +33,7 @@ public class VoteTestData {
             new Vote(VOTE_ADMIN_ID3_ON_TRI_OLENYA, ADMIN_ID, LocalDateTime.now(), TRI_OLENYA_ID, -1);
 
     public static final List<Vote> ADMIN_VOTES = Arrays.asList(
-            VOTE_ADMIN_ON_PERCHINI, VOTE_ADMIN_ON_BAR_AND_GRIL,VOTE_ADMIN_ON_TRI_OLENYA);
+            VOTE_ADMIN_ON_PERCHINI, VOTE_ADMIN_ON_BAR_AND_GRIL, VOTE_ADMIN_ON_TRI_OLENYA);
 
     public static final Vote VOTE_USER_ON_PERCHINI =
             new Vote(VOTE_USER_ID1_ON_PERCHINI, USER_ID, LocalDateTime.now(), PERCHINI_ID, -1);
@@ -46,7 +46,7 @@ public class VoteTestData {
             VOTE_USER_ON_PERCHINI, VOTE_USER_ON_BAR_AND_GRIL, VOTE_USER_ON_TRI_OLENYA);
 
     public static final List<Vote> VOTES_ON_PERCHINI = Arrays.asList(
-             VOTE_ADMIN_ON_PERCHINI, VOTE_USER_ON_PERCHINI);
+            VOTE_ADMIN_ON_PERCHINI, VOTE_USER_ON_PERCHINI);
 
     public static final List<Vote> ALL_VOTES = Arrays.asList(
             VOTE_ADMIN_ON_PERCHINI, VOTE_ADMIN_ON_BAR_AND_GRIL, VOTE_ADMIN_ON_TRI_OLENYA,
@@ -55,12 +55,12 @@ public class VoteTestData {
 
     public final static String notValidVote =
             "{\n" +
-            "  \"date_vote\": \"2021-05-13T05:41:50.142Z\"\n" +
-            "  \n" +
-            "  \"restaurantId\": 100002,\n" +
-            "  \"userId\": 100000,\n" +
-            "  \"vote\": 1\n" +
-            "}";
+                    "  \"date_vote\": \"2021-05-13T05:41:50.142Z\"\n" +
+                    "  \n" +
+                    "  \"restaurantId\": 100002,\n" +
+                    "  \"userId\": 100000,\n" +
+                    "  \"vote\": 1\n" +
+                    "}";
 
     public static String getNotValidVote() {
         return notValidVote;

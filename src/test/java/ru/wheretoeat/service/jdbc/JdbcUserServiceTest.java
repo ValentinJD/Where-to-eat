@@ -20,7 +20,7 @@ class JdbcUserServiceTest extends AbstractUserServiceTest {
                 service.create(new User(null, "name", "user@yandex.ru", "Duplicate", true, LocalDateTime.now(), Role.USER)));
     }
 
-//    @Ignore
+    //    @Ignore
     @Override
     public void createWithException() throws Exception {
         validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)), ConstraintViolationException.class);

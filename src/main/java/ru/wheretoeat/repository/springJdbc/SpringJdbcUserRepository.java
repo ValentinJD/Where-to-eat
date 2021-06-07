@@ -52,7 +52,7 @@ public class SpringJdbcUserRepository implements UserRepository {
                 .addValue("password", user.getPassword())
                 .addValue("registered", user.getRegistered())
                 .addValue("enabled", user.isEnabled())
-                .addValue("role",user.getRole());
+                .addValue("role", user.getRole());
 
         if (user.isNew()) {
             Number newKey = insertUser.executeAndReturnKey(map);

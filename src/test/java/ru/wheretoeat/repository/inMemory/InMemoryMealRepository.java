@@ -16,7 +16,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public Meal save(Meal meal) {
-        return storage.put(meal.getId(),meal);
+        return storage.put(meal.getId(), meal);
     }
 
     @Override

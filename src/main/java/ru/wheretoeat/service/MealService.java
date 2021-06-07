@@ -42,18 +42,18 @@ public class MealService {
         return meal;
     }
 
-    @CacheEvict(value = {"meals" ,"restaurants"}, allEntries = true)
+    @CacheEvict(value = {"meals", "restaurants"}, allEntries = true)
     public void delete(int mealId) {
         checkNotFoundWithId(repository.delete(mealId), mealId);
     }
 
-    @CacheEvict(value = {"meals" ,"restaurants"}, allEntries = true)
+    @CacheEvict(value = {"meals", "restaurants"}, allEntries = true)
     public Meal update(Meal meal) {
         Assert.notNull(meal, "meal must not be null");
         return repository.save(meal);
     }
 
-    @CacheEvict(value = {"meals" ,"restaurants"}, allEntries = true)
+    @CacheEvict(value = {"meals", "restaurants"}, allEntries = true)
     public Meal create(Meal meal) {
         Assert.notNull(meal, "meal must not be null");
         return repository.save(meal);

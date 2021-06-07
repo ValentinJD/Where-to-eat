@@ -43,7 +43,7 @@ public class VoteRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void notValidEntry() throws Exception{
+    void notValidEntry() throws Exception {
         String vote = VoteTestData.getNotValidVote();
 
         perform(MockMvcRequestBuilders.post(REST_URL_VOTE)

@@ -14,6 +14,6 @@ class DataJpaVoteServiceTest extends AbstractVoteServiceTest {
     @Override
     public void delete() {
         service.delete(VOTE_ADMIN_ID1_ON_PERCHINI);
-        assertThrows(NotFoundException.class, ()-> service.delete(VOTE_ADMIN_ID1_ON_PERCHINI));
+        assertThrows(NotFoundException.class, () -> service.delete(VOTE_ADMIN_ID1_ON_PERCHINI));
     }
 }

@@ -1,7 +1,7 @@
 // $(document).ready(function () {
 $(function () {
     makeEditable({
-        ajaxUrl: userAjaxUrl,
+            ajaxUrl: userAjaxUrl,
             datatableApi: $("#datatable").DataTable({
                 "ajax": {
                     "url": userAjaxUrl,

@@ -18,7 +18,7 @@ import static ru.wheretoeat.TestUtil.userHttpBasic;
 import static ru.wheretoeat.UserTestData.*;
 import static ru.wheretoeat.web.user.ProfileRestController.REST_URL;
 
-public class ProfileRestControllerTest extends AbstractControllerTest{
+public class ProfileRestControllerTest extends AbstractControllerTest {
     @Autowired
     private UserService userService;
 

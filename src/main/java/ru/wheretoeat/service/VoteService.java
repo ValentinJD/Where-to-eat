@@ -34,7 +34,7 @@ public class VoteService {
         this.restaurantRepository = restaurantRepository;
     }
 
-   // @Cacheable("votes")
+    // @Cacheable("votes")
     public List<Vote> getallbyrestarauntid(int restaurantId) {
 
         return votesRepository.getAll(restaurantId).stream()
@@ -43,12 +43,12 @@ public class VoteService {
                 .collect(Collectors.toList());
     }
 
-   // @Cacheable("votes")
+    // @Cacheable("votes")
     public Vote getByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDateTime ldt) {
         return votesRepository.getByRestaurantIdUserIdAndLocalDate(restaurantId, userId, ldt);
     }
 
-   // @Cacheable("votes")
+    // @Cacheable("votes")
     public List<Vote> getAll() {
         return votesRepository.getAllForTest();
     }
@@ -121,7 +121,7 @@ public class VoteService {
         return votesRepository.save(vote);
     }
 
-  //  @CacheEvict(value = "users", allEntries = true)
+    //  @CacheEvict(value = "users", allEntries = true)
     public Vote update(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
         return votesRepository.save(vote);
     }

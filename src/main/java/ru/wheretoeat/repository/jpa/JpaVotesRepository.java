@@ -67,7 +67,6 @@ public class JpaVotesRepository implements VotesRepository {
     }
 
 
-
     @Override
     public Vote getByRestaurantIdUserIdAndLocalDate(int restaurantId, int userId, LocalDateTime ldt) {
 /*
