@@ -12,7 +12,7 @@
                                                                           src="resources/images/logon.png"></a>
             </div>
             <div class="col-3 m-2">
-                <a href="restaurants"><H2 CLASS="text-primary"><spring:message code="app.title"/></H2></a>
+                <a href="restaurants"><b><spring:message code="app.title"/></b></a>
             </div>
             <div class="col-6 m-2">
                 <sec:authorize access="isAuthenticated()">
