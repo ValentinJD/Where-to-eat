@@ -1,5 +1,7 @@
 <%@ page import="ru.wheretoeat.util.TimeUtil" %>
 <%@ page import="ru.wheretoeat.web.SecurityUtil" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.LocalTime" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -18,6 +20,7 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
+            <p>Время на сервере: <b> <%=LocalTime.now().toString().substring(0,5) %></b></p>
             <p><spring:message code="app.filter"/></p>
             <form method="get" action="restaurants/filter">
                 <input type="hidden" name="action" value="filter">
