@@ -47,7 +47,7 @@ public class SpringJdbcVotesRepository implements VotesRepository {
                 .addValue("user_id", vote.getUserId())
                 .addValue("date_vote", vote.getDate_vote())
                 .addValue("restaurant_id", vote.getRestaurantId())
-                .addValue("vote", vote.getVote());
+                .addValue("vote", vote.getVoteCount());
 
 
         if (vote.isNew()) {

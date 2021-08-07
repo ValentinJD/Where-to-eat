@@ -25,7 +25,7 @@ class JdbcVoteServiceTest extends AbstractVoteServiceTest {
 
     @Test
     public void getByRestaurantIdUserIdAndLocalDate() {
-        Vote actual = service.getByRestaurantIdUserIdAndLOcalDate(100002, 100000, LocalDateTime.now());
+        Vote actual = service.getVoteByRestaurantIdUserIdAndLOcalDate(100002, 100000, LocalDateTime.now());
         Vote expected = new Vote(100014, 100000, LocalDateTime.now(), 100002, 1);
         assertMatch(actual, expected);
     }

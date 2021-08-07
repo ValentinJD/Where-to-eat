@@ -34,7 +34,6 @@ public class VoteService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    // @Cacheable("votes")
     public List<Vote> getallbyrestarauntid(int restaurantId) {
 
         return votesRepository.getAll(restaurantId).stream()
@@ -43,12 +42,10 @@ public class VoteService {
                 .collect(Collectors.toList());
     }
 
-    // @Cacheable("votes")
-    public Vote getByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDateTime ldt) {
+    public Vote getVoteByRestaurantIdUserIdAndLOcalDate(int restaurantId, int userId, LocalDateTime ldt) {
         return votesRepository.getByRestaurantIdUserIdAndLocalDate(restaurantId, userId, ldt);
     }
 
-    // @Cacheable("votes")
     public List<Vote> getAll() {
         return votesRepository.getAllForTest();
     }
@@ -60,13 +57,11 @@ public class VoteService {
 
     public Vote get(int voteId) {
         return checkNotFoundWithId(votesRepository.get(voteId), voteId);
-        //return votesRepository.get(voteId);
     }
 
     private boolean isVoteUserInRestaurantBefore11Hour(Vote vote) {
         Objects.requireNonNull(vote);
         return vote.getDate_vote().getHour() < 11;
-//        return true;
     }
 
     public int getCountVote(int restaurantId) {
@@ -75,10 +70,10 @@ public class VoteService {
         int count = 0;
 
         for (Vote vote : voteList) {
-            if (vote.getVote() > 0) {
+            if (vote.getVoteCount() > 0) {
                 count++;
             }
-            if (vote.getVote() < 0) {
+            if (vote.getVoteCount() < 0) {
                 count--;
             }
         }
@@ -87,41 +82,58 @@ public class VoteService {
 
     public void voter(Vote vote1) throws NotFoundException, NotSaveOrUpdateException, NotVoteException {
         Assert.notNull(vote1, "vote must not be null");
-        int restaurantId = vote1.getRestaurantId();
-        int userId = vote1.getUserId();
-        int countVote = vote1.getVote();
 
         if (isVoteUserInRestaurantBefore11Hour(vote1)) {
-            // получаем голос за ресторан за сегодня
-            Vote vote = getByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDateTime.now());
-
-            if (vote == null) {
-                vote = new Vote();
-                vote.setUserId(userId);
-                vote.setRestaurantId(restaurantId);
-                vote.setDate_vote(vote1.getDate_vote());
-            }
-            vote.setVote(countVote);
-
-            votesRepository.save(vote);
-
-            int countInRestaurant = getCountVote(restaurantId);
-
-            Restaurant restaurant = restaurantRepository.get(restaurantId);
-            restaurant.setVote_count(countInRestaurant);
-
-            restaurantRepository.save(restaurant);
-
+            saveOrUpdateVote(vote1);
         } else {
             throw new NotVoteException("Голосовать необходимо до 11 часов");
         }
     }
 
+    private void saveOrUpdateVote(Vote vote1) {
+        int restaurantId = vote1.getRestaurantId();
+        int userId = vote1.getUserId();
+        int countVote = vote1.getVoteCount();
+
+        // получаем голос за ресторан за сегодня
+        Vote voteOnToday = getVoteByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDateTime.now());
+
+        if (voteOnToday == null) {
+            getNewVote(userId, restaurantId, vote1.getDate_vote());
+        }
+
+        voteOnToday.setVoteCount(countVote);
+
+        votesRepository.save(voteOnToday);
+
+        updateVotesForRestaurant(restaurantId);
+    }
+
+    private Vote getNewVote(int userId, int restaurantId, LocalDateTime date) {
+
+        Vote oldVote = new Vote();
+        oldVote.setUserId(userId);
+        oldVote.setRestaurantId(restaurantId);
+        oldVote.setDate_vote(date);
+
+        return oldVote;
+    }
+
+    private void updateVotesForRestaurant(int restaurantId) {
+
+        int countInRestaurant = getCountVote(restaurantId);
+
+        Restaurant restaurant = restaurantRepository.get(restaurantId);
+        restaurant.setVote_count(countInRestaurant);
+
+        restaurantRepository.save(restaurant);
+    }
+
+
     public Vote create(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
         return votesRepository.save(vote);
     }
 
-    //  @CacheEvict(value = "users", allEntries = true)
     public Vote update(Vote vote) throws NotFoundException, NotSaveOrUpdateException {
         return votesRepository.save(vote);
     }

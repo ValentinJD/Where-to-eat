@@ -30,7 +30,7 @@ public class VoteUIController extends AbstractVoteController {
         vote1.setUserId(SecurityUtil.authUserId());
         vote1.setRestaurantId(restId);
         vote1.setDate_vote(LocalDateTime.now());
-        vote1.setVote(count);
+        vote1.setVoteCount(count);
         super.voter(vote1);
     }
 

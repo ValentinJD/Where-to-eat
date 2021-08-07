@@ -80,19 +80,19 @@ public class VoteTestData {
 
     public static Vote getUpdatedAfter11oClock() {
         Vote updated = new Vote(VOTE_ADMIN_ID1_ON_PERCHINI, ADMIN_ID, LocalDateTime.of(LocalDate.now(), LocalTime.of(12, 00)), PERCHINI_ID, 0);
-        updated.setVote(1);
+        updated.setVoteCount(1);
         return updated;
     }
 
     public static Vote getUpdatedBefore11oClock() {
         Vote updated = new Vote(VOTE_ADMIN_ID1_ON_PERCHINI, ADMIN_ID, LocalDateTime.of(LocalDate.now(), LocalTime.of(01, 00)), PERCHINI_ID, 0);
-        updated.setVote(1);
+        updated.setVoteCount(1);
         return updated;
     }
 
     public static Vote getUpdatedBefore11oClockCount1() {
         Vote updated = new Vote(VOTE_ADMIN_ID1_ON_PERCHINI, ADMIN_ID, LocalDateTime.of(LocalDate.now(), LocalTime.of(01, 00)), PERCHINI_ID, 1);
-        updated.setVote(1);
+        updated.setVoteCount(1);
         return updated;
     }
 

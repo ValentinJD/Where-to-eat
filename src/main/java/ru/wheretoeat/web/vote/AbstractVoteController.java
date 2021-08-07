@@ -8,7 +8,6 @@ import ru.wheretoeat.exceptions.NotFoundException;
 import ru.wheretoeat.exceptions.NotSaveOrUpdateException;
 import ru.wheretoeat.exceptions.NotVoteException;
 import ru.wheretoeat.model.Vote;
-import ru.wheretoeat.service.RestaurantService;
 import ru.wheretoeat.service.VoteService;
 import ru.wheretoeat.web.SecurityUtil;
 
@@ -24,7 +23,7 @@ public abstract class AbstractVoteController {
 
     public Vote get(int restaurantId) {
         int userId = SecurityUtil.authUserId();
-        Vote vote = voteService.getByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDateTime.now());
+        Vote vote = voteService.getVoteByRestaurantIdUserIdAndLOcalDate(restaurantId, userId, LocalDateTime.now());
         log.info("get() {}", vote);
         return vote;
     }

@@ -44,14 +44,14 @@ public class Vote {
     private int restaurantId;
 
     @Column(name = "vote", nullable = false)
-    private int vote;
+    private int voteCount;
 
-    public int getVote() {
-        return vote;
+    public int getVoteCount() {
+        return voteCount;
     }
 
-    public void setVote(int vote) {
-        this.vote = vote;
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
     }
 
     public Vote() {
@@ -62,7 +62,7 @@ public class Vote {
         this.userId = userId;
         this.date_vote = date_vote;
         this.restaurantId = restaurantId;
-        this.vote = vote;
+        this.voteCount = vote;
     }
 
     public boolean isNew() {
@@ -114,7 +114,7 @@ public class Vote {
                 ", userId=" + userId +
                 ", date_vote=" + date_vote +
                 ", restaurantId=" + restaurantId +
-                ", vote=" + vote +
+                ", vote=" + voteCount +
                 '}';
     }
 

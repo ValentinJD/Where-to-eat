@@ -81,7 +81,7 @@ abstract public class AbstractVoteServiceTest extends AbstractServiceTest {
 
     @Test
     void getByRestaurantIdUserIdAndLocalDate() {
-        Vote expected = service.getByRestaurantIdUserIdAndLOcalDate(PERCHINI_ID, ADMIN_ID, LocalDateTime.now());
+        Vote expected = service.getVoteByRestaurantIdUserIdAndLOcalDate(PERCHINI_ID, ADMIN_ID, LocalDateTime.now());
         Vote actual = VoteTestData.getVoteAdminOnPerchiniToday();
         VOTE_TEST_MATCHER.assertMatch(actual, expected);
     }

@@ -37,7 +37,7 @@ public class JDBCVotesRepository implements VotesRepository {
                 // Parameters start with 1
                 preparedStatement.setInt(1, vote.getUserId());
                 preparedStatement.setInt(2, vote.getRestaurantId());
-                preparedStatement.setInt(3, vote.getVote());
+                preparedStatement.setInt(3, vote.getVoteCount());
                 preparedStatement.executeUpdate();
                 vote.setId(
                         getByRestaurantIdUserIdAndLocalDate(
@@ -61,7 +61,7 @@ public class JDBCVotesRepository implements VotesRepository {
                                 "and user_id = ?");
 
                 // Parameters start with 1
-                preparedStatement.setInt(1, vote.getVote());
+                preparedStatement.setInt(1, vote.getVoteCount());
                 preparedStatement.setInt(2, vote.getRestaurantId());
                 preparedStatement.setInt(3, vote.getUserId());
 
@@ -125,7 +125,7 @@ public class JDBCVotesRepository implements VotesRepository {
                 vote.setUserId(rs.getInt("user_id"));
                 vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
-                vote.setVote(rs.getInt("vote"));
+                vote.setVoteCount(rs.getInt("vote"));
             } else {
                 return null;
             }
@@ -158,7 +158,7 @@ public class JDBCVotesRepository implements VotesRepository {
                 vote.setUserId(rs.getInt("user_id"));
                 vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
-                vote.setVote(rs.getInt("vote"));
+                vote.setVoteCount(rs.getInt("vote"));
                 votes.add(vote);
             }
 
@@ -195,7 +195,7 @@ public class JDBCVotesRepository implements VotesRepository {
                 vote.setUserId(rs.getInt("user_id"));
                 vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
-                vote.setVote(rs.getInt("vote"));
+                vote.setVoteCount(rs.getInt("vote"));
                 votes.add(vote);
             }
 
@@ -235,7 +235,7 @@ public class JDBCVotesRepository implements VotesRepository {
                 vote.setUserId(rs.getInt("user_id"));
                 vote.setDate_vote(LocalDateTime.parse(TimeUtil.toDateFormatString(rs.getString("date_vote"))));
                 vote.setRestaurantId(rs.getInt("restaurant_id"));
-                vote.setVote(rs.getInt("vote"));
+                vote.setVoteCount(rs.getInt("vote"));
                 voteList.add(vote);
             } else {
                 return voteList;
