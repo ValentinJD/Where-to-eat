@@ -1,7 +1,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/730b8c819b384cc383f02cf00cb249ef)](https://www.codacy.com/gh/ValentinJD/Where-to-eat/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ValentinJD/Where-to-eat&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.com/ValentinJD/topjava.svg?branch=master)](https://travis-ci.com/ValentinJD/topjava.svg)
 
-# Where-to-eat
+# Приложение Голосование за рестораны Where-to-eat
 Vote for the restaurant with the best food (Задание на дипломную работу на стажировке topjava)
 -
 Разработка и реализация REST API с использованием
