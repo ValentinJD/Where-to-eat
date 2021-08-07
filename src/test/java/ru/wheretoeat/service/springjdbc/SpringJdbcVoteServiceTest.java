@@ -1,6 +1,10 @@
 package ru.wheretoeat.service.springjdbc;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.wheretoeat.exceptions.NotFoundException;
 import ru.wheretoeat.service.AbstractVoteServiceTest;
 
@@ -16,4 +20,33 @@ class SpringJdbcVoteServiceTest extends AbstractVoteServiceTest {
         service.delete(VOTE_ADMIN_ID1_ON_PERCHINI);
         assertThrows(NotFoundException.class, () -> service.delete(VOTE_ADMIN_ID1_ON_PERCHINI));
     }
+
+
+    @Test
+    void getAll() {
+
+    }
+
+    @Test
+    void getallbyrestarauntid() {
+
+    }
+
+    @Test
+    void get() {
+
+    }
+
+    @Test
+
+    void getByRestaurantIdUserIdAndLocalDate() {
+
+    }
+
+    @Test
+    void getCountVote() {
+
+    }
+
+
 }
